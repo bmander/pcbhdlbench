@@ -1,0 +1,92 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::connector::Header1x2
+import std::parts::passive::{Capacitor, Resistor}
+
+/// A 2 A synchronous buck regulator in SOT-23-6, pinned as the TPS562201 is. Its layout block is
+/// what its datasheet's layout section says, in the case's numbers.
+#[assembly(hand)]
+part Tps562201 {
+    .designator &= "U"
+    pins {
+        .gnd passive "GND"  "1"
+        .sw  passive "SW"   "2"
+        .vin passive "VIN"  "3"
+        .fb  passive "VFB"  "4"
+        .en  passive "EN"   "5"
+        .bst passive "VBST" "6"
+    }
+    .package: Package
+
+    layout {
+        source "pcbhdl-bench, power/buck-loop"
+        /// The input capacitor is at the VIN and ground pins, and the loop it closes is short.
+        near input_cap bridging .vin .gnd to .vin
+        loop hot bridging .vin .gnd within 8mm
+        /// The bootstrap capacitor and the inductor are at the switch pin, on a short track.
+        near bootstrap bridging .bst .sw to .bst
+        near coil on .sw kind inductor to .sw
+        route switch .sw length 12mm
+        /// The feedback divider is at the feedback pin, and the inductor is kept from it.
+        near divider on .fb kind resistor to .fb
+        away coil_from_feedback on .sw kind inductor from .fb beyond 3mm
+    }
+}
+
+/// A 4 mm square shielded power inductor.
+#[kind(inductor)]
+#[assembly(hand)]
+part Inductor4x4 {
+    .designator &= "L"
+    pins {
+        .a passive "1" "1"
+        .b passive "2" "2"
+    }
+    .package: Package
+}
+
+board BuckLoop {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .u1: Tps562201
+    /// The input capacitor. The case's is 10 uF and the output's 22 uF; the only 0805 of
+    /// netsmith's catalog is 47 uF, and the case grades the package, not the value.
+    .c1: Capacitor { .capacitance &= 47uF +/- 20%; .package &= "0805" }
+    /// The bootstrap capacitor.
+    .c2: Capacitor { .capacitance &= 100nF +/- 10%; .package &= "0603" }
+    /// The output capacitor.
+    .c3: Capacitor { .capacitance &= 47uF +/- 20%; .package &= "0805" }
+    .l1: Inductor4x4
+    .r1: Resistor { .resistance &= 33kohm +/- 1%; .package &= "0603" }
+    .r2: Resistor { .resistance &= 10kohm +/- 1%; .package &= "0603" }
+    .j1: Header1x2
+    .j2: Header1x2
+
+    // VIN: the input header's pin 1, the supply and enable pins, the input capacitor.
+    .j1.p1 ~ .u1.vin
+    .u1.vin ~ .u1.en
+    .u1.vin ~ .c1.a
+    // Ground.
+    .j1.p2 ~ .u1.gnd
+    .u1.gnd ~ .c1.b
+    .u1.gnd ~ .c3.b
+    .u1.gnd ~ .r2.b
+    .u1.gnd ~ .j2.p2
+    // The switch node, and the bootstrap capacitor on it.
+    .u1.sw ~ .l1.a
+    .u1.sw ~ .c2.b
+    .u1.bst ~ .c2.a
+    // The output, and the divider that feeds it back.
+    .l1.b ~ .c3.a
+    .l1.b ~ .r1.a
+    .l1.b ~ .j2.p1
+    .u1.fb ~ .r1.b
+    .u1.fb ~ .r2.a
+}

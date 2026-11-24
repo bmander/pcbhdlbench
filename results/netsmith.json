@@ -200,6 +200,49 @@
     }
    }
   },
+  "power/buck-loop": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "loop": {
+     "ok": true,
+     "notes": []
+    },
+    "apart": {
+     "ok": true,
+     "notes": []
+    },
+    "copper": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 84.187,
+    "vias": 7,
+    "layers": 2,
+    "loop_mm2 (the input loop)": 3.63,
+    "apart_mm (FB from SW)": 1.4,
+    "copper_mm2 (SW)": 12.2
+   },
+   "seconds": 1.52
+  },
   "reuse/eight-channels": {
    "outcome": "wrong",
    "why": "7 of 8 instances are not laid out as RS1's is: those of RS2, RS3, RS4, RS5 ….",

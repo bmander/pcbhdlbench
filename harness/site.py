@@ -57,6 +57,8 @@ CHECKS = {
     "loop": "The loop the case names encloses no more area than it allows",
     "replica": "The instances of a module the case names are congruent, parts and tracks",
     "pattern": "The parts the case arrays are at the positions its rule gives",
+    "apart": "The nets the case keeps apart come no nearer one another than it allows, on any layer",
+    "copper": "The copper of a net the case names, pads and tracks together, is no more than the area it allows",
     "refuse": "No board can satisfy the case, and the toolchain says so",
 }
 
@@ -138,7 +140,7 @@ def board_svg(case, path):
         if len(poly) == 2:
             return f"<polyline class='{cls} line' points='{pts(poly)}' stroke-width='{2 * r:g}'/>"
         return (f"<polygon class='{cls}{' line' if r else ''}' points='{pts(poly)}'"
-                f"{f' stroke-width={2 * r:g}' if r else ''}/>")
+                f"{f' stroke-width="{2 * r:g}"' if r else ''}/>")
 
     out = [f"<polygon class=edge points='{pts(board['outline'] or want)}'/>"]
     pads = [pad for part in board["parts"] for pad in part["pads"]]
@@ -433,6 +435,8 @@ def case_page(case, patterns, rules, toolchains, results):
             mm = r["metrics"]
             facts.append(f"<tr><th>Track</th><td>{mm['track_mm']:g} mm on {mm['layers']} layer{'s' if mm['layers'] != 1 else ''}</td></tr>"
                          f"<tr><th>Vias</th><td>{mm['vias']}</td></tr>")
+            facts += [f"<tr><th>{esc(k.split(' (')[1][:-1])}</th><td>{v:g} {k.split('_')[1].split(' ')[0].replace('mm2', 'mm²')}</td></tr>"
+                      for k, v in mm.items() if " (" in k]
         for k, v in (r.get("checks") or {}).items():
             facts.append(f"<tr><th><code>{k}</code></th><td>{'holds' if v['ok'] else esc('; '.join(v['notes']))}</td></tr>")
         body += f"<table class=facts><tbody>{''.join(facts)}</tbody></table>\n"

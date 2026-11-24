@@ -6,7 +6,8 @@ own language, with its own library and idioms. A **runner** lays the board out a
 file. The **harness** grades every file the same way.
 
 The harness reads the checks `parts`, `connectivity`, `rules`, `outline`, `fixed`, `side`,
-`layers`, `near` and `replica` (of parts, not yet of tracks), and refusals. The other checks are named and defined below and not yet read, so a case
+`layers`, `near`, `replica` (of parts, not yet of tracks), `loop`, `apart` and `copper`, and
+refusals. The other checks are named and defined below and not yet read, so a case
 that names one cannot be specified yet.
 
 ## Principles
@@ -100,6 +101,8 @@ Every case names `parts`, `connectivity`, `rules` and `outline`, or names `refus
 | `loop` | A named loop encloses no more area than allowed |
 | `replica` | Named instances of a module are congruent, parts and tracks: each is the first, moved and turned, not mirrored |
 | `pattern` | Arrayed parts are at the positions the case's rule gives |
+| `apart` | Two nets the case names come no nearer one another than allowed, on any layer |
+| `copper` | A named net's copper, pads and tracks, is no more than the area allowed |
 | `refuse` | No board satisfies the case, and the toolchain says so |
 
 A clearance, a width or a distance from the edge may fall short by 0.005 mm, KiCad's own
@@ -117,6 +120,21 @@ max = 2.0
 
 [[replica]]              # the instances of a module, each a list of its parts in the same order
 of = [["RS1", "C1", "RL1"], ["RS2", "C2", "RL2"]]
+
+[[loop]]                 # the area a loop encloses, mm²: from pin to pin, along the copper where
+name = "the input loop"  # the two are of one net (the shortest way, by the tracks' centre lines),
+path = ["C1.1", "U1.3", "U1.1", "C1.2"]   # and straight through the part where they are not
+max = 12.0
+
+[[apart]]                # copper of one net no nearer copper of another, on any layer;
+net = "FB"               # `except` leaves out the pads of the parts it names
+from = "SW"
+except = ["U1"]
+min = 1.0
+
+[[copper]]               # a net's copper, summed over the layers, mm²
+net = "SW"
+max = 25.0
 ```
 
 A pattern that follows from a rule (a ring, a grid) needs no check of its own: the case's header

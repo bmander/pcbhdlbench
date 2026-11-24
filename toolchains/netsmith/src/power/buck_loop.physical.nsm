@@ -1,0 +1,7 @@
+import std::pcb::Outline
+
+physical for BuckLoop {
+    case {
+        .outline: Outline { .width &= 25mm; .height &= 20mm }
+    }
+}

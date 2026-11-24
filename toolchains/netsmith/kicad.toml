@@ -43,3 +43,15 @@ kind = "Tqfp32"
 package = "TQFP-32"
 default = true
 footprint = "Package_QFP:TQFP-32_7x7mm_P0.8mm"
+
+[[part]]
+kind = "Tps562201"
+package = "SOT-23-6"
+default = true
+footprint = "Package_TO_SOT_SMD:SOT-23-6"
+
+[[part]]
+kind = "Inductor4x4"
+package = "4x4mm"
+default = true
+footprint = "Inductor_SMD:L_Taiyo-Yuden_NR-40xx"

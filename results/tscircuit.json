@@ -290,6 +290,51 @@
    },
    "seconds": 10.92
   },
+  "power/buck-loop": {
+   "outcome": "wrong",
+   "why": "FB comes within 0.32 mm of SW, under 1.",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "loop": {
+     "ok": true,
+     "notes": []
+    },
+    "apart": {
+     "ok": false,
+     "notes": [
+      "FB comes within 0.32 mm of SW, under 1"
+     ]
+    },
+    "copper": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 74.211,
+    "vias": 4,
+    "layers": 2,
+    "loop_mm2 (the input loop)": 6.66,
+    "apart_mm (FB from SW)": 0.323,
+    "copper_mm2 (SW)": 7.6
+   },
+   "seconds": 7.41
+  },
   "reuse/eight-channels": {
    "outcome": "pass",
    "why": "",

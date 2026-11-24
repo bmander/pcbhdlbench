@@ -9,10 +9,10 @@ Results: **[bmander.github.io/pcbhdlbench](https://bmander.github.io/pcbhdlbench
 Modelled on [brep-bench](https://github.com/bmander/brep-bench), which does the same for B-rep
 kernels.
 
-**Status: early.** 82 cases in 11 categories, 20 of them specified down to the netlist and the
-rest one-paragraph sketches. The harness grades nine of the checks (`parts`, `connectivity`,
-`rules`, `outline`, `fixed`, `side`, `layers`, `near`, `replica`) and refusals, which is what
-those 20 cases ask. Two toolchains are entered, tscircuit and netsmith; their results are on the site.
+**Status: early.** 82 cases in 11 categories, 21 of them specified down to the netlist and the
+rest one-paragraph sketches. The harness grades twelve of the checks (`parts`, `connectivity`,
+`rules`, `outline`, `fixed`, `side`, `layers`, `near`, `replica`, `loop`, `apart`, `copper`) and
+refusals, which is what those 21 cases ask. Two toolchains are entered, tscircuit and netsmith; their results are on the site.
 
 ## Why
 
