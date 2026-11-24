@@ -327,13 +327,25 @@ function say() {
     if (hemmed) bits.push(`${hemmed} pad${hemmed === 1 ? ' has' : 's have'} no way out on this grid, hemmed in by the pads beside ${hemmed === 1 ? 'it' : 'them'}: a finer grid or less clearance lets ${hemmed === 1 ? 'it' : 'them'} out.`);
   }
   else {
-    bits.push(done ? (failed || shared ? 'Finished, not clean.' : 'Routed.') : current >= 0 ? `Routing net ${current + 1}${ripping ? ', through the nets in its way' : ''}…` : 'Working…');
+    if (!done) bits.push(current >= 0 ? `Routing net ${current + 1}${ripping ? ', through the nets in its way' : ''}…` : 'Working…');
     bits.push(`${routed} of ${nets} nets routed${failed ? `, ${failed} given up` : ''}.`);
     if (strategy === 3) bits.push(`Round ${round}: ${shared} point${shared === 1 ? '' : 's'} shared.`);
     if (strategy === 2 && rips) bits.push(`${rips} net${rips === 1 ? '' : 's'} taken up and routed again.`);
     bits.push(`${(length / 100).toFixed(1)} mm of track, ${vias} via${vias === 1 ? '' : 's'}, ${expansions.toLocaleString()} search steps.`);
   }
-  $('stats').textContent = bits.join(' ');
+  // when the attempt is over, the line is its verdict: routed, not finished (nets given up), or
+  // not clean (tracks still through one another)
+  const verdict = !(started && done && nets) ? null
+    : shared ? ['bad', 'Not clean'] : failed ? ['part', 'Not finished'] : ['ok', 'Routed'];
+  const line = $('stats');
+  line.className = verdict ? `verdict ${verdict[0]}` : 'legend';
+  const said = (verdict ? verdict[1] + '|' : '') + bits.join(' ');
+  if (line.dataset.said !== said) {              // written only when it changes, for a screen reader's sake
+    line.dataset.said = said;
+    line.replaceChildren();
+    if (verdict) line.append(Object.assign(document.createElement('strong'), { textContent: verdict[1] }));
+    line.append(Object.assign(document.createElement('span'), { textContent: bits.join(' ') }));
+  }
 }
 
 function buttons() {

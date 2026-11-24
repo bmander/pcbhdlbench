@@ -6,6 +6,7 @@
 .panel h2 { margin: 18px 0 8px; font-size: 1.05em; }
 .panel h2:first-child { margin-top: 0; }
 .panel label { display: block; margin: 0 0 8px; }
+.panel [hidden] { display: none; }   /* a label is a block above: hidden still means hidden */
 .panel select, .panel input[type=number] { font: inherit; color: var(--fg); background: var(--bg);
   border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; max-width: 100%; }
 .panel input[type=number] { width: 4.3em; }
@@ -23,3 +24,16 @@
 .key .sw-shared { background: #e34948; }
 .key .sw-wall { background: repeating-linear-gradient(45deg, var(--muted) 0 2px, transparent 2px 4px); }
 #stats { min-height: 3em; }
+/* the verdict, when an attempt is over: the line as a banner in the colour of how it ended */
+:root { --ok: #18794e; --ok-bg: #dff3e6; --part: #9a6200; --part-bg: #f8ecc8; --bad: #b42318; --bad-bg: #fbe1dd; }
+@media (prefers-color-scheme: dark) {
+  :root { --ok: #5fd39a; --ok-bg: #173a29; --part: #f0c060; --part-bg: #40330f; --bad: #ff8a7a; --bad-bg: #4a1f1a; }
+}
+#stats.verdict { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; margin: 10px 0 8px; padding: 8px 12px;
+                 border-radius: 6px; min-height: 0; color: var(--fg); background: var(--v-bg); border-left: 4px solid var(--v);
+                 font-variant-numeric: tabular-nums; }
+#stats.verdict strong { color: var(--v); font-size: 1.1em; }
+#stats.verdict span { font-size: 0.92em; }
+#stats.ok { --v: var(--ok); --v-bg: var(--ok-bg); }
+#stats.part { --v: var(--part); --v-bg: var(--part-bg); }
+#stats.bad { --v: var(--bad); --v-bg: var(--bad-bg); }
