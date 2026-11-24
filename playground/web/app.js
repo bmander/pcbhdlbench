@@ -43,7 +43,11 @@ async function boot() {
     return;
   }
   await loadPresets();
-  restore() || pick(0);
+  // ?case=routing/bus-8 opens that case of the bench; otherwise the board in the link, or the first example
+  const asked = new URLSearchParams(location.search).get('case');
+  const found = asked ? presets.findIndex((p) => p.id === asked) : -1;
+  if (found >= 0) pick(found);
+  else restore() || pick(0);
   frame();
 }
 
@@ -427,9 +431,14 @@ let presets = [
 async function loadPresets() {
   try {
     const more = await (await fetch('presets.json')).json();
-    presets = presets.concat(more.map((p) => ({ ...p, title: `${p.title} (${p.id})` })));
+    presets = presets.concat(more);
   } catch { /* the page stands without the bench's cases */ }
-  $('preset').innerHTML = presets.map((p, i) => `<option value=${i}>${p.title.replace(/</g, '&lt;')}</option>`).join('');
+  const option = (p, i) => `<option value=${i}>${p.title.replace(/</g, '&lt;')}</option>`;
+  const group = (label, own) => {
+    const mine = presets.map((p, i) => [p, i]).filter(([p]) => Boolean(p.id) === own).map(([p, i]) => option(p, i)).join('');
+    return mine ? `<optgroup label='${label}'>${mine}</optgroup>` : '';
+  };
+  $('preset').innerHTML = group('Examples', false) + group('Cases of the bench', true);
   $('preset').onchange = () => pick(+$('preset').value);
 }
 
@@ -442,6 +451,9 @@ function pick(i) {
   selected = -1;
   net = 0;
   $('preset').value = i;
+  $('case').innerHTML = p.id
+    ? `This is <a href='../cases/${p.id}.html'>${p.id}</a> of the bench, as its parts are placed: see how the routers and the toolchains do on it there.`
+    : '';
   fields();
   send();
   save();
@@ -449,7 +461,8 @@ function pick(i) {
 
 function save() {
   const s = { b: board, s: +$('strategy').value, o: +$('order').value };
-  history.replaceState(null, '', '#' + btoa(unescape(encodeURIComponent(JSON.stringify(s)))));
+  // the board is in the link's fragment; a ?case= it was opened by is dropped, so that a reload keeps the edits
+  history.replaceState(null, '', location.pathname + '#' + btoa(unescape(encodeURIComponent(JSON.stringify(s)))));
 }
 
 function restore() {

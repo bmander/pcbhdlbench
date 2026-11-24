@@ -249,6 +249,9 @@ table.versus td small { display: block; font-size: 0.75em; }
 table.versus th { font-size: 0.9em; }
 table.versus td.empty { text-align: center; }
 
+a.chip { text-decoration: none; display: inline-block; }
+a.chip:hover { border-color: var(--accent); color: var(--accent); }
+
 /* pcbhdl-bench's own: a case's status, the cases' filter, the tables of prose */
 .badge.specified { background: var(--pass); }
 .badge.sketch { border: 1px dashed var(--muted); color: var(--muted); }

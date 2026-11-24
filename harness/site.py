@@ -420,6 +420,10 @@ def case_page(case, patterns, rules, toolchains, results, routers=()):
             body += (f"<p class=prose>Every part is placed, so this case is also given to <a href='../../routers.html'>the "
                      f"routers</a>, as a placed, unrouted board: <a href='{stem}.placed.kicad_pcb' download>the board</a> and "
                      f"<a href='{stem}.placed.kicad_pro' download>its project file</a>, which holds the rules.</p>\n")
+            if c["layers"] == 2:
+                body += (f"<div class=pick><a class=chip href='../../playground/index.html?case={c['id']}'>Open in the "
+                         "playground</a></div>\n<p class='prose muted'>The playground has small routers of its own that "
+                         "can be watched at work on this board.</p>\n")
     else:
         body += ("<p class='prose muted'>A sketch: its parts, nets and numbers are not yet in its header, "
                  "so it cannot be graded. Pin it down, or argue with it, in "
@@ -513,8 +517,9 @@ def routers_page(cases, tools, results, runs):
     head = ("".join(f"<th class=k>{esc(r['name'])}</th>" for r in routers)
             + "".join(f"<th class=k><span class=muted>{esc(t['name'])}</span></th>" for t in chains))
     rows = "".join(
-        f"<tr><td class=case><a href='cases/{c['id']}.html'>{esc(c['title'])}</a><small>{c['id']}</small></td>"
-        f"<td class=num>{len(c['net'])}</td><td class=num>{c['layers']}</td>"
+        f"<tr><td class=case><a href='cases/{c['id']}.html'>{esc(c['title'])}</a><small>{c['id']}"
+        + (f" · <a href='playground/index.html?case={c['id']}'>open in the playground</a>" if c["layers"] == 2 else "")
+        + f"</small></td><td class=num>{len(c['net'])}</td><td class=num>{c['layers']}</td>"
         + "".join(cell(r["name"], c) for r in routers) + "".join(cell(t["name"], c) for t in chains) + "</tr>"
         for c in placed)
     tally = ("<tr><th>Passed</th><td></td><td></td>" + "".join(count(r["name"]) for r in routers)
