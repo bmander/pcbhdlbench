@@ -76,6 +76,22 @@ The harness is Python 3.11+, standard library only; a runner needs its toolchain
 Node). `run.py --case basics/rc-lowpass` runs one case, `--toolchain NAME` one toolchain. Each
 board is kept at `results/<toolchain>/<case>/board.kicad_pcb`, and the site draws it from there.
 
+## The playground
+
+`playground/` is a page for watching autorouters work: place pads, name nets, pick a strategy
+(Lee, A*, rip-up and reroute, negotiated congestion) and see the search spread and the tracks
+laid. The routers are a small Rust crate with no dependencies, `playground/router`, compiled to
+WebAssembly behind a C ABI; the page around it is plain JavaScript and a canvas. The cases that
+place every part of a two-layer board are among the boards it starts from.
+
+```bash
+cargo test --release --manifest-path playground/router/Cargo.toml
+cargo build --release --target wasm32-unknown-unknown --manifest-path playground/router/Cargo.toml
+python3 harness/site.py     # copies the page and the module to site/playground/
+```
+
+These are teaching routers on a coarse grid, not entrants: they are not on the routers' board.
+
 ## Adding a toolchain
 
 Write a runner (`<command> <case id> <out dir>`, see [SPEC.md](SPEC.md#a-runner)) and an

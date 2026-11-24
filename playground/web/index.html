@@ -1,0 +1,79 @@
+<!doctype html><html lang=en><head><meta charset=utf-8>
+<meta name=viewport content='width=device-width, initial-scale=1'>
+<title>Autorouting playground · pcbhdl-bench</title>
+<meta name=description content='Place pads, name nets, pick an autorouting strategy and watch it work: grid routers in Rust, compiled to WebAssembly.'>
+<link rel=stylesheet href='../style.css'>
+<link rel=stylesheet href='playground.css'>
+<link rel=icon href='../favicon.svg' type='image/svg+xml'>
+</head><body class=wide>
+<nav class=top><a href='../index.html'>pcbhdl-bench</a><a href='../cases.html'>Cases</a><a href='../routers.html'>Routers</a><a href='index.html' aria-current=page>Playground</a><a href='../toolchains.html'>Toolchains</a><a href='../prior.html'>Prior work</a><a href='https://github.com/bmander/pcbhdlbench'>Source</a></nav>
+<h1>Autorouting playground</h1>
+<p class=lede>Place pads, give them nets, pick a strategy and watch it route. The routers are
+small grid routers written in Rust and compiled to WebAssembly; they run in this page, a few
+search steps a frame, so that the wave can be seen spreading.</p>
+
+<div class=play>
+  <div class=stage>
+    <canvas id=board width=900 height=640 aria-label='The board: click to place or select a pad'></canvas>
+    <p class=legend id=stats aria-live=polite>Loading the router…</p>
+    <p class=legend>
+      <span class=key><span class=sw-open></span>search, open</span>
+      <span class=key><span class=sw-closed></span>search, closed</span>
+      <span class=key><span class=sw-shared></span>shared by two nets</span>
+      <span class=key><span class=sw-wall></span>closed to tracks</span>
+      <span class=muted>Solid tracks are on the top layer, hollow ones on the bottom.</span>
+    </p>
+  </div>
+  <aside class=panel>
+    <h2>Route</h2>
+    <label>Strategy <select id=strategy>
+      <option value=0>Lee: a breadth-first wave</option>
+      <option value=1 selected>A*: pulled toward the pad</option>
+      <option value=2>Rip-up and reroute</option>
+      <option value=3>Negotiated congestion (PathFinder)</option>
+    </select></label>
+    <p class=muted id=about></p>
+    <label>Order of the nets <select id=order>
+      <option value=0>as numbered</option><option value=1>shortest first</option><option value=2>longest first</option>
+    </select></label>
+    <div class=pick>
+      <button type=button id=run>Run</button>
+      <button type=button id=step>Step</button>
+      <button type=button id=reset>Reset</button>
+    </div>
+    <label>Speed <input type=range id=speed min=0 max=100 value=45> <span id=speedout class=muted></span></label>
+    <label>Show <select id=view><option value=both>both layers</option><option value=top>the top layer</option><option value=bottom>the bottom layer</option></select></label>
+
+    <h2>Board</h2>
+    <label>Start from <select id=preset></select></label>
+    <div class=fields>
+      <label>Width <input type=number id=width min=2 max=150 step=1> mm</label>
+      <label>Height <input type=number id=height min=2 max=150 step=1> mm</label>
+      <label>Track <input type=number id=track min=0.05 max=2 step=0.05> mm</label>
+      <label>Clearance <input type=number id=clearance min=0.05 max=2 step=0.05> mm</label>
+      <label>Via <input type=number id=via min=0.2 max=3 step=0.1> mm</label>
+      <label>Grid <input type=number id=pitch min=0.1 max=2 step=0.05> mm</label>
+    </div>
+    <p class=muted>The grid is usually the track plus the clearance, so that two tracks may run side by side.</p>
+
+    <h2>Pads</h2>
+    <div class=pick id=tools>
+      <button type=button data-tool=select aria-pressed=true class=chip>Select and move</button>
+      <button type=button data-tool=pad aria-pressed=false class=chip>Add pads</button>
+    </div>
+    <p class=muted id=hint></p>
+    <div class=pick id=netlist aria-label='The net of a new pad, or of the selected one'></div>
+    <div class=fields>
+      <label>Kind <select id=kind><option value=2>through-hole</option><option value=0>surface, top</option><option value=1>surface, bottom</option></select></label>
+      <label>Size <input type=number id=padw min=0.2 max=10 step=0.1> × <input type=number id=padh min=0.2 max=10 step=0.1> mm</label>
+    </div>
+    <div class=pick>
+      <button type=button id=delete>Delete the selected pad</button>
+      <button type=button id=clear>Clear the board</button>
+      <button type=button id=share>Copy a link to this board</button>
+    </div>
+  </aside>
+</div>
+<noscript><p>The playground is drawn and run by JavaScript and WebAssembly.</p></noscript>
+<script type=module src='app.js'></script>
+</body></html>

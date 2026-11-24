@@ -14,3 +14,4 @@ toolchains/fastroute/*.tar.gz
 toolchains/fastroute/SHA256SUMS.txt
 toolchains/krt/upstream/
 toolchains/krt/venv/
+playground/router/target/

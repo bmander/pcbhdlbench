@@ -1,0 +1,16 @@
+[package]
+name = "pcb-router-playground"
+version = "0.1.0"
+edition = "2021"
+description = "Grid autorouters that can be stepped an expansion at a time, for the pcbhdl-bench playground"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[profile.release]
+opt-level = 3
+lto = true
+panic = "abort"
+strip = true

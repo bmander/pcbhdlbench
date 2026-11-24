@@ -173,7 +173,7 @@ def board_svg(case, path):
 def page(path, title, body, current=None, description=None):
     """Writes one page; `path` is relative to the site, and its links are made relative to it."""
     up = "../" * path.count("/")
-    nav = [("index.html", "pcbhdl-bench"), ("cases.html", "Cases"), ("routers.html", "Routers"), ("toolchains.html", "Toolchains"),
+    nav = [("index.html", "pcbhdl-bench"), ("cases.html", "Cases"), ("routers.html", "Routers"), ("playground/index.html", "Playground"), ("toolchains.html", "Toolchains"),
            ("prior.html", "Prior work"), (REPO, "Source")]
     links = "".join(
         f"<a href='{href if href.startswith('http') else up + href}'"
@@ -543,6 +543,43 @@ it. The time is the whole run: the board out to the router's format, the routing
     page("routers.html", "Routers · pcbhdl-bench", body, "routers.html")
 
 
+def playground(cases, patterns, rules):
+    """The autorouting playground: its page, the router as WebAssembly where it has been built
+    (playground/router, see the README), and the cases that place every part of a two-layer
+    board, as boards to start from."""
+    out = SITE / "playground"
+    out.mkdir()
+    for f in (ROOT / "playground" / "web").iterdir():
+        shutil.copy(f, out / f.name)
+    built = ROOT / "playground" / "router" / "target" / "wasm32-unknown-unknown" / "release" / "pcb_router_playground.wasm"
+    if built.exists():
+        shutil.copy(built, out / "router.wasm")
+    else:
+        print("the playground's router is not built: site/playground has no router.wasm")
+    presets = []
+    for c in cases:
+        if not place.placeable(c) or c["layers"] != 2:
+            continue
+        r = rules[c["rules"]]
+        net = {pin: i for i, n in enumerate(c["net"]) for pin in n["pins"]}
+        pads = []
+        for part in c["part"]:
+            turn = part.get("rotation", 0)
+            for pad in patterns[part["pattern"]]["pads"]:
+                name, x, y, w, h = pad[:5]
+                dx, dy = geom.rotate((x, y), turn)
+                if round(turn) % 180 == 90:
+                    w, h = h, w
+                pads.append({"x": round(part["at"][0] + dx, 4), "y": round(part["at"][1] + dy, 4), "w": w, "h": h,
+                             "side": 2 if len(pad) > 5 else 0, "round": len(pad) > 5 and w == h,
+                             "net": net.get(f"{part['ref']}.{name}", -1)})
+        outline = c["board"]["outline"]
+        presets.append({"id": c["id"], "title": c["title"], "width": max(p[0] for p in outline),
+                        "height": max(p[1] for p in outline), "outline": outline if len(outline) != 4 else [],
+                        "track": r["track"], "clearance": r["clearance"], "via": r["via_pad"], "edge": r["edge"], "pads": pads})
+    (out / "presets.json").write_text(json.dumps(presets, separators=(",", ":")))
+
+
 def link(name, url):
     return f"<a href='{esc(url, quote=True)}'>{esc(name)}</a>" if url else esc(name)
 
@@ -610,6 +647,7 @@ def main():
     for case in cases:
         case_page(case, patterns, rules, everyone, results, tools.get("routers", []))
     routers_page(cases, tools, results, read_runs())
+    playground(cases, patterns, rules)
     toolchains_page(tools)
     prior_page(json.loads((ROOT / "landscape.json").read_text()))
     public = [{k: v for k, v in c.items() if k != "body"} for c in cases]

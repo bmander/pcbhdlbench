@@ -1,0 +1,24 @@
+/* The playground: the board on the left, its controls on the right; one column on a narrow screen. */
+.play { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; align-items: start; }
+@media (max-width: 900px) { .play { grid-template-columns: minmax(0, 1fr); } }
+.stage canvas { width: 100%; height: min(74vh, 720px); display: block; border: 1px solid var(--line); border-radius: 6px;
+                background: var(--card); touch-action: none; cursor: crosshair; }
+.panel h2 { margin: 18px 0 8px; font-size: 1.05em; }
+.panel h2:first-child { margin-top: 0; }
+.panel label { display: block; margin: 0 0 8px; }
+.panel select, .panel input[type=number] { font: inherit; color: var(--fg); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px; padding: 3px 6px; max-width: 100%; }
+.panel input[type=number] { width: 4.3em; }
+.panel input[type=range] { vertical-align: middle; width: 55%; }
+.panel p.muted { font-size: 0.88em; margin: 0 0 10px; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+.fields label:has(#padw), .fields label:has(#kind) { grid-column: 1 / -1; }
+.pick button { white-space: nowrap; }
+.pick button.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+#netlist .chip { display: inline-flex; align-items: center; gap: 6px; }
+#netlist .chip i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.key .sw-open { background: rgba(240, 190, 40, 0.75); }
+.key .sw-closed { background: rgba(110, 150, 255, 0.45); }
+.key .sw-shared { background: #e34948; }
+.key .sw-wall { background: repeating-linear-gradient(45deg, var(--muted) 0 2px, transparent 2px 4px); }
+#stats { min-height: 3em; }
