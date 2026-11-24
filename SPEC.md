@@ -6,8 +6,8 @@ own language, with its own library and idioms. A **runner** lays the board out a
 file. The **harness** grades every file the same way.
 
 The harness reads the checks `parts`, `connectivity`, `rules`, `outline`, `fixed`, `side`,
-`layers`, `near`, `replica` (of parts, not yet of tracks), `loop`, `apart` and `copper`, and
-refusals. The other checks are named and defined below and not yet read, so a case
+`layers`, `near`, `replica` (of parts, not yet of tracks), `loop`, `apart`, `copper`, `width` and
+`vias`, and refusals. The other checks are named and defined below and not yet read, so a case
 that names one cannot be specified yet.
 
 ## Principles
@@ -90,7 +90,7 @@ Every case names `parts`, `connectivity`, `rules` and `outline`, or names `refus
 | `layers` | Copper is only on the layers the case allows |
 | `near` | Bounded distances between pads, parts or tracks are within bounds |
 | `keepout` | Closed regions are empty of what they are closed to |
-| `width` | Named nets are at least as wide as asked, along their whole length |
+| `width` | Between two named pins there is a way along the copper at least as wide as asked |
 | `length` | Named nets have the lengths asked, or match as closely as asked |
 | `pair` | Each differential pair runs coupled at the stated width and gap, its tracks matched |
 | `impedance` | A track's impedance, computed from its width and the case's stackup, is as asked |
@@ -102,7 +102,7 @@ Every case names `parts`, `connectivity`, `rules` and `outline`, or names `refus
 | `replica` | Named instances of a module are congruent, parts and tracks: each is the first, moved and turned, not mirrored |
 | `pattern` | Arrayed parts are at the positions the case's rule gives |
 | `apart` | Two nets the case names come no nearer one another than allowed, on any layer |
-| `copper` | A named net's copper, pads and tracks, is no more than the area allowed |
+| `copper` | A named net's copper, pads, tracks and pours, is no more than the area allowed, or no less than the area asked |
 | `refuse` | No board satisfies the case, and the toolchain says so |
 
 A clearance, a width or a distance from the edge may fall short by 0.005 mm, KiCad's own
@@ -132,10 +132,22 @@ from = "SW"
 except = ["U1"]
 min = 1.0
 
-[[copper]]               # a net's copper, summed over the layers, mm²
-net = "SW"
+[[copper]]               # a net's copper, mm²: `max` or `min`, summed over the layers or on
+net = "SW"               # one (`layer = "F.Cu"`)
 max = 25.0
+
+[[width]]                # a way between two pins of a net at least so wide: by tracks that wide,
+path = ["J1.1", "F1.1"]  # pads, vias and pours, and by a narrower track only within `neck` of a
+min = 1.37               # pad too narrow for the width
+neck = 2.0
+
+[[vias]]                 # the vias on a net, at least so many
+net = "VOUT"
+min = 6
 ```
+
+Two pads of one name in a land pattern (a regulator's tab and its middle pin) are one pin, joined
+inside the part: copper to either reaches the pin.
 
 A pattern that follows from a rule (a ring, a grid) needs no check of its own: the case's header
 has the positions worked out, as `at` and `rotation` on each part, and `fixed` checks them. The

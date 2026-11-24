@@ -239,9 +239,80 @@
     "layers": 2,
     "loop_mm2 (the input loop)": 3.63,
     "apart_mm (FB from SW)": 1.4,
-    "copper_mm2 (SW)": 12.2
+    "copper_mm2 (SW)": 12.3
    },
-   "seconds": 1.52
+   "seconds": 1.76
+  },
+  "power/ldo-copper": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "copper": {
+     "ok": true,
+     "notes": []
+    },
+    "vias": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 43.853,
+    "vias": 46,
+    "layers": 2,
+    "copper_mm2 (VOUT on F.Cu)": 662.5,
+    "copper_mm2 (VOUT on B.Cu)": 701.1,
+    "vias_n (VOUT)": 45
+   },
+   "seconds": 1.64
+  },
+  "power/three-amps": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "width": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 61.544,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 0.65
   },
   "reuse/eight-channels": {
    "outcome": "wrong",

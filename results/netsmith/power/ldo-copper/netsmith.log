@@ -1,0 +1,47 @@
+LdoCopper: 2 part(s) on 1 BOM line(s), 2 placement(s), 9 file(s) in the zip
+  process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers (F.Cu is a pour on VOUT, B.Cu is a pour on VOUT), 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+  buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C42431798 x2, PH2.54-1X2P-H25, for J1, J2 (hand-solder)
+  offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+  warning: LdoCopper: layout guideline: `u1` (U1) asks for `tab`: at least 6 vias in the pads of its pin `.vout` (pads 2), and they have 0 (pcbhdl-bench, power/ldo-copper; toolchains/netsmith/src/power/ldo_copper.nsm:19): add vias of the pin's net in its pads, or a process that allows vias in pads
+  zone fill: netsmith filled VOUT on F.Cu, VOUT on B.Cu itself (clearance round other nets, thermal reliefs on its own pads; copper under the minimum thickness, spokes that reach nothing and copper islands removed); look at the planes and pours in JLCPCB's order preview
+  hand-solder: J1, J2, U1
+  rotation unverified: check JLCPCB's order preview: C1, C2 (C_0805_2012Metric)
+  origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+  design rules check: passed
+  design rules warnings: 2
+    warning [fiducial_count] the front of the board has parts the board house assembles and 0 fiducial(s); it asks for at least 2 on each assembled side ("a minimum of two, but three fiducial marks are strongly recommended") at (20.000, 20.000) on F.Cu
+    warning [starved_thermal] thermal relief joins the pour with 1 of its 4 spokes; the least is 2 at (32.850, 29.950) on F.Cu: SMD pad 1 [VOUT] of C2; Zone [VOUT] on F.Cu
+wrote results/netsmith/power/ldo-copper/fab/LdoCopper
+where each footprint's origin is, in mm from the outline's top left corner (y down), and how far it is from the centre of the body that `.place.x` and `.place.y` measure: to put the origin at (x, y) with the part on that face and turned so, write `.place.x &= x - dx` and `.place.y &= y - dy`:
+  C1 (`c1`) top, turned 180: origin (12.15, 13.25), body centre (12.15, 13.25), dx 0 dy 0
+  C2 (`c2`) top, turned 90: origin (12.85, 9), body centre (12.85, 9), dx 0 dy 0
+  J1 (`j1`) top, turned 90: origin (15.1, 17.85), body centre (16.37, 17.85), dx -1.27 dy 0
+  J2 (`j2`) top, turned 0: origin (24.45, 10.7), body centre (24.45, 11.97), dx 0 dy -1.27
+  U1 (`u1`) top, turned 0: origin (18.25, 10.8), body centre (18.25, 10.8), dx 0 dy 0
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/power/ldo_copper.lock.toml
+LdoCopper: placing 5 parts
+LdoCopper: placing: seed 0 (1 of 8) [0 s]
+LdoCopper: placing: run 1 sized to the parts: placed [0 s]
+LdoCopper: placing: the courtyards need 121 mm2 on the front and 12 mm2 on the back, and each face of the 30.0 x 25.0 mm outline holds 685 mm2 inside its margin [0 s]
+LdoCopper: placing: run 1 in 30.0 x 25.0 mm: placed [0 s]
+LdoCopper: placed on a 30 by 25 mm board with seed 0
+LdoCopper: routing: 9 connections on a 30 by 25 mm board [0 s]
+LdoCopper: routing: try 1 of 1: ended with 9 of 9 connections routed; 29 tracks and 1 vias so far [0 s]
+LdoCopper: routed, writing files
+warning: LdoCopper: layout guideline: `u1` (U1) asks for `tab`: at least 6 vias in the pads of its pin `.vout` (pads 2), and they have 0 (pcbhdl-bench, power/ldo-copper; toolchains/netsmith/src/power/ldo_copper.nsm:19): add vias of the pin's net in its pads, or a process that allows vias in pads
+
+before you order (LdoCopper):
+fab-notes for LdoCopper
+process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers (F.Cu is a pour on VOUT, B.Cu is a pour on VOUT), 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C42431798 x2, PH2.54-1X2P-H25, for J1, J2 (hand-solder)
+offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+warning: LdoCopper: layout guideline: `u1` (U1) asks for `tab`: at least 6 vias in the pads of its pin `.vout` (pads 2), and they have 0 (pcbhdl-bench, power/ldo-copper; toolchains/netsmith/src/power/ldo_copper.nsm:19): add vias of the pin's net in its pads, or a process that allows vias in pads
+zone fill: netsmith filled VOUT on F.Cu, VOUT on B.Cu itself (clearance round other nets, thermal reliefs on its own pads; copper under the minimum thickness, spokes that reach nothing and copper islands removed); look at the planes and pours in JLCPCB's order preview
+hand-solder: J1, J2, U1
+rotation unverified: check JLCPCB's order preview: C1, C2 (C_0805_2012Metric)
+origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+design rules check: passed
+design rules warnings: 2
+  warning [fiducial_count] the front of the board has parts the board house assembles and 0 fiducial(s); it asks for at least 2 on each assembled side ("a minimum of two, but three fiducial marks are strongly recommended") at (20.000, 20.000) on F.Cu
+  warning [starved_thermal] thermal relief joins the pour with 1 of its 4 spokes; the least is 2 at (32.850, 29.950) on F.Cu: SMD pad 1 [VOUT] of C2; Zone [VOUT] on F.Cu

@@ -278,8 +278,8 @@
   (footprint
     "tscircuit:led"
     (layer F.Cu)
-    (uuid 09b246a0-4c87-46c1-5d3f-2bde07059e7d)
-    (at 97.4625 103.245 180)
+    (uuid 68e1c6e0-5320-b461-3d5f-a1e2279e8f63)
+    (at 97.4625 103.5 180)
     (attr smd)
     (property "Reference" "D1"
       (at 0 -3 0)
@@ -341,6 +341,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000001 4.440892098500626e-16 0)
       (size 0.875 0.95)
@@ -369,12 +379,12 @@
     )
   )
   (segment
-    (start 98.25 103.245)
+    (start 98.25 103.5)
     (end 98.25 103.02)
     (width 0.15)
     (layer F.Cu)
     (net 3)
-    (uuid 783c7060-318a-023f-24af-8b227ae91883)
+    (uuid 09fa57e0-0bc6-ba9f-2187-cd1e3748df9d)
   )
   (segment
     (start 98.25 103.02)
@@ -394,11 +404,11 @@
   )
   (segment
     (start 96.675 103.02)
-    (end 96.675 103.245)
+    (end 96.675 103.5)
     (width 0.15)
     (layer F.Cu)
     (net 2)
-    (uuid 3bd8f400-161b-56bf-680f-a17e45fc13c3)
+    (uuid 7dab7640-2c1a-fc5f-2a1e-91027fa7e19d)
   )
   (segment
     (start 98.73 100)

@@ -13,14 +13,15 @@ export default () => (
       }}
     />
     {/* The input capacitor: tscircuit has a word for a capacitor that belongs to a supply pin. Its
-        track may be 1 mm long unless told otherwise, which an 0805 beside a SOT-23 cannot meet. */}
+        track may be 1 mm long unless told otherwise, which an 0805 beside a SOT-23 cannot meet, and it will
+        not route at all a board that breaks the limit: the limit is set out of its way. */}
     <capacitor
       name="C1"
       capacitance="10uF"
       footprint={c0805}
       decouplingFor=".U1 > .VIN"
       decouplingTo="net.GND"
-      maxDecouplingTraceLength="4mm"
+      maxDecouplingTraceLength="20mm"
       connections={{ pin1: "net.VIN", pin2: "net.GND" }}
     />
     <capacitor name="C2" capacitance="100nF" footprint={c0603} connections={{ pin1: "net.BST", pin2: "net.SW" }} />

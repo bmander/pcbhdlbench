@@ -27,15 +27,19 @@ import patterns from "./patterns.json"
 // `as` gives a pad the names a tscircuit part knows its pins by (an LED's anode is its pin 1).
 export const pattern = (name: keyof typeof patterns, as: Record<string, string[]> = {}) => (
   <footprint>
-    {(patterns[name].pads as (string | number)[][]).map(([pad, x, y, w, h, drill]) => {
+    {(patterns[name].pads as (string | number)[][]).map(([pad, x, y, w, h, drill], i) => {
       const hints = as[pad] ?? [`${pad}`]
       const pin = hints[0]
       return drill ? (
-        <platedhole key={pin} portHints={hints} pcbX={x} pcbY={y} shape="circle" holeDiameter={drill} outerDiameter={w} />
+        <platedhole key={i} portHints={hints} pcbX={x} pcbY={y} shape="circle" holeDiameter={drill} outerDiameter={w} />
       ) : (
-        <smtpad key={pin} portHints={hints} pcbX={x} pcbY={y} shape="rect" width={w} height={h} />
+        <smtpad key={i} portHints={hints} pcbX={x} pcbY={y} shape="rect" width={w} height={h} />
       )
     })}
+    {/* the pattern's courtyard, so that the placer keeps other parts off the body, not just the pads */}
+    {(([x0, y0, x1, y1]) => (
+      <courtyardrect pcbX={(x0 + x1) / 2} pcbY={(y0 + y1) / 2} width={x1 - x0} height={y1 - y0} />
+    ))(patterns[name].courtyard)}
   </footprint>
 )
 

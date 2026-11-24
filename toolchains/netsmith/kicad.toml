@@ -55,3 +55,27 @@ kind = "Inductor4x4"
 package = "4x4mm"
 default = true
 footprint = "Inductor_SMD:L_Taiyo-Yuden_NR-40xx"
+
+[[part]]
+kind = "Terminal2"
+package = "5.00mm"
+default = true
+footprint = "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal"
+
+[[part]]
+kind = "Fuse1206"
+package = "1206"
+default = true
+footprint = "Fuse:Fuse_1206_3216Metric"
+
+[[part]]
+kind = "PFetSot23"
+package = "SOT-23"
+default = true
+footprint = "Package_TO_SOT_SMD:SOT-23"
+
+[[part]]
+kind = "Ldo1117"
+package = "SOT-223"
+default = true
+footprint = "Package_TO_SOT_SMD:SOT-223-3_TabPin2"

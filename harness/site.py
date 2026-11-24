@@ -46,7 +46,7 @@ CHECKS = {
     "layers": "Copper is only on the layers the case allows",
     "near": "The distances the case bounds between pads, parts or tracks are within their bounds",
     "keepout": "The regions the case closes to parts or copper are empty of them",
-    "width": "The nets the case names are at least as wide as it asks, along their whole length",
+    "width": "Between the pins the case names there is a way along the copper at least as wide as it asks",
     "length": "The nets the case names have the lengths it asks, or match one another as closely as it asks",
     "pair": "Each differential pair runs coupled at the case's width and gap, its two tracks matched",
     "impedance": "A track's impedance, computed by the harness from its width and the case's stackup, is what the case asks",
@@ -58,7 +58,7 @@ CHECKS = {
     "replica": "The instances of a module the case names are congruent, parts and tracks",
     "pattern": "The parts the case arrays are at the positions its rule gives",
     "apart": "The nets the case keeps apart come no nearer one another than it allows, on any layer",
-    "copper": "The copper of a net the case names, pads and tracks together, is no more than the area it allows",
+    "copper": "The copper of a net the case names, pads, tracks and pours together, is no more than the area it allows, or no less than the area it asks",
     "refuse": "No board can satisfy the case, and the toolchain says so",
 }
 
@@ -435,7 +435,8 @@ def case_page(case, patterns, rules, toolchains, results):
             mm = r["metrics"]
             facts.append(f"<tr><th>Track</th><td>{mm['track_mm']:g} mm on {mm['layers']} layer{'s' if mm['layers'] != 1 else ''}</td></tr>"
                          f"<tr><th>Vias</th><td>{mm['vias']}</td></tr>")
-            facts += [f"<tr><th>{esc(k.split(' (')[1][:-1])}</th><td>{v:g} {k.split('_')[1].split(' ')[0].replace('mm2', 'mm²')}</td></tr>"
+            facts += [f"<tr><th>{esc(k.split(' (')[1][:-1])}</th><td>{v:g} "
+                      f"{k.split('_')[1].split(' ')[0].replace('mm2', 'mm²').replace('n', 'vias')}</td></tr>"
                       for k, v in mm.items() if " (" in k]
         for k, v in (r.get("checks") or {}).items():
             facts.append(f"<tr><th><code>{k}</code></th><td>{'holds' if v['ok'] else esc('; '.join(v['notes']))}</td></tr>")

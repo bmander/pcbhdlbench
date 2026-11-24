@@ -286,8 +286,8 @@
   (footprint
     "tscircuit:capacitor"
     (layer F.Cu)
-    (uuid 2acfcb40-72e7-7001-4500-eb3e0316b983)
-    (at 100.86333333333333 96.755 180)
+    (uuid 01397c00-47be-1f1f-71bd-3dc22b389aa3)
+    (at 100.86333333333333 96.5 180)
     (attr smd)
     (property "Reference" "C1"
       (at 0 -3 0)
@@ -349,6 +349,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "1" smd rect
       (at -0.7749999999999999 0 0)
       (size 0.9 0.95)
@@ -378,19 +388,19 @@
   )
   (segment
     (start 102.54 100)
-    (end 102.54 97.657)
+    (end 102.54 97.402)
     (width 0.15)
     (layer F.Cu)
     (net 3)
-    (uuid 0d8a5620-234b-689f-390c-7b1e4ecd8d9d)
+    (uuid 332fb420-1d6e-a1a1-07ad-8f220e13835d)
   )
   (segment
-    (start 102.54 97.657)
-    (end 101.63833333333334 96.755)
+    (start 102.54 97.402)
+    (end 101.63833333333334 96.5)
     (width 0.15)
     (layer F.Cu)
     (net 3)
-    (uuid 7e11f12e-06a4-d1ce-70c8-4d9217ca930e)
+    (uuid 0c04f78a-391e-1536-7e41-21f63c9bd14a)
   )
   (segment
     (start 102.54 100)
@@ -410,19 +420,19 @@
   )
   (segment
     (start 100 100)
-    (end 100 96.843)
+    (end 100 96.588)
     (width 0.15)
     (layer F.Cu)
     (net 2)
-    (uuid 7ac32800-2acc-9a1f-2fa3-a3c275ec1e5d)
+    (uuid 2dc98040-2ca6-bda1-78e9-047e1e78c69d)
   )
   (segment
-    (start 100 96.843)
-    (end 100.08833333333334 96.755)
+    (start 100 96.588)
+    (end 100.08833333333334 96.5)
     (width 0.15)
     (layer F.Cu)
     (net 2)
-    (uuid 736d66e0-2b55-c21f-1cc1-e2a264d98763)
+    (uuid 10f9fc20-577e-9f3f-61fc-bda21b781a83)
   )
   (segment
     (start 97.46 100)

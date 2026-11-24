@@ -266,6 +266,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875 0 0)
       (size 0.95 0.875)
@@ -358,6 +368,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 0 96)
@@ -452,6 +472,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 102)
       (size 0.875 0.95)
@@ -544,6 +574,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 7.105427357601002e-15 108)
@@ -638,6 +678,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 114)
       (size 0.875 0.95)
@@ -730,6 +780,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000014 0 120)
@@ -824,6 +884,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 0 126)
       (size 0.875 0.95)
@@ -916,6 +986,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000014 0 132)
@@ -1010,6 +1090,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.787500000000005 0 138)
       (size 0.875 0.95)
@@ -1102,6 +1192,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000014 0 144)
@@ -1196,6 +1296,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999979 0 150)
       (size 0.875 0.95)
@@ -1288,6 +1398,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 7.105427357601002e-15 156)
@@ -1382,6 +1502,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999979 -7.105427357601002e-15 162)
       (size 0.875 0.95)
@@ -1474,6 +1604,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 7.105427357601002e-15 168)
@@ -1568,6 +1708,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 174)
       (size 0.875 0.95)
@@ -1660,6 +1810,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875 0 0)
@@ -1754,6 +1914,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 185.99999999999997)
       (size 0.875 0.95)
@@ -1846,6 +2016,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 0 192)
@@ -1940,6 +2120,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 -7.105427357601002e-15 198)
       (size 0.875 0.95)
@@ -2032,6 +2222,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 0 203.99999999999994)
@@ -2126,6 +2326,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999979 0 209.99999999999997)
       (size 0.875 0.95)
@@ -2218,6 +2428,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999979 7.105427357601002e-15 215.99999999999997)
@@ -2312,6 +2532,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 0 222.00000000000003)
       (size 0.875 0.95)
@@ -2404,6 +2634,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.787500000000005 0 227.99999999999997)
@@ -2498,6 +2738,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999979 0 233.99999999999997)
       (size 0.875 0.95)
@@ -2590,6 +2840,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999979 7.105427357601002e-15 239.99999999999994)
@@ -2684,6 +2944,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999979 -7.105427357601002e-15 246)
       (size 0.875 0.95)
@@ -2776,6 +3046,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 0 252)
@@ -2870,6 +3150,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 258)
       (size 0.875 0.95)
@@ -2962,6 +3252,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000005 7.105427357601002e-15 264)
@@ -3056,6 +3356,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875 0 0)
       (size 0.95 0.875)
@@ -3148,6 +3458,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.787500000000001 0 276)
@@ -3242,6 +3562,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000005 0 281.99999999999994)
       (size 0.875 0.95)
@@ -3334,6 +3664,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 0 288)
@@ -3428,6 +3768,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 294)
       (size 0.875 0.95)
@@ -3520,6 +3870,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999979 -7.105427357601002e-15 300)
@@ -3614,6 +3974,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999979 0 306)
       (size 0.875 0.95)
@@ -3706,6 +4076,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.787500000000005 0 312)
@@ -3800,6 +4180,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 0 318)
       (size 0.875 0.95)
@@ -3892,6 +4282,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000014 0 324)
@@ -3986,6 +4386,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 0 330)
       (size 0.875 0.95)
@@ -4078,6 +4488,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999979 0 336)
@@ -4172,6 +4592,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 342)
       (size 0.875 0.95)
@@ -4264,6 +4694,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000014 -7.105427357601002e-15 348)
@@ -4358,6 +4798,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 354.00000000000006)
       (size 0.875 0.95)
@@ -4450,6 +4900,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875 0 0)
@@ -4544,6 +5004,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.787500000000001 7.105427357601002e-15 5.999999999999943)
       (size 0.875 0.95)
@@ -4636,6 +5106,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000005 7.105427357601002e-15 12)
@@ -4730,6 +5210,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999996 0 18)
       (size 0.875 0.95)
@@ -4822,6 +5312,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999979 0 24)
@@ -4916,6 +5416,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 -7.105427357601002e-15 30)
       (size 0.875 0.95)
@@ -5008,6 +5518,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000014 0 36)
@@ -5102,6 +5622,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 0 42)
       (size 0.875 0.95)
@@ -5194,6 +5724,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7875000000000014 0 48)
@@ -5288,6 +5828,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 0 54)
       (size 0.875 0.95)
@@ -5380,6 +5930,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999979 0 60)
@@ -5474,6 +6034,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7874999999999979 7.105427357601002e-15 66)
       (size 0.875 0.95)
@@ -5566,6 +6136,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999979 0 72)
@@ -5660,6 +6240,16 @@
         )
       )
     )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
     (pad "2" smd rect
       (at -0.7875000000000014 0 78)
       (size 0.875 0.95)
@@ -5752,6 +6342,16 @@
           (thickness 0.15)
         )
       )
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
     )
     (pad "2" smd rect
       (at -0.7874999999999996 0 84)

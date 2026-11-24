@@ -1,0 +1,78 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::connector::Connector
+import std::parts::passive::Resistor
+
+/// A two-way screw terminal at 5 mm pitch. Three amps on 1 oz copper want 1.37 mm of track, and
+/// what leaves a terminal of this board is the current's way: its nets are drawn at 1.4 mm.
+#[assembly(hand)]
+part Terminal2 provides Connector {
+    pins {
+        .p1 passive "1" "1"
+        .p2 passive "2" "2"
+    }
+    .package: Package
+
+    layout {
+        source "pcbhdl-bench, power/three-amps"
+        route feed .p1 width 1.4mm
+        route back .p2 width 1.4mm
+    }
+}
+
+/// A 1206 fuse.
+#[assembly(hand)]
+part Fuse1206 {
+    .designator &= "F"
+    pins {
+        .a passive "1" "1"
+        .b passive "2" "2"
+    }
+    .package: Package
+}
+
+/// A P-channel MOSFET in SOT-23: 1 gate, 2 source, 3 drain. The drain and the source carry the
+/// load.
+#[assembly(hand)]
+part PFetSot23 {
+    .designator &= "Q"
+    pins {
+        .gate   passive "G" "1"
+        .source passive "S" "2"
+        .drain  passive "D" "3"
+    }
+    .package: Package
+
+    layout {
+        source "pcbhdl-bench, power/three-amps"
+        route load_in .drain width 1.4mm
+        route load_out .source width 1.4mm
+    }
+}
+
+board ThreeAmps {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .j1: Terminal2
+    .f1: Fuse1206
+    .q1: PFetSot23
+    .r1: Resistor { .resistance &= 100kohm +/- 1%; .package &= "0603" }
+    .j2: Terminal2
+
+    // The supply: in at J1, through the fuse and the MOSFET, out at J2.
+    .j1.p1 ~ .f1.a
+    .f1.b ~ .q1.drain
+    .q1.source ~ .j2.p1
+    // The return.
+    .j2.p2 ~ .j1.p2
+    // The gate, held at ground.
+    .q1.gate ~ .r1.a
+    .r1.b ~ .j1.p2
+}

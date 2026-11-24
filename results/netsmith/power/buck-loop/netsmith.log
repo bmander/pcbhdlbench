@@ -29,7 +29,7 @@ note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison
 wrote toolchains/netsmith/src/power/buck_loop.lock.toml
 BuckLoop: placing 9 parts
 BuckLoop: placing: seed 0 (1 of 8) [0 s]
-BuckLoop: placing: run 1 sized to the parts: placed [0 s]
+BuckLoop: placing: run 1 sized to the parts: placed [1 s]
 BuckLoop: placed on a 25 by 20 mm board with seed 0
 BuckLoop: routing: 16 connections on a 25 by 20 mm board [0 s]
 BuckLoop: routing: try 1 of 1: ended with 16 of 16 connections routed; 87 tracks and 7 vias so far [0 s]

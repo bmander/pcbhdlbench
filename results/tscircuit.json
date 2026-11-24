@@ -89,11 +89,11 @@
     }
    },
    "metrics": {
-    "track_mm": 12.417,
+    "track_mm": 12.927,
     "vias": 0,
     "layers": 1
    },
-   "seconds": 7.63
+   "seconds": 6.87
   },
   "basics/rc-lowpass": {
    "outcome": "pass",
@@ -117,11 +117,11 @@
     }
    },
    "metrics": {
-    "track_mm": 15.321,
+    "track_mm": 15.831,
     "vias": 0,
     "layers": 1
    },
-   "seconds": 7.77
+   "seconds": 6.7
   },
   "basics/voltage-divider": {
    "outcome": "pass",
@@ -173,11 +173,11 @@
     }
    },
    "metrics": {
-    "track_mm": 59.17,
+    "track_mm": 64.786,
     "vias": 2,
     "layers": 2
    },
-   "seconds": 7.76
+   "seconds": 7.21
   },
   "outline/l-shape": {
    "outcome": "refused",
@@ -224,7 +224,7 @@
     "vias": 0,
     "layers": 1
    },
-   "seconds": 7.39
+   "seconds": 7.41
   },
   "parametric/led-ring-60": {
    "outcome": "pass",
@@ -256,7 +256,7 @@
     "vias": 0,
     "layers": 1
    },
-   "seconds": 13.75
+   "seconds": 12.41
   },
   "placement/decoupling": {
    "outcome": "pass",
@@ -284,15 +284,15 @@
     }
    },
    "metrics": {
-    "track_mm": 75.333,
-    "vias": 8,
+    "track_mm": 92.2,
+    "vias": 7,
     "layers": 2
    },
-   "seconds": 10.92
+   "seconds": 9.34
   },
   "power/buck-loop": {
-   "outcome": "wrong",
-   "why": "FB comes within 0.32 mm of SW, under 1.",
+   "outcome": "pass",
+   "why": "",
    "checks": {
     "parts": {
      "ok": true,
@@ -315,10 +315,8 @@
      "notes": []
     },
     "apart": {
-     "ok": false,
-     "notes": [
-      "FB comes within 0.32 mm of SW, under 1"
-     ]
+     "ok": true,
+     "notes": []
     },
     "copper": {
      "ok": true,
@@ -326,14 +324,85 @@
     }
    },
    "metrics": {
-    "track_mm": 74.211,
-    "vias": 4,
+    "track_mm": 75.427,
+    "vias": 5,
     "layers": 2,
-    "loop_mm2 (the input loop)": 6.66,
-    "apart_mm (FB from SW)": 0.323,
-    "copper_mm2 (SW)": 7.6
+    "loop_mm2 (the input loop)": 5.5,
+    "apart_mm (FB from SW)": 1.867,
+    "copper_mm2 (SW)": 6.8
    },
-   "seconds": 7.41
+   "seconds": 7.34
+  },
+  "power/ldo-copper": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "copper": {
+     "ok": true,
+     "notes": []
+    },
+    "vias": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 39.306,
+    "vias": 30,
+    "layers": 2,
+    "copper_mm2 (VOUT on F.Cu)": 682.3,
+    "copper_mm2 (VOUT on B.Cu)": 706.1,
+    "vias_n (VOUT)": 30
+   },
+   "seconds": 7.5
+  },
+  "power/three-amps": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "width": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 50.118,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 7.56
   },
   "reuse/eight-channels": {
    "outcome": "pass",
@@ -365,7 +434,7 @@
     "vias": 8,
     "layers": 2
    },
-   "seconds": 8.95
+   "seconds": 9.24
   },
   "routing/bus-8": {
    "outcome": "pass",

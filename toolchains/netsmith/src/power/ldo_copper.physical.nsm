@@ -1,0 +1,7 @@
+import std::pcb::Outline
+
+physical for LdoCopper {
+    case {
+        .outline: Outline { .width &= 30mm; .height &= 25mm }
+    }
+}

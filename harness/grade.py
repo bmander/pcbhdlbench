@@ -10,7 +10,7 @@ import geom
 import kicad
 
 READ = {"parts", "connectivity", "rules", "outline", "fixed", "side", "layers", "near", "replica", "loop", "apart",
-        "copper", "refuse"}
+        "copper", "width", "vias", "refuse"}
 PAD = 0.05       # a pad's place, size and drill against its pattern's
 PLACE = 0.01     # a placed part's position, and degrees of its rotation
 OUTLINE = 0.01   # an outline's corners
@@ -24,17 +24,17 @@ def pose(pattern, pads, side, names):
     """Where a part lies, from its pads: (origin, rotation), or a string saying how its pads
     disagree with its pattern. A part on the bottom is the pattern mirrored in x, then turned."""
     mirror = -1 if side == "bottom" else 1
-    want = {p[0]: p for p in pattern["pads"]}
-    have = {}
-    for pad in pads:
-        name = names.get(pad["name"], pad["name"])
-        if name in have:
-            return f"two pads named {name}"
-        have[name] = pad
-    if set(have) != set(want):
-        return f"pads {sorted(have)}, where its pattern has {sorted(want)}"
+    named = sorted(names.get(pad["name"], pad["name"]) for pad in pads)
+    if named != sorted(p[0] for p in pattern["pads"]):
+        return f"pads {named}, where its pattern has {sorted(p[0] for p in pattern['pads'])}"
+    # the part is laid over its pattern by the pads whose names are theirs alone
+    want = {p[0]: p for p in pattern["pads"] if named.count(p[0]) == 1}
+    have = {names.get(pad["name"], pad["name"]): pad for pad in pads
+            if named.count(names.get(pad["name"], pad["name"])) == 1}
     local = {n: (mirror * p[1], p[2]) for n, p in want.items()}
     order = sorted(want)
+    if not order:
+        return "no pad with a name of its own to lay it by"
     if len(order) == 1:
         turn = 0.0
     else:
@@ -45,9 +45,12 @@ def pose(pattern, pads, side, names):
         turn = math.degrees(math.atan2(actual[1], actual[0]) - math.atan2(ideal[1], ideal[0])) % 360
     first = geom.rotate(local[order[0]], turn)
     origin = geom.sub(have[order[0]]["at"], first)
-    for n in order:
-        p, pad = want[n], have[n]
-        at = geom.rotate(local[n], turn)
+    for p in pattern["pads"]:
+        n = p[0]
+        at = geom.rotate((mirror * p[1], p[2]), turn)
+        # of the pads of this name, the one nearest where the pattern has it
+        pad = min((q for q in pads if names.get(q["name"], q["name"]) == n),
+                  key=lambda q: math.dist((origin[0] + at[0], origin[1] + at[1]), q["at"]))
         off = math.dist((origin[0] + at[0], origin[1] + at[1]), pad["at"])
         if off > PAD:
             return f"pad {n} {off:.3f} mm from its place in the pattern"
@@ -109,23 +112,49 @@ def way(pieces, start, end):
     return [nodes[i][0] for i in reversed(path)]
 
 
-def painted(pieces, step=0.04):
-    """The area of copper, by layer and summed: the pieces painted on a grid of `step`."""
+def shapes(piece):
+    """A piece of copper as polygons whose union it is: a round one as a 32-gon, a grown one as its
+    polygon and a rounded bar along each edge."""
+    poly, r = piece["poly"], piece["r"]
+    if r <= 0:
+        return [poly]
+    ring = [(r * math.cos(math.radians(a)), r * math.sin(math.radians(a))) for a in range(0, 360, 360 // 32)]
+    out = [poly] if len(poly) > 2 else []
+    for a, b in geom.edges(poly):
+        if a == b:
+            out.append([(a[0] + x, a[1] + y) for x, y in ring])
+            continue
+        turn = math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]))
+        half = [geom.rotate(p, turn - 90) for p in ring[:17]]  # the half ring beyond b
+        out.append([(b[0] + x, b[1] + y) for x, y in half] + [(a[0] - x, a[1] - y) for x, y in half])
+    return out
+
+
+def painted(pieces, layer=None, step=0.02):
+    """The area of copper, summed over the layers (or on `layer` alone): each layer's pieces cut by
+    scan lines `step` apart, and the lengths of what they cover added up."""
     total = 0.0
-    for layer in sorted(set().union(*(p["layers"] for p in pieces)) if pieces else []):
-        on = [p for p in pieces if layer in p["layers"]]
-        x0, y0, x1, y1 = (f(b[k] for b in (geom.bbox(p["poly"], p["r"]) for p in on))
-                          for k, f in ((0, min), (1, min), (2, max), (3, max)))
-        boxes = [geom.bbox(p["poly"], p["r"]) for p in on]
-        cells = 0
-        for i in range(int((x1 - x0) / step) + 1):
-            x = x0 + (i + 0.5) * step
-            for j in range(int((y1 - y0) / step) + 1):
-                y = y0 + (j + 0.5) * step
-                if any(b[0] <= x <= b[2] and b[1] <= y <= b[3]
-                       and geom.distance([(x, y)], p["poly"]) <= p["r"] for p, b in zip(on, boxes)):
-                    cells += 1
-        total += cells * step * step
+    for name in sorted(set().union(*(p["layers"] for p in pieces)) if pieces else []):
+        if layer and name != layer:
+            continue
+        polys = [s for p in pieces if name in p["layers"] for s in shapes(p)]
+        boxes = [geom.bbox(s) for s in polys]
+        y = min(b[1] for b in boxes) + step / 2
+        top = max(b[3] for b in boxes)
+        while y < top:
+            spans = []
+            for s, b in zip(polys, boxes):
+                if not b[1] <= y <= b[3]:
+                    continue
+                xs = sorted(a[0] + (y - a[1]) * (c[0] - a[0]) / (c[1] - a[1])
+                            for a, c in geom.edges(s) if (a[1] > y) != (c[1] > y))
+                spans += zip(xs[::2], xs[1::2])
+            reach = -math.inf
+            for x0, x1 in sorted(spans):
+                if x1 > reach:
+                    total += (x1 - max(x0, reach)) * step
+                    reach = x1
+            y += step
     return total
 
 
@@ -187,7 +216,7 @@ def grade(case, board, patterns, rules, names):
     for part in board["parts"]:
         if part["pads"]:
             by_ref.setdefault(part["ref"], []).append(part)
-    poses, pins = {}, {}  # pins: "R1.2" -> its pad
+    poses, pins, pin_pads = {}, {}, []  # pins: "R1.2" -> its pad (its first, where it has two)
     for p in case["part"]:
         found = by_ref.pop(p["ref"], [])
         if len(found) != 1:
@@ -200,7 +229,9 @@ def grade(case, board, patterns, rules, names):
             continue
         poses[p["ref"]] = (*fit, part["side"])
         for pad in part["pads"]:
-            pins[f"{p['ref']}.{names.get(p['pattern'], {}).get(pad['name'], pad['name'])}"] = pad
+            pin = f"{p['ref']}.{names.get(p['pattern'], {}).get(pad['name'], pad['name'])}"
+            pins.setdefault(pin, pad)
+            pin_pads.append((pin, pad))
     for ref in by_ref:
         notes["parts"].append(f"{ref} is on the board and not in the case")
 
@@ -222,9 +253,9 @@ def grade(case, board, patterns, rules, names):
                 notes["outline"].append(f"{a}'s and {b}'s courtyards overlap by {depth:.3f} mm")
 
     # what the copper joins
-    pieces = [dict(pad, pin=pin, ref=pin.split(".")[0]) for pin, pad in pins.items()]
+    pieces = [dict(pad, pin=pin, ref=pin.split(".")[0]) for pin, pad in pin_pads]
     pieces += [dict(pad, pin=None) for part in board["parts"] for pad in part["pads"]
-               if not any(pad is q for q in pins.values())]
+               if not any(pad is q for _, q in pin_pads)]
     pieces += [dict(t, pin=None) for t in board["tracks"] + board["vias"] + board["zones"]]
     boxes = [geom.bbox(p["poly"], p["r"]) for p in pieces]
     joined = Joined(len(pieces))
@@ -238,6 +269,10 @@ def grade(case, board, patterns, rules, names):
                 near.append((i, j, g))
                 if g <= TOUCH:
                     joined.join(i, j)
+    first = {}
+    for i, p in enumerate(pieces):  # two pads of one pin are joined inside the part
+        if p["pin"]:
+            joined.join(i, first.setdefault(p["pin"], i))
     net_of = {}
     for net in case["net"]:
         for pin in net["pins"]:
@@ -384,12 +419,43 @@ def grade(case, board, patterns, rules, names):
         if d < rule["min"] - SLACK:
             notes["apart"].append(f"{rule['net']} comes within {max(d, 0):.2f} mm of {rule['from']}, under {rule['min']:g}")
 
-    # a net's copper, no more than so much
+    # a net's copper, no more than so much, or no less, on every layer or on one
     for rule in case.get("copper", []) if "copper" in notes else []:
-        size = painted(copper_of(rule["net"]))
-        measures[f"copper_mm2 ({rule['net']})"] = round(size, 1)
-        if size > rule["max"] * 1.01:
-            notes["copper"].append(f"{rule['net']} is {size:.1f} mm² of copper, over {rule['max']:g}")
+        size = painted(copper_of(rule["net"]), rule.get("layer"))
+        where = f"{rule['net']} on {rule['layer']}" if "layer" in rule else rule["net"]
+        measures[f"copper_mm2 ({where})"] = round(size, 1)
+        if "max" in rule and size > rule["max"] * 1.01:
+            notes["copper"].append(f"{where} is {size:.1f} mm² of copper, over {rule['max']:g}")
+        if "min" in rule and size < rule["min"] * 0.99:
+            notes["copper"].append(f"{where} is {size:.1f} mm² of copper, under {rule['min']:g}")
+
+    # a way at least so wide between two pins: by tracks that wide, by pads, vias and pours, and
+    # by a narrower track only within `neck` of a pad too narrow for the width
+    for rule in case.get("width", []) if "width" in notes else []:
+        a, b = rule["path"]
+        if a not in pins or b not in pins:
+            notes["width"].append(f"{a} or {b} is not on the board")
+            continue
+        copper = copper_of(net_of[a])
+        small = [p for p in copper if p["pin"] and min(p["w"], p["h"]) < rule["min"]]
+        neck = rule.get("neck", 0)
+
+        def wide(p):
+            if "width" not in p or p["width"] >= rule["min"] - SLACK:
+                return True
+            return any(all(math.dist(end, pad["at"]) <= neck for end in p["poly"]) for pad in small)
+        narrowest = min((p["width"] for p in copper if "width" in p), default=None)
+        if way([p for p in copper if wide(p)], pins[a], pins[b]) is None:
+            notes["width"].append(
+                f"no way from {a} to {b} is {rule['min']:g} mm wide"
+                + (f": the net's narrowest track is {narrowest:g}" if narrowest is not None else ""))
+
+    # the vias of a net, at least so many
+    for rule in case.get("vias", []) if "vias" in notes else []:
+        n = sum(1 for p in copper_of(rule["net"]) if "drill" in p and "size" in p)
+        measures[f"vias_n ({rule['net']})"] = n
+        if n < rule["min"]:
+            notes["vias"].append(f"{rule['net']} has {n} vias, under {rule['min']}")
 
     checks = {c: {"ok": not n, "notes": n} for c, n in notes.items()}
     failed = [c for c in case["checks"] if notes[c]]

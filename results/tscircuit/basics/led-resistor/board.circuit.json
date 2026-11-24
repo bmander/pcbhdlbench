@@ -557,11 +557,11 @@
     "pcb_component_id": "pcb_component_2",
     "center": {
       "x": -2.5374999999999996,
-      "y": -3.245
+      "y": -3.5
     },
     "footprint_origin": {
       "x": -2.5374999999999996,
-      "y": -3.245
+      "y": -3.5
     },
     "width": 2.45,
     "height": 0.95,
@@ -820,7 +820,7 @@
     ],
     "is_covered_with_solder_mask": false,
     "x": -1.7499999999999996,
-    "y": -3.245,
+    "y": -3.5,
     "subcircuit_id": "subcircuit_source_group_0"
   },
   {
@@ -831,7 +831,7 @@
     "width": 0.6124999999999999,
     "height": 0.6649999999999999,
     "x": -1.7499999999999996,
-    "y": -3.245,
+    "y": -3.5,
     "pcb_component_id": "pcb_component_2",
     "pcb_smtpad_id": "pcb_smtpad_2",
     "subcircuit_id": "subcircuit_source_group_0"
@@ -851,7 +851,7 @@
     ],
     "is_covered_with_solder_mask": false,
     "x": -3.3249999999999997,
-    "y": -3.245,
+    "y": -3.5,
     "subcircuit_id": "subcircuit_source_group_0"
   },
   {
@@ -862,9 +862,23 @@
     "width": 0.6124999999999999,
     "height": 0.6649999999999999,
     "x": -3.3249999999999997,
-    "y": -3.245,
+    "y": -3.5,
     "pcb_component_id": "pcb_component_2",
     "pcb_smtpad_id": "pcb_smtpad_3",
+    "subcircuit_id": "subcircuit_source_group_0"
+  },
+  {
+    "type": "pcb_courtyard_rect",
+    "pcb_courtyard_rect_id": "pcb_courtyard_rect_2",
+    "pcb_component_id": "pcb_component_2",
+    "layer": "top",
+    "center": {
+      "x": -2.5374999999999996,
+      "y": -3.5
+    },
+    "width": 2.96,
+    "height": 1.46,
+    "ccw_rotation": 180,
     "subcircuit_id": "subcircuit_source_group_0"
   },
   {
@@ -926,7 +940,7 @@
     ],
     "subcircuit_id": "subcircuit_source_group_0",
     "x": -3.3249999999999997,
-    "y": -3.245,
+    "y": -3.5,
     "source_port_id": "source_port_4"
   },
   {
@@ -938,7 +952,7 @@
     ],
     "subcircuit_id": "subcircuit_source_group_0",
     "x": -1.7499999999999996,
-    "y": -3.245,
+    "y": -3.5,
     "source_port_id": "source_port_5"
   },
   {
@@ -994,7 +1008,7 @@
     "cad_component_id": "cad_component_2",
     "position": {
       "x": -2.5374999999999996,
-      "y": -3.245,
+      "y": -3.5,
       "z": 0.8
     },
     "rotation": {
@@ -1025,15 +1039,6 @@
     "message": "<led#20 name=\".D1\" /> is missing a manufacturer part number and could not be resolved to a supplier part. Specify mpn, manufacturerPartNumber, or mfn, provide supplierPartNumbers, or configure a parts engine to select a part. If this part will not be assembled, mark it doNotPlace."
   },
   {
-    "type": "pcb_component_missing_courtyard_warning",
-    "pcb_component_missing_courtyard_warning_id": "pcb_component_missing_courtyard_warning_0",
-    "warning_type": "pcb_component_missing_courtyard_warning",
-    "message": "D1 has no courtyard",
-    "pcb_component_id": "pcb_component_2",
-    "source_component_id": "source_component_2",
-    "subcircuit_id": "subcircuit_source_group_0"
-  },
-  {
     "type": "pcb_trace",
     "pcb_trace_id": "source_trace_2_0",
     "connection_name": "source_trace_2",
@@ -1045,7 +1050,7 @@
       {
         "route_type": "wire",
         "x": -1.7499999999999996,
-        "y": -3.245,
+        "y": -3.5,
         "width": 0.15,
         "layer": "top",
         "start_pcb_port_id": "pcb_port_5"
@@ -1096,7 +1101,7 @@
       {
         "route_type": "wire",
         "x": -3.3249999999999997,
-        "y": -3.245,
+        "y": -3.5,
         "width": 0.15,
         "layer": "top",
         "end_pcb_port_id": "pcb_port_4"
@@ -1124,7 +1129,7 @@
       },
       {
         "route_type": "wire",
-        "x": -4.694999999999999,
+        "x": -4.695,
         "y": 0,
         "width": 0.15,
         "layer": "top",
@@ -1136,6 +1141,6 @@
   },
   {
     "type": "source_project_metadata",
-    "source_filesystem_md5_hash": "0682248fc95604a0db4db56c1be4bd7d"
+    "source_filesystem_md5_hash": "6c118c90ac9499d578193fa15c7f598b"
   }
 ]

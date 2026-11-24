@@ -1,0 +1,58 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::connector::Header1x2
+import std::parts::passive::Capacitor
+
+/// A 1 A linear regulator in SOT-223, pinned as the 1117 is. The tab is the output again, and it
+/// is where the heat leaves: six vias take it to the other side of the board.
+#[assembly(hand)]
+part Ldo1117 {
+    .designator &= "U"
+    pins {
+        .gnd  passive "GND"  "1"
+        .vout passive "VOUT" "2"
+        .vin  passive "VIN"  "3"
+    }
+    .package: Package
+
+    layout {
+        source "pcbhdl-bench, power/ldo-copper"
+        vias tab .vout 6
+        near input_cap bridging .vin .gnd to .vin
+        near output_cap bridging .vout .gnd to .vout
+    }
+}
+
+board LdoCopper {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+        // The output net is poured on both layers, for the tab to cool into, and stitched.
+        .top.net &= "VOUT"
+        .top.stitch_pitch &= 0mm..4mm
+        .bottom.net &= "VOUT"
+        .bottom.stitch_pitch &= 0mm..4mm
+    }
+    .u1: Ldo1117 { .vout.net &= "VOUT" }
+    // 47 uF is the only 0805 of netsmith's catalog; the case grades the package, not the value.
+    .c1: Capacitor { .capacitance &= 47uF +/- 20%; .package &= "0805" }
+    .c2: Capacitor { .capacitance &= 47uF +/- 20%; .package &= "0805" }
+    .j1: Header1x2
+    .j2: Header1x2
+
+    // The input, and ground.
+    .j1.p1 ~ .u1.vin
+    .u1.vin ~ .c1.a
+    .j1.p2 ~ .u1.gnd
+    .u1.gnd ~ .c1.b
+    .u1.gnd ~ .c2.b
+    .u1.gnd ~ .j2.p2
+    // The output.
+    .u1.vout ~ .c2.a
+    .u1.vout ~ .j2.p1
+}
