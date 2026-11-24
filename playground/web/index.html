@@ -45,6 +45,11 @@ search steps a frame, so that the wave can be seen spreading.</p>
       <option value=0>as numbered</option><option value=1>shortest first</option><option value=2>longest first</option>
     </select></label>
     <label><input type=checkbox id=diagonal checked> Tracks may run at 45°</label>
+    <label><input type=checkbox id=improve> Keep improving once routed</label>
+    <p class=muted>Each net in turn is taken up and laid again, and the new route kept where it is
+      cheaper: its length, plus <input type=number id=viaweight min=0 max=100 step=1 value=8 aria-label='What a via costs, in grid steps'>
+      steps for each via and <input type=number id=turnweight min=0 max=50 step=0.5 value=2 aria-label='What a turn costs, in grid steps'>
+      for each turn. It stops when a whole pass betters nothing.</p>
     <div class=pick>
       <button type=button id=run>Run</button>
       <button type=button id=step>Step</button>

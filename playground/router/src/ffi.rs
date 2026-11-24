@@ -18,7 +18,7 @@ struct Held {
     nets: Vec<i16>,
     flags: Vec<u8>,
     links: Vec<u8>,
-    stats: [i32; 14],
+    stats: [i32; 18],
     error: Vec<u8>,
 }
 
@@ -84,15 +84,17 @@ pub extern "C" fn load() -> i32 {
 
 /// Begins routing: strategy 0 Lee, 1 A*, 2 rip-up and reroute, 3 negotiated congestion, 4 Hadlock,
 /// 5 bidirectional, 6 simulated annealing; order 0 as given, 1 the shortest net first, 2 the
-/// longest; diagonal 1 where a track may step diagonally.
+/// longest; diagonal 1 where a track may step diagonally; improve 1 to go on bettering the routes
+/// once the strategy is done, a via and a turn then costing so many steps of track.
 #[no_mangle]
-pub extern "C" fn start(strategy: u32, order: u32, diagonal: u32) {
+pub extern "C" fn start(strategy: u32, order: u32, diagonal: u32, improve: u32, via_weight: f32, turn_weight: f32) {
     HELD.with(|h| {
         let h = &mut *h.borrow_mut();
         if let Some(r) = h.router.as_mut() {
             let s = [Strategy::Lee, Strategy::AStar, Strategy::RipUp, Strategy::Negotiated, Strategy::Hadlock,
                      Strategy::Bidirectional, Strategy::Anneal][strategy.min(6) as usize];
             r.diagonal = diagonal != 0;
+            (r.improve, r.via_weight, r.turn_weight) = (improve != 0, via_weight.max(0.0), turn_weight.max(0.0));
             let o = [Order::AsGiven, Order::ShortestFirst, Order::LongestFirst][order.min(2) as usize];
             r.start(s, o, &h.pads);
         }
@@ -140,7 +142,9 @@ pub extern "C" fn links() -> *const u8 {
 /// Fourteen numbers: 1 when over; the round (or the annealing's move); the nets of two pads or more; those routed; those
 /// given up; the search's expansions; the tracks' length in hundredths of a mm; the vias; the
 /// points still shared; the net being routed, or -1; the times a net was taken up; 1 while the
-/// search is routing through other nets; the annealing's temperature, in tenths; its moves kept.
+/// search is routing through other nets; the annealing's temperature, in tenths; its moves kept;
+/// the pass of the bettering, or 0; the turns; the board's cost by the bettering's measure, in
+/// tenths of a mm of track; the times a net was bettered.
 #[no_mangle]
 pub extern "C" fn stats() -> *const i32 {
     HELD.with(|h| h.borrow().stats.as_ptr())

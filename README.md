@@ -80,7 +80,7 @@ board is kept at `results/<toolchain>/<case>/board.kicad_pcb`, and the site draw
 
 `playground/` is a page for watching autorouters work: place pads, name nets, pick a strategy
 (Lee, bidirectional, A*, Hadlock, rip-up and reroute, negotiated congestion, simulated annealing),
-with tracks square or at 45°, and see the search spread and the tracks
+with tracks square or at 45°, and optionally improved afterwards by a cost of length, vias and turns, and see the search spread and the tracks
 laid. The routers are a small Rust crate with no dependencies, `playground/router`, compiled to
 WebAssembly behind a C ABI; the page around it is plain JavaScript and a canvas. The cases that
 place every part of a two-layer board are among the boards it starts from, and so are three

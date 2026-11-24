@@ -29,7 +29,7 @@ let running = false;
 let loaded = false;
 let wasm = null;
 let grid = { w: 0, h: 0 };
-let stats = new Int32Array(14);
+let stats = new Int32Array(18);
 let drag = null;
 
 const hue = (n) => (n * 67 + 200) % 360;
@@ -76,7 +76,7 @@ function send() {
   grid = { w: wasm.grid_width(), h: wasm.grid_height() };
   hemmed = wasm.hemmed();
   wasm.paint();
-  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 14).slice();   // how many nets there are, before any is routed
+  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 18).slice();   // how many nets there are, before any is routed
   buttons();
 }
 
@@ -84,7 +84,8 @@ let started = false;
 let hemmed = 0;      // pads with no way out on this grid
 function begin() {
   if (!loaded) return;
-  wasm.start(+$('strategy').value, +$('order').value, $('diagonal').checked ? 1 : 0);
+  wasm.start(+$('strategy').value, +$('order').value, $('diagonal').checked ? 1 : 0,
+             $('improve').checked ? 1 : 0, +$('viaweight').value || 0, +$('turnweight').value || 0);
   started = true;
 }
 
@@ -103,7 +104,7 @@ function advance(n) {
   }
   if (over) running = false;
   wasm.paint();
-  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 14).slice();
+  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 18).slice();
   buttons();
 }
 
@@ -313,7 +314,7 @@ const px0 = () => view.ox;
 
 function say() {
   if (!loaded) return;
-  const [done, round, nets, routed, failed, expansions, length, vias, shared, current, rips, ripping, heat, kept] = stats;
+  const [done, round, nets, routed, failed, expansions, length, vias, shared, current, rips, ripping, heat, kept, pass, turns, , bettered] = stats;
   const strategy = +$('strategy').value;
   const bits = [];
   if (!started) {
@@ -321,12 +322,14 @@ function say() {
     if (hemmed) bits.push(`${hemmed} pad${hemmed === 1 ? ' has' : 's have'} no way out on this grid, hemmed in by the pads beside ${hemmed === 1 ? 'it' : 'them'}: a finer grid or less clearance lets ${hemmed === 1 ? 'it' : 'them'} out.`);
   }
   else {
-    if (!done) bits.push(current >= 0 ? `Routing net ${current + 1}${ripping ? ', through the nets in its way' : ''}…` : 'Working…');
+    if (!done) bits.push(pass ? `Routed; now improving, pass ${pass}: ${bettered} route${bettered === 1 ? '' : 's'} bettered so far…`
+      : current >= 0 ? `Routing net ${current + 1}${ripping ? ', through the nets in its way' : ''}…` : 'Working…');
     bits.push(`${routed} of ${nets} nets routed${failed ? `, ${failed} given up` : ''}.`);
     if (strategy === 3) bits.push(`Round ${round}: ${shared} point${shared === 1 ? '' : 's'} shared.`);
     if (strategy === 2 && rips) bits.push(`${rips} net${rips === 1 ? '' : 's'} taken up and routed again.`);
     if (strategy === 6 && round) bits.push(`${round} move${round === 1 ? '' : 's'}, ${kept} kept, at temperature ${(heat / 10).toFixed(0)}.`);
-    bits.push(`${(length / 100).toFixed(1)} mm of track, ${vias} via${vias === 1 ? '' : 's'}, ${expansions.toLocaleString()} search steps.`);
+    if (done && pass) bits.push(`Improved in ${pass} pass${pass === 1 ? '' : 'es'}: ${bettered} route${bettered === 1 ? '' : 's'} bettered.`);
+    bits.push(`${(length / 100).toFixed(1)} mm of track, ${vias} via${vias === 1 ? '' : 's'}, ${turns} turn${turns === 1 ? '' : 's'}, ${expansions.toLocaleString()} search steps.`);
   }
   // when the attempt is over, the line is its verdict: routed, not finished (nets given up), or
   // not clean (tracks still through one another)
@@ -370,7 +373,7 @@ $('step').onclick = () => { running = false; if (stats[0]) send(); advance(Math.
 $('reset').onclick = () => send();
 $('strategy').onchange = () => { $('about').textContent = ABOUT[+$('strategy').value]; send(); save(); };
 $('order').onchange = () => { send(); save(); };
-$('diagonal').onchange = () => { send(); save(); };
+for (const id of ['diagonal', 'improve', 'viaweight', 'turnweight']) $(id).onchange = () => { send(); save(); };
 $('speed').oninput = () => { $('speedout').textContent = `${perFrame().toLocaleString()} steps a frame`; };
 
 for (const id of ['width', 'height', 'track', 'clearance', 'via', 'pitch']) {
@@ -573,7 +576,8 @@ function save() {
     history.replaceState(null, '', location.pathname + (opened ? `?case=${opened}` : ''));
     return;
   }
-  const s = { b: board, s: +$('strategy').value, o: +$('order').value, d: $('diagonal').checked ? 1 : 0 };
+  const s = { b: board, s: +$('strategy').value, o: +$('order').value, d: $('diagonal').checked ? 1 : 0,
+              i: $('improve').checked ? 1 : 0, vw: +$('viaweight').value, tw: +$('turnweight').value };
   // the board is in the link's fragment; a ?case= it was opened by is dropped, so that a reload keeps the edits
   history.replaceState(null, '', location.pathname + '#' + btoa(unescape(encodeURIComponent(JSON.stringify(s)))));
 }
@@ -587,6 +591,9 @@ function restore() {
     $('strategy').value = s.s ?? 1;
     $('order').value = s.o ?? 0;
     $('diagonal').checked = (s.d ?? 0) === 1;      // a link from before there were diagonals keeps its square tracks
+    $('improve').checked = s.i === 1;
+    if (s.vw != null) $('viaweight').value = s.vw;
+    if (s.tw != null) $('turnweight').value = s.tw;
     if (!Array.isArray(board.pour)) board.pour = board.pour == null ? null : [board.pour];
     $('about').textContent = ABOUT[+$('strategy').value];
     fields();

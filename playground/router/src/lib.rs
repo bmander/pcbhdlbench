@@ -23,6 +23,10 @@
 //!   nets in its way, those are laid again round it, and the move is kept if the board is the
 //!   better for it, or, while the temperature is high, sometimes when it is the worse.
 //!
+//! Any of them may be told to go on once it is done (`improve`): net after net is taken up and
+//! laid again by A\* with a price on vias and on turns, and the new way is kept only where the
+//! net costs less by it, pass after pass until a pass betters nothing.
+//!
 //! A track may also step diagonally where the board is told to allow it. A diagonal step passes
 //! between two points, which must both be free to its net and which it keeps as its own, so that
 //! nothing else runs through them beside it.
@@ -225,6 +229,19 @@ pub struct Router {
 
     /// Whether a track may step diagonally.
     pub diagonal: bool,
+    /// Whether to go on bettering the routes once the strategy is done, and what a via and a
+    /// turn cost then, in steps of track.
+    pub improve: bool,
+    pub via_weight: f32,
+    pub turn_weight: f32,
+    // the bettering: under way, the pass and where it has got to, the nets bettered in this pass
+    // and in all, and the net in hand as it was with what it cost
+    polishing: bool,
+    pass: u32,
+    cursor: usize,
+    bettered: u32,
+    bettered_in_all: u32,
+    in_hand: Option<(Saved, f32)>,
     // the annealing: the move in hand, the temperature and how it cools, the moves made and kept
     mv: Option<Move>,
     temp: f32,
@@ -240,6 +257,7 @@ const DIAGONAL: f32 = std::f32::consts::SQRT_2;
 const UNROUTED: f32 = 600.0;
 const HOT: f32 = 300.0;
 const COLD: f32 = 3.0;
+const MAX_PASSES: u32 = 12;
 
 fn point_segment(px: f32, py: f32, a: (f32, f32), b: (f32, f32)) -> f32 {
     let (dx, dy) = (b.0 - a.0, b.1 - a.1);
@@ -297,7 +315,8 @@ impl Router {
             g2: vec![0.0; n], seen2: vec![0; n], closed2: vec![0; n], parent2: vec![NONE; n], heap2: BinaryHeap::new(),
             meet: (f32::INFINITY, NONE, NONE), tbox: (0, 0, 0, 0), mark: vec![0; n], mark_id: 0,
             expansions: 0, total_rips: 0, last_path: Vec::new(),
-            diagonal: false, mv: None, temp: HOT, alpha: 1.0, moves: 0, max_moves: 0, accepted: 0, rng: 0x9E3779B97F4A7C15,
+            diagonal: false, improve: false, via_weight: VIA_COST, turn_weight: 2.0,
+            polishing: false, pass: 0, cursor: 0, bettered: 0, bettered_in_all: 0, in_hand: None, mv: None, temp: HOT, alpha: 1.0, moves: 0, max_moves: 0, accepted: 0, rng: 0x9E3779B97F4A7C15,
         };
         // the edge: a track's centre keeps half its width and the edge clearance inside the outline
         let keep = p.edge + p.track / 2.0 - eps;
@@ -445,6 +464,7 @@ impl Router {
         self.heap.clear();
         self.last_path.clear();
         self.ripping = false;
+        (self.polishing, self.pass, self.cursor, self.bettered, self.bettered_in_all, self.in_hand) = (false, 0, 0, 0, 0, None);
         self.mv = None;
         (self.temp, self.alpha, self.moves, self.max_moves, self.accepted) = (HOT, 1.0, 0, 0, 0);
         self.rng = 0x9E3779B97F4A7C15;   // the same moves every time: a run can be watched again
@@ -549,6 +569,32 @@ impl Router {
         }).sum()
     }
 
+    /// The step from one point to the next on its layer, or nothing across layers.
+    fn heading(&self, a: u32, b: u32) -> Option<(i32, i32)> {
+        let ((ax, ay, la), (bx, by, lb)) = (self.xy(a), self.xy(b));
+        (la == lb).then_some((bx - ax, by - ay))
+    }
+
+    /// How many times a net's tracks change direction.
+    fn turns(&self, i: usize) -> u32 {
+        self.nets[i].segs.windows(2)
+            .filter(|w| w[0].1 == w[1].0 && self.heading(w[0].0, w[0].1) != self.heading(w[1].0, w[1].1))
+            .count() as u32
+    }
+
+    /// What a net costs the bettering: its length, its vias and its turns at their weights, and a
+    /// great deal if it is not whole.
+    fn net_cost(&self, i: usize) -> f32 {
+        let n = &self.nets[i];
+        self.length(i) + self.via_weight * n.vias.len() as f32 + self.turn_weight * self.turns(i) as f32
+            + if n.routed && !n.failed { 0.0 } else { UNROUTED }
+    }
+
+    /// What the board costs by the bettering's measure.
+    pub fn total_cost(&self) -> f32 {
+        (0..self.nets.len()).filter(|&i| self.nets[i].pads.len() > 1).map(|i| self.net_cost(i)).sum()
+    }
+
     /// What the board costs the annealing: its tracks' length, its vias, and a great deal for
     /// each net that is not whole.
     fn cost(&self) -> f32 {
@@ -576,6 +622,9 @@ impl Router {
             return None;
         }
         let others = self.others(c) as f32;
+        if self.polishing {
+            return (others == 0.0).then_some(1.0);   // round what is there, whatever the strategy was
+        }
         match self.strategy {
             Strategy::Negotiated => Some((1.0 + self.history[c]) * (1.0 + self.present * others)),
             _ if others == 0.0 => Some(1.0),
@@ -593,6 +642,9 @@ impl Router {
         }
         // what other nets keep within the via's halo, on both layers, each time it is kept
         let others = (self.near[at] - self.near_own[at]) as f32;
+        if self.polishing {
+            return (others == 0.0).then_some(self.via_weight);
+        }
         match self.strategy {
             Strategy::Negotiated => Some(VIA_COST + self.present * others.min(40.0)),
             _ if others == 0.0 => Some(VIA_COST),
@@ -611,6 +663,9 @@ impl Router {
 
     /// What the search adds to a point's cost to order the points it has open.
     fn heuristic(&self, c: u32) -> f32 {
+        if self.polishing {
+            return self.distance(c);
+        }
         match self.strategy {
             Strategy::Lee | Strategy::Bidirectional => 0.0,
             // Hadlock's order is the detours alone; of two points with as many, the nearer first
@@ -623,7 +678,7 @@ impl Router {
     /// a step goes than it brings the pads nearer, so that a step straight at them is free and a
     /// step straight away costs two. A via is as dear as half its length in steps.
     fn price(&self, from: u32, to: usize, cost: f32) -> f32 {
-        if self.strategy != Strategy::Hadlock || cost == 0.0 {
+        if self.strategy != Strategy::Hadlock || cost == 0.0 || self.polishing {
             return cost;
         }
         let per = self.gw * self.gh;
@@ -660,7 +715,7 @@ impl Router {
         }
         self.heap2.clear();
         self.meet = (f32::INFINITY, NONE, NONE);
-        if self.strategy == Strategy::Bidirectional {
+        if self.strategy == Strategy::Bidirectional && !self.polishing {
             for &c in &targets {
                 self.g2[c as usize] = 0.0;
                 self.seen2[c as usize] = sid;
@@ -672,7 +727,15 @@ impl Router {
     }
 
     fn relax(&mut self, from: u32, to: usize, cost: f32) {
-        let g = self.g[from as usize] + self.price(from, to, cost);
+        let mut step = self.price(from, to, cost);
+        if self.polishing && self.turn_weight > 0.0 && self.parent[from as usize] != NONE {
+            // a turn, as nearly as the way here so far shows it
+            let before = self.heading(self.parent[from as usize], from);
+            if before.is_some() && before != self.heading(from, to as u32) && self.heading(from, to as u32).is_some() {
+                step += self.turn_weight;
+            }
+        }
+        let g = self.g[from as usize] + step;
         if self.closed[to] != self.sid && (self.seen[to] != self.sid || g < self.g[to]) {
             self.g[to] = g;
             self.seen[to] = self.sid;
@@ -792,7 +855,7 @@ impl Router {
 
     /// One expansion of the search. True when the search is over, with a path or without.
     fn expand(&mut self) -> bool {
-        if self.strategy == Strategy::Bidirectional {
+        if self.strategy == Strategy::Bidirectional && !self.polishing {
             return self.expand_both();
         }
         let Some(Open(_, c)) = self.heap.pop() else {
@@ -816,7 +879,7 @@ impl Router {
 
     /// The search has run out: route through other nets if the strategy allows, or give the net up.
     fn dead_end(&mut self) {
-        if self.strategy == Strategy::RipUp && !self.ripping && self.total_rips < 20 * self.nets.len() as u32 {
+        if self.strategy == Strategy::RipUp && !self.ripping && !self.polishing && self.total_rips < 20 * self.nets.len() as u32 {
             self.ripping = true;
             self.phase = Phase::Begin;
             return;
@@ -976,7 +1039,56 @@ impl Router {
         out
     }
 
+    /// The strategy is done: the routing is over, or goes on to be bettered.
+    fn end(&mut self) {
+        if self.improve && !self.polishing && self.shared().is_empty() {
+            (self.polishing, self.ripping, self.pass, self.cursor, self.bettered) = (true, false, 1, 0, 0);
+            self.better();
+        } else {
+            self.phase = Phase::Done;
+        }
+    }
+
+    /// The bettering, between searches: the net in hand judged, and the next one taken up.
+    fn better(&mut self) {
+        if let Some((saved, before)) = self.in_hand.take() {
+            let i = saved.net;
+            if self.net_cost(i) < before - 1e-3 {
+                self.bettered += 1;
+                self.bettered_in_all += 1;
+            } else {
+                self.rip(i);
+                self.restore(saved);
+            }
+        }
+        loop {
+            if self.cursor >= self.nets.len() {
+                if self.bettered == 0 || self.pass >= MAX_PASSES {
+                    self.phase = Phase::Done;
+                    return;
+                }
+                (self.pass, self.cursor, self.bettered) = (self.pass + 1, 0, 0);
+            }
+            let i = self.cursor;
+            self.cursor += 1;
+            if self.nets[i].pads.len() < 2 {
+                continue;
+            }
+            self.in_hand = Some((self.snapshot(i), self.net_cost(i)));
+            self.rip(i);
+            self.cur = i;
+            self.nets[i].failed = false;
+            self.nets[i].connected[0] = true;
+            self.phase = Phase::Begin;
+            return;
+        }
+    }
+
     fn next(&mut self) {
+        if self.polishing {
+            self.better();
+            return;
+        }
         if let Some(i) = self.queue.pop_front() {
             self.cur = i;
             if self.strategy == Strategy::Negotiated {
@@ -1003,7 +1115,7 @@ impl Router {
                 return;
             }
         }
-        self.phase = Phase::Done;
+        self.end();
     }
 
     /// The annealing, between searches: the next net of the move in hand, or the move judged and
@@ -1048,7 +1160,7 @@ impl Router {
         self.ripping = false;
         let left = unrouted(self);
         if left.is_empty() || self.moves >= self.max_moves {
-            self.phase = Phase::Done;
+            self.end();
             return;
         }
         // a move: one of the nets left, routed through whatever is in its way
@@ -1129,7 +1241,7 @@ impl Router {
     }
 
     /// What there is to say of the routing so far: see `ffi::stats` for the order.
-    pub fn stats(&mut self) -> [i32; 14] {
+    pub fn stats(&mut self) -> [i32; 18] {
         let shared = if self.strategy == Strategy::Negotiated { self.shared().len() } else { 0 };
         let wired = self.nets.iter().filter(|n| n.pads.len() > 1);
         [
@@ -1147,6 +1259,10 @@ impl Router {
             self.ripping as i32,
             (self.temp * 10.0) as i32,
             self.accepted as i32,
+            if self.polishing { self.pass as i32 } else { 0 },
+            (0..self.nets.len()).map(|i| self.turns(i)).sum::<u32>() as i32,
+            (self.total_cost() * self.pitch * 10.0) as i32,
+            self.bettered_in_all as i32,
         ]
     }
 
@@ -1327,6 +1443,38 @@ mod tests {
             let got = solve_with(&open_field(), s, true).stats()[6];
             assert!((got - slant).abs() <= 1, "{s:?} with diagonals finds a way of {got}, and Lee one of {slant}");
         }
+    }
+
+    #[test]
+    fn bettering_never_costs_more_and_leaves_the_board_clean() {
+        for (s, diagonal) in [(Strategy::Lee, false), (Strategy::RipUp, false), (Strategy::Negotiated, true), (Strategy::Anneal, true)] {
+            let plain = solve_with(&reversed(), s, diagonal).total_cost();
+            let mut r = Router::new(&reversed()).unwrap();
+            (r.diagonal, r.improve) = (diagonal, true);
+            r.start(s, Order::AsGiven, &reversed().pads);
+            let mut steps = 0;
+            while !r.step(10_000) {
+                steps += 1;
+                assert!(steps < 10_000, "{s:?} with bettering does not end");
+            }
+            let routed = r.stats()[3];
+            assert!(r.shared().is_empty(), "{s:?}: the bettering lays a track through another net's");
+            assert!(routed >= solve_with(&reversed(), s, diagonal).stats()[3], "{s:?}: the bettering loses a net");
+            assert!(r.total_cost() <= plain + 1e-3, "{s:?}: {} after bettering, {plain} before", r.total_cost());
+        }
+    }
+
+    #[test]
+    fn a_dear_turn_makes_for_fewer_turns() {
+        let run = |turn: f32| {
+            let p = reversed();
+            let mut r = Router::new(&p).unwrap();
+            (r.diagonal, r.improve, r.turn_weight) = (true, true, turn);
+            r.start(Strategy::RipUp, Order::AsGiven, &p.pads);
+            while !r.step(100_000) {}
+            r.stats()[15]
+        };
+        assert!(run(8.0) <= run(0.0), "{} turns with turns dear, {} with them free", run(8.0), run(0.0));
     }
 
     #[test]
