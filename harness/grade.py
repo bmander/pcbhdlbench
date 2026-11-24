@@ -191,7 +191,7 @@ def grade(case, board, patterns, rules, names):
     if "refuse" in case["checks"]:
         # a board for a case that has none: graded as any board, to say what is wrong with it, and
         # because one that passed would show the case to be satisfiable after all
-        asked = ["parts", "connectivity", "rules", "outline"] + (["layers"] if "copper" in case else [])
+        asked = ["parts", "connectivity", "rules", "outline"] + (["layers"] if "track_layers" in case else [])
         as_built = grade({**case, "checks": asked}, board, patterns, rules, names)
         if as_built["outcome"] == "pass":
             raise AssertionError(f"{case['id']} is not unsatisfiable: this board passes")
@@ -343,13 +343,15 @@ def grade(case, board, patterns, rules, names):
         if "side" in notes and side != p.get("side", "top"):
             notes["side"].append(f"{p['ref']} is on the {side}")
     if "layers" in notes:
-        only = case["copper"]  # the layers by name, or how many, whichever they are
+        only = case["track_layers"]  # the layers by name, or how many, whichever they are
+        tracked = set().union(*(t["layers"] for t in board["tracks"])) if board["tracks"] else set()
         if isinstance(only, int):
-            if len(used) > only:
-                notes["layers"].append(f"copper on {sorted(used)}, where the case allows {only} layer{'s' if only > 1 else ''}")
-        elif not used <= set(only):
-            notes["layers"].append(f"copper on {sorted(used - set(only))}, where the case allows {sorted(only)}")
-        if board["vias"] and (only == 1 or len(only) == 1):
+            if len(tracked) > only:
+                notes["layers"].append(f"tracks on {sorted(tracked)}, where the case allows {only} layer{'s' if only > 1 else ''}")
+        elif not tracked <= set(only):
+            n = sum(1 for t in board["tracks"] if not t["layers"] <= set(only))
+            notes["layers"].append(f"{n} tracks on {sorted(tracked - set(only))}, where the case allows tracks on {sorted(only)}")
+        if board["vias"] and (only == 1 or (not isinstance(only, int) and len(only) == 1)):
             notes["layers"].append(f"{len(board['vias'])} vias, where the case allows none")
 
     # the distances the case bounds, copper edge to copper edge

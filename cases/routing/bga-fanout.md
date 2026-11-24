@@ -4,7 +4,8 @@ tags = ["routing", "fanout", "bga", "four-layer", "scale"]
 status = "specified"
 layers = 4
 rules = "std-4"
-checks = ["parts", "connectivity", "rules", "outline", "fixed", "vias", "copper"]
+checks = ["parts", "connectivity", "rules", "outline", "fixed", "layers", "vias", "copper"]
+track_layers = ["F.Cu", "B.Cu"]
 timeout = 1800
 
 # no via in a ball's pad
@@ -424,10 +425,15 @@ and so on, two to each pair of pins. Each net is named for its ball.
 chessboard of ground and supply: ground where the row's and the column's numbers (A is 1) add up
 to an even number, as at C3, and VCC where they are odd. The second layer is a ground plane and
 the third a VCC plane, each at least 2500 mm² of the board's 3600, and every one of the 144 balls
-reaches its plane. J5 brings in VCC on pin 1 and ground on pin 2.
+reaches its plane. The planes are planes: no track runs on either inner layer, and the signals are
+routed on the top and the bottom alone. J5 brings in VCC on pin 1 and ground on pin 2.
 
 **The rules** are the four-layer set's: 0.127 mm tracks and spaces, a 0.5 mm via with a 0.3 mm
 hole. No via stands in a ball's pad. That leaves the textbook fanout: a track leaves each ball of
 the outer ring outward, one from the second ring passes between two pads of the outer (0.48 mm
 between them, and a track with its spaces takes 0.381), and each inner ball has a short track to a
 via in the middle of four pads, where a 0.5 mm via is 0.156 mm from each.
+
+**It can be done.** `bga-fanout.witness.kicad_pcb`, beside this file, passes every check: the 112
+signals as KiCadRoutingTools routed them on the two outer layers, and a via to the lower right of
+each of the 144 inner balls, put there by a script, with the planes filled by KiCad.

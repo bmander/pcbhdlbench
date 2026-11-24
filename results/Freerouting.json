@@ -134,7 +134,7 @@
   },
   "routing/bga-fanout": {
    "outcome": "placed",
-   "why": "B2 is open; B6 is open; E16 is open; F16 is open; G16 is open; K15 is open; L15 is open; N15 is open; T14 is open; R7 is open; R6 is open; R4 is open; N2 is open; K1 is open; K2 is open; H2 is open; G1 is open; GND is open; VCC is open.",
+   "why": "N16 is open; T14 is open; R5 is open; T3 is open; K1 is open; H2 is open; F2 is open; C2 is open; GND is open; VCC is open.",
    "checks": {
     "parts": {
      "ok": true,
@@ -143,23 +143,14 @@
     "connectivity": {
      "ok": false,
      "notes": [
-      "B2 is open",
-      "B6 is open",
-      "E16 is open",
-      "F16 is open",
-      "G16 is open",
-      "K15 is open",
-      "L15 is open",
-      "N15 is open",
+      "N16 is open",
       "T14 is open",
-      "R7 is open",
-      "R6 is open",
-      "R4 is open",
-      "N2 is open",
+      "R5 is open",
+      "T3 is open",
       "K1 is open",
-      "K2 is open",
       "H2 is open",
-      "G1 is open",
+      "F2 is open",
+      "C2 is open",
       "GND is open",
       "VCC is open"
      ]
@@ -176,6 +167,10 @@
      "ok": true,
      "notes": []
     },
+    "layers": {
+     "ok": true,
+     "notes": []
+    },
     "vias": {
      "ok": true,
      "notes": []
@@ -186,13 +181,13 @@
     }
    },
    "metrics": {
-    "track_mm": 2371.39,
-    "vias": 46,
-    "layers": 4,
-    "copper_mm2 (GND on In1.Cu)": 3122.4,
-    "copper_mm2 (VCC on In2.Cu)": 3144.2
+    "track_mm": 2314.941,
+    "vias": 0,
+    "layers": 3,
+    "copper_mm2 (GND on In1.Cu)": 3187.5,
+    "copper_mm2 (VCC on In2.Cu)": 3187.5
    },
-   "seconds": 889.25
+   "seconds": 1720.42
   },
   "routing/bus-8": {
    "outcome": "pass",

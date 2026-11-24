@@ -44,7 +44,7 @@ CHECKS = {
     "outline": "The board's outline is the case's, and every part's courtyard lies inside it and overlaps no other",
     "fixed": "The parts the case places are where it places them, to 0.01 mm, at the rotation it gives",
     "side": "Each part is on the side of the board the case names",
-    "layers": "Copper is only on the layers the case allows",
+    "layers": "Tracks are only on the layers the case allows",
     "near": "The distances the case bounds between pads, parts or tracks are within their bounds",
     "keepout": "The regions the case closes to parts or copper are empty of them",
     "width": "Between the pins the case names there is a way along the copper at least as wide as it asks",
@@ -424,6 +424,18 @@ def case_page(case, patterns, rules, toolchains, results, routers=()):
         body += ("<p class='prose muted'>A sketch: its parts, nets and numbers are not yet in its header, "
                  "so it cannot be graded. Pin it down, or argue with it, in "
                  f"<a href='{REPO}/blob/main/cases/{c['id']}.md'>its file</a>.</p>\n")
+    witness = ROOT / "cases" / f"{c['id']}.witness.kicad_pcb"
+    if witness.exists():
+        # a board that passes, kept beside the case: it is graded here, and the build stops if it fails
+        graded = grade.grade(c, kicad.load(witness), patterns, rules, {})
+        if graded["outcome"] != "pass":
+            raise SystemExit(f"{c['id']}: its witness does not pass: {graded['why']}")
+        stem = c["id"].split("/")[1]
+        shutil.copy(witness, SITE / "cases" / f"{c['id']}.witness.kicad_pcb")
+        body += ("<h2>A board that passes</h2>\n<p class=prose>The case can be met: this board meets it, and is "
+                 "graded again each time the site is built. It is no toolchain's result, and is here to show that "
+                 f"a pass exists, not how to find one. <a href='{stem}.witness.kicad_pcb' download>The board as a "
+                 f"KiCad file</a>.</p>\n{board_svg(c, witness)}\n")
     body += (f"<h2>What is checked</h2>\n<table class=prose><tbody>{checks}</tbody></table>\n"
              f"<h2>The case</h2>\n<table class=facts><tbody>{facts}</tbody></table>\n<h2>Results</h2>\n")
     got = [(t, results[t["name"]][c["id"]]) for t in toolchains if c["id"] in results.get(t["name"], {})]

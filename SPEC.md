@@ -64,8 +64,9 @@ pins = ["R1.2", "C1.1", "J1.3"]
 - **A part's position** is that of its pattern's origin. A part on the bottom is mirrored in x
   before it is turned.
 - **A pin left out of every net** is unconnected, and copper joining it to anything is a short.
-- **`copper`**, where a case names the `layers` check, is the layers its tracks may be on: a list
-  of names (`["F.Cu"]`), or a number of layers, whichever they are (`1`). One layer allows no via.
+- **`track_layers`**, where a case names the `layers` check, is the layers its tracks may be on: a
+  list of names (`["F.Cu"]`), or a number of layers, whichever they are (`1`). One layer allows no
+  via. A pour is not a track: a plane's layer is closed to tracks by leaving it out.
 - **Where the board lies** in its file is the toolchain's business. The harness moves it so that
   its outline's lower left corner is the case's, and reads every position from there.
 - **A part is found** by its reference, and its pads by their names; where a toolchain's library
@@ -87,7 +88,7 @@ Every case names `parts`, `connectivity`, `rules` and `outline`, or names `refus
 | `outline` | The outline is the case's; every courtyard lies inside it and overlaps no other on its side of the board |
 | `fixed` | Placed parts are where the case puts them, to 0.01 mm |
 | `side` | Each part is on the side the case names |
-| `layers` | Copper is only on the layers the case allows |
+| `layers` | Tracks are only on the layers the case allows |
 | `near` | Bounded distances between pads, parts or tracks are within bounds |
 | `keepout` | Closed regions are empty of what they are closed to |
 | `width` | Between two named pins there is a way along the copper at least as wide as asked |
@@ -190,6 +191,13 @@ case's header: the netlist there is the harness's, to check with.
 
 A toolchain that cannot write KiCad's format writes Gerber X2 and Excellon files, from which the
 harness reads the same copper; the parts are then found by their pads.
+
+## A witness
+
+A case whose difficulty raises the question may keep a board that passes it beside it,
+`cases/<category>/<name>.witness.kicad_pcb`. It is nobody's result. The site shows it, and grades
+it again at every build, which stops if it no longer passes: a change to the case or to the
+grading that would make the case impossible is caught there.
 
 ## A router
 

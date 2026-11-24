@@ -194,8 +194,10 @@ def load(path):
     vias = []
     for v in all_of(root, "via"):
         size = float(one(v, "size")[1])
-        vias.append({"poly": [xy(one(v, "at"))], "r": size / 2, "size": size,
-                     "drill": float(one(v, "drill")[1]), "layers": copper(one(v, "layers"), every)})
+        # a via names the two layers it runs between, and is on every copper layer from one to the other
+        ends = [every.index(name) for name in copper(one(v, "layers"), every)]
+        vias.append({"poly": [xy(one(v, "at"))], "r": size / 2, "size": size, "drill": float(one(v, "drill")[1]),
+                     "layers": frozenset(every[min(ends):max(ends) + 1])})
     zones = []
     for z in all_of(root, "zone"):
         for f in all_of(z, "filled_polygon"):

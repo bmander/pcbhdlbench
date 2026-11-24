@@ -134,18 +134,15 @@
   },
   "routing/bga-fanout": {
    "outcome": "wrong",
-   "why": "GND is open; VCC is open; 100 vias in pads of U1.",
+   "why": "100 vias in pads of U1.",
    "checks": {
     "parts": {
      "ok": true,
      "notes": []
     },
     "connectivity": {
-     "ok": false,
-     "notes": [
-      "GND is open",
-      "VCC is open"
-     ]
+     "ok": true,
+     "notes": []
     },
     "rules": {
      "ok": true,
@@ -156,6 +153,10 @@
      "notes": []
     },
     "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "layers": {
      "ok": true,
      "notes": []
     },
@@ -171,13 +172,13 @@
     }
    },
    "metrics": {
-    "track_mm": 2380.626,
-    "vias": 147,
-    "layers": 4,
-    "copper_mm2 (GND on In1.Cu)": 3154.3,
-    "copper_mm2 (VCC on In2.Cu)": 3154.3
+    "track_mm": 2383.289,
+    "vias": 144,
+    "layers": 3,
+    "copper_mm2 (GND on In1.Cu)": 3155.7,
+    "copper_mm2 (VCC on In2.Cu)": 3155.7
    },
-   "seconds": 29.32
+   "seconds": 50.99
   },
   "routing/bus-8": {
    "outcome": "pass",

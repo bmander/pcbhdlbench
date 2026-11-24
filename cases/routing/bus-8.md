@@ -5,7 +5,7 @@ status = "specified"
 layers = 2
 rules = "std-2"
 checks = ["parts", "connectivity", "rules", "outline", "fixed", "layers"]
-copper = ["F.Cu"]
+track_layers = ["F.Cu"]
 
 [board]
 outline = [[0, 0], [31, 0], [31, 31], [0, 31]]

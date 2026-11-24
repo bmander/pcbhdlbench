@@ -6,7 +6,7 @@ layers = 1
 rules = "std-2"
 checks = ["refuse"]
 control = "routing/k4-planar"
-copper = 1
+track_layers = 1
 
 [board]
 outline = [[0, 0], [30, 0], [30, 30], [0, 30]]

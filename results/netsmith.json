@@ -1,5 +1,6 @@
 {
  "toolchain": "netsmith",
+ "kind": "toolchain",
  "version": "netsmith 0.8.0 (1b5e697)",
  "ran": "2026-11-24",
  "cases": {
@@ -355,13 +356,13 @@
    "refused": true,
    "as_built": {
     "outcome": "placed",
-    "why": "B2 is open; B3 is open; B4 is open; B5 is open; B6 is open; B7 is open; B11 is open; B12 is open; B13 is open; B14 is open; B15 is open; C15 is open; H15 is open; J15 is open; K15 is open; L15 is open; M15 is open; N15 is open; P15 is open; R13 is open; R11 is open; R5 is open; R4 is open; R3 is open; R2 is open; P2 is open; M2 is open; L2 is open; H2 is open; G2 is open; E2 is open; D2 is open; C2 is open; GND is open; VCC is open.",
+    "why": "B2 is open; B3 is open; B4 is open; B5 is open; B6 is open; B7 is open; B11 is open; B12 is open; B13 is open; B14 is open; B15 is open; C15 is open; H15 is open; J15 is open; K15 is open; L15 is open; M15 is open; N15 is open; P15 is open; R13 is open; R11 is open; R5 is open; R4 is open; R3 is open; R2 is open; P2 is open; M2 is open; L2 is open; H2 is open; G2 is open; E2 is open; D2 is open; C2 is open; VCC is open.",
     "metrics": {
      "track_mm": 2284.737,
      "vias": 171,
      "layers": 4,
      "copper_mm2 (GND on In1.Cu)": 2981.7,
-     "copper_mm2 (VCC on In2.Cu)": 2981.1
+     "copper_mm2 (VCC on In2.Cu)": 2981.3
     }
    }
   },

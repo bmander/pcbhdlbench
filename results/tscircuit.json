@@ -1,5 +1,6 @@
 {
  "toolchain": "tscircuit",
+ "kind": "toolchain",
  "version": "tscircuit 0.0.3288 (core 0.0.2464)",
  "ran": "2026-11-24",
  "cases": {
@@ -443,13 +444,13 @@
    "refused": true,
    "as_built": {
     "outcome": "wrong",
-    "why": "U1: pads named 1, 10, 100, 101, 102, 103 … (256), where its pattern has A1, A10, A11, A12, A13, A14 … (256); A12 and B10 are shorted; A1 is open; A2 is open; B2 is open; A3 is open; and 111 more.",
+    "why": "U1: pads named 1, 10, 100, 101, 102, 103 … (256), where its pattern has A1, A10, A11, A12, A13, A14 … (256); A11 and A12 and B10 and B11 are shorted; A13 and B13 are shorted; GND and P1 and P2 and R4 and R5 and VCC are shorted; R1 and R2 are shorted; A1 is open; and 115 more.",
     "metrics": {
      "track_mm": 2692.894,
      "vias": 110,
      "layers": 4,
-     "copper_mm2 (GND on In1.Cu)": 2856.3,
-     "copper_mm2 (VCC on In2.Cu)": 2968.9
+     "copper_mm2 (GND on In1.Cu)": 2879.5,
+     "copper_mm2 (VCC on In2.Cu)": 2984.4
     }
    }
   },

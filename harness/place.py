@@ -7,7 +7,7 @@ case's outline, its parts where it puts them with the pads of their land pattern
 pads, and nothing else. The rule set goes into the project file, as the board's least sizes and as
 the default net class, which is where KiCad keeps them. A plane the case asks for (a `[[copper]]`
 with a layer and a least area) is drawn as an unfilled zone of its net over the whole board, and a
-layer the case closes to tracks (`copper = ["F.Cu"]`) is closed by a rule area. Standard library
+layer the case closes to tracks (`track_layers = ["F.Cu"]`) is closed by a rule area. Standard library
 only."""
 import json
 import pathlib
@@ -109,7 +109,7 @@ def board(case, patterns, rules):
                    f'(fill (thermal_gap {n(rule["clearance"])}) (thermal_bridge_width {n(2 * rule["track"])})) '
                    f"(polygon (pts {pts})))")
     # the layers the case closes to tracks: a rule area over the whole board on each of the others
-    only = case.get("copper") if isinstance(case.get("copper"), list) and all(isinstance(c, str) for c in case["copper"]) else None
+    only = case.get("track_layers") if isinstance(case.get("track_layers"), list) else None
     for layer in ([name for name in copper if name not in only] if only else []):
         out.append(f'  (zone (net 0) (net_name "") (layer "{layer}") (uuid "{uid(case["id"], "closed", layer)}") '
                    f'(name "closed to tracks") (hatch edge 0.5) (connect_pads (clearance 0)) (min_thickness 0.1) '
