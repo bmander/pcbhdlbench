@@ -1,0 +1,352 @@
+{
+ "toolchain": "Freerouting",
+ "kind": "router",
+ "version": "Freerouting 2.1.0",
+ "ran": "2026-11-24",
+ "cases": {
+  "basics/header-breakout": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 56.0,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 5.26
+  },
+  "outline/l-shape": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 266.555,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 5.87
+  },
+  "parametric/led-ring-12": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 62.977,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 5.15
+  },
+  "parametric/led-ring-60": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 245.635,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 7.01
+  },
+  "routing/bga-fanout": {
+   "outcome": "placed",
+   "why": "B2 is open; B6 is open; E16 is open; F16 is open; G16 is open; K15 is open; L15 is open; N15 is open; T14 is open; R7 is open; R6 is open; R4 is open; N2 is open; K1 is open; K2 is open; H2 is open; G1 is open; GND is open; VCC is open.",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": false,
+     "notes": [
+      "B2 is open",
+      "B6 is open",
+      "E16 is open",
+      "F16 is open",
+      "G16 is open",
+      "K15 is open",
+      "L15 is open",
+      "N15 is open",
+      "T14 is open",
+      "R7 is open",
+      "R6 is open",
+      "R4 is open",
+      "N2 is open",
+      "K1 is open",
+      "K2 is open",
+      "H2 is open",
+      "G1 is open",
+      "GND is open",
+      "VCC is open"
+     ]
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "vias": {
+     "ok": true,
+     "notes": []
+    },
+    "copper": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 2371.39,
+    "vias": 46,
+    "layers": 4,
+    "copper_mm2 (GND on In1.Cu)": 3122.4,
+    "copper_mm2 (VCC on In2.Cu)": 3144.2
+   },
+   "seconds": 889.25
+  },
+  "routing/bus-8": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "layers": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 179.775,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 5.46
+  },
+  "routing/bus-reversed": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 183.426,
+    "vias": 0,
+    "layers": 2
+   },
+   "seconds": 5.8
+  },
+  "routing/channel": {
+   "outcome": "placed",
+   "why": "D1 is open; D2 is open; D3 is open; D4 is open; D5 is open; D6 is open.",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": false,
+     "notes": [
+      "D1 is open",
+      "D2 is open",
+      "D3 is open",
+      "D4 is open",
+      "D5 is open",
+      "D6 is open"
+     ]
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 185.823,
+    "vias": 0,
+    "layers": 2
+   },
+   "seconds": 101.25
+  },
+  "routing/two-crossings": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 31.326,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 5.67
+  },
+  "unsatisfiable/channel-overfull": {
+   "outcome": "refused",
+   "refused": true,
+   "seconds": 286.03,
+   "metrics": {
+    "track_mm": 321.34,
+    "vias": 0,
+    "layers": 2
+   },
+   "why": "It left 3 of the 13 nets open, on a board with no other fault.",
+   "control": {
+    "case": "routing/channel",
+    "outcome": "placed"
+   }
+  }
+ }
+}

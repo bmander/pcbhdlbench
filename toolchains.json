@@ -267,5 +267,55 @@
    "does": "places and routes",
    "note": "A model driving any of the above, or KiCad itself, as PCBRouteAgent does. Entered as a toolchain like any other: named model, named tools, fixed prompt."
   }
+ ],
+ "routers": [
+  {
+   "name": "Freerouting",
+   "url": "https://github.com/freerouting/freerouting",
+   "license": "GPL-3.0",
+   "command": [
+    "python3",
+    "toolchains/freerouting/run.py"
+   ],
+   "version": [
+    "python3",
+    "toolchains/freerouting/run.py",
+    "--version"
+   ],
+   "source": "toolchains/freerouting/run.py",
+   "note": "The open autorouter, in Java, over Specctra's DSN and SES, which KiCad's own code writes and reads. Version 2.1.0: the releases since need Java 25."
+  },
+  {
+   "name": "fastroute",
+   "url": "https://github.com/parisxmas/fastroute",
+   "license": "GPL-3.0",
+   "command": [
+    "python3",
+    "toolchains/fastroute/run.py"
+   ],
+   "version": [
+    "python3",
+    "toolchains/fastroute/run.py",
+    "--version"
+   ],
+   "source": "toolchains/fastroute/run.py",
+   "note": "A port of Freerouting to Rust, begun September 2026, with fixes and passes of its own; the same Specctra files in and out."
+  },
+  {
+   "name": "KiCadRoutingTools",
+   "url": "https://github.com/drandyhaas/KiCadRoutingTools",
+   "license": "MIT",
+   "command": [
+    "python3",
+    "toolchains/krt/run.py"
+   ],
+   "version": [
+    "python3",
+    "toolchains/krt/run.py",
+    "--version"
+   ],
+   "source": "toolchains/krt/run.py",
+   "note": "Python with a Rust A* core, begun December 2025: routes a KiCad board as it is, by a plan it builds from the board (fanout, planes, then routing passes). A baseline of PCBWorld."
+  }
  ]
 }

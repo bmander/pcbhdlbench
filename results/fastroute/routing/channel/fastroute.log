@@ -1,0 +1,106 @@
+    0.000 INFO  fastroute 0.1.14
+    0.000 INFO  parsed 'work/board.dsn' in 0.2 ms: 2 layers, 2 components, 12 nets, 0 wires
+    0.001 INFO  built board in 1.0 ms: 27 items (24 pins, 0 vias, 0 traces)
+    0.001 INFO  threads: autorouting passes run on router.autorouter.max_threads threads (1 = sequential); the optimizer uses router.optimizer.max_threads
+    0.001 INFO  optimizer mode: Parallel { threads: 11 }, board time limits: WallClock, stage wall clock limits: enabled
+    0.002 INFO  Pipeline thread limits: autorouter.max_threads=11, optimizer.max_threads=11.
+    0.002 INFO  Fanout stage is enabled but skipped because the board has no SMD pins.
+    0.002 INFO  checkpoint: best board so far (12 unrouted, 0 violations) written to 'work/board.ses'
+    0.002 INFO  Auto-routing stage started with baseline score 0.00 for 12 unrouted items.
+    0.053 INFO  Auto-routing pass #1 was completed in 0.05 seconds with score 444.44 (5 unrouted and 0 violations) (routed 11, failed 5, ripped 4).
+    0.054 INFO  checkpoint: best board so far (5 unrouted, 0 violations) written to 'work/board.ses'
+    0.069 INFO  Auto-routing pass #2 was completed in 0.02 seconds with score 555.56 (4 unrouted and 0 violations) (routed 5, failed 0, ripped 4).
+    0.069 INFO  checkpoint: best board so far (4 unrouted, 0 violations) written to 'work/board.ses'
+    0.108 INFO  Auto-routing pass #3 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 4, failed 0, ripped 2).
+    0.109 INFO  checkpoint: best board so far (2 unrouted, 0 violations) written to 'work/board.ses'
+    0.127 INFO  Auto-routing pass #4 was completed in 0.02 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.155 INFO  Auto-routing pass #5 was completed in 0.03 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.190 INFO  Auto-routing pass #6 was completed in 0.03 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.221 INFO  Auto-routing pass #7 was completed in 0.03 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.261 INFO  Auto-routing pass #8 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.303 INFO  Auto-routing pass #9 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.349 INFO  Auto-routing pass #10 was completed in 0.05 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.407 INFO  Auto-routing pass #11 was completed in 0.06 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.457 INFO  Auto-routing pass #12 was completed in 0.05 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.501 INFO  Auto-routing pass #13 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.542 INFO  Auto-routing pass #14 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    0.625 INFO  Auto-routing pass #15 was completed in 0.08 seconds with score 666.67 (3 unrouted and 0 violations) (routed 2, failed 1, ripped 3).
+    0.760 INFO  Auto-routing pass #16 was completed in 0.13 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 2, ripped 3).
+    0.796 INFO  Auto-routing pass #17 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    0.832 INFO  Auto-routing pass #18 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    0.832 INFO  The router's best score (777.78) has not improved by more than 0.5 points since pass #8. Stopping the auto-router after 18 passes (2 items still unconnected).
+    0.832 INFO  Auto-routing stage completed: started with 12 unrouted nets, completed in 0.83 seconds, final score: 777.78 (2 unrouted and 0 violations).
+    0.832 INFO  2 item(s) cannot be routed even on the board as loaded (blocked by pins, keepouts or fixed wiring); they were skipped after their second failure.
+    0.832 INFO  Pipeline thread limits: autorouter.max_threads=11, optimizer.max_threads=11.
+    0.832 INFO  Pipeline thread limits: autorouter.max_threads=11, optimizer.max_threads=11.
+    0.832 INFO  Pipeline thread limits: autorouter.max_threads=11, optimizer.max_threads=11.
+    0.832 INFO  Fanout stage is enabled but skipped because the board has no SMD pins.
+    0.832 INFO  Fanout stage is enabled but skipped because the board has no SMD pins.
+    0.832 INFO  Fanout stage is enabled but skipped because the board has no SMD pins.
+    0.833 INFO  Auto-routing stage started with baseline score 0.00 for 12 unrouted items.
+    0.833 INFO  Auto-routing stage started with baseline score 0.00 for 12 unrouted items.
+    0.833 INFO  Auto-routing stage started with baseline score 0.00 for 12 unrouted items.
+    0.938 INFO  Auto-routing pass #1 was completed in 0.10 seconds with score 444.44 (5 unrouted and 0 violations) (routed 9, failed 10, ripped 2).
+    0.943 INFO  Auto-routing pass #1 was completed in 0.11 seconds with score 555.56 (4 unrouted and 0 violations) (routed 11, failed 5, ripped 3).
+    0.944 INFO  Auto-routing pass #1 was completed in 0.11 seconds with score 555.56 (4 unrouted and 0 violations) (routed 12, failed 5, ripped 4).
+    0.986 INFO  Auto-routing pass #2 was completed in 0.04 seconds with score 666.67 (3 unrouted and 0 violations) (routed 4, failed 1, ripped 3).
+    0.992 INFO  Auto-routing pass #2 was completed in 0.05 seconds with score 555.56 (4 unrouted and 0 violations) (routed 4, failed 2, ripped 3).
+    1.012 INFO  Auto-routing pass #2 was completed in 0.07 seconds with score 666.67 (3 unrouted and 0 violations) (routed 3, failed 3, ripped 2).
+    1.026 INFO  Auto-routing pass #3 was completed in 0.03 seconds with score 666.67 (3 unrouted and 0 violations) (routed 3, failed 0, ripped 2).
+    1.031 INFO  Auto-routing pass #3 was completed in 0.02 seconds with score 666.67 (3 unrouted and 0 violations) (routed 2, failed 0, ripped 2).
+    1.033 INFO  Auto-routing pass #3 was completed in 0.05 seconds with score 888.89 (1 unrouted and 0 violations) (routed 3, failed 0, ripped 1).
+    1.033 INFO  checkpoint: best board so far (1 unrouted, 0 violations) written to 'work/board.ses'
+    1.057 INFO  Auto-routing pass #4 was completed in 0.02 seconds with score 888.89 (1 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.066 INFO  Auto-routing pass #4 was completed in 0.03 seconds with score 888.89 (1 unrouted and 0 violations) (routed 2, failed 0, ripped 0).
+    1.066 INFO  Auto-routing pass #5 was completed in 0.00 seconds with score 888.89 (1 unrouted and 0 violations) (routed 0, failed 0, ripped 0).
+    1.066 INFO  Auto-routing stage completed: started with 12 unrouted nets, completed in 0.23 seconds, final score: 888.89 (1 unrouted and 0 violations).
+    1.066 INFO  2 item(s) cannot be routed even on the board as loaded (blocked by pins, keepouts or fixed wiring); they were skipped after their second failure.
+    1.068 INFO  Auto-routing pass #4 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 0, ripped 1).
+    1.087 INFO  Auto-routing pass #5 was completed in 0.03 seconds with score 888.89 (1 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.098 INFO  Auto-routing pass #5 was completed in 0.03 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.121 INFO  Auto-routing pass #6 was completed in 0.03 seconds with score 888.89 (1 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.121 INFO  Auto-routing pass #6 was completed in 0.02 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.156 INFO  Auto-routing pass #7 was completed in 0.03 seconds with score 888.89 (1 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.159 INFO  Auto-routing pass #7 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.200 INFO  Auto-routing pass #8 was completed in 0.04 seconds with score 888.89 (1 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.203 INFO  Auto-routing pass #8 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.253 INFO  Auto-routing pass #9 was completed in 0.05 seconds with score 888.89 (1 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.255 INFO  Auto-routing pass #9 was completed in 0.05 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.295 INFO  Auto-routing pass #10 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.301 INFO  Auto-routing pass #10 was completed in 0.05 seconds with score 888.89 (1 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.339 INFO  Auto-routing pass #11 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.359 INFO  Auto-routing pass #11 was completed in 0.06 seconds with score 777.78 (2 unrouted and 0 violations) (routed 0, failed 2, ripped 1).
+    1.377 INFO  Auto-routing pass #12 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.418 INFO  Auto-routing pass #13 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.463 INFO  Auto-routing pass #12 was completed in 0.10 seconds with score 666.67 (3 unrouted and 0 violations) (routed 1, failed 2, ripped 2).
+    1.463 INFO  Auto-routing pass #14 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.510 INFO  Auto-routing pass #15 was completed in 0.05 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.557 INFO  Auto-routing pass #16 was completed in 0.05 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.601 INFO  Auto-routing pass #17 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.632 INFO  Auto-routing pass #13 was completed in 0.17 seconds with score 666.67 (3 unrouted and 0 violations) (routed 3, failed 3, ripped 3).
+    1.643 INFO  Auto-routing pass #18 was completed in 0.04 seconds with score 777.78 (2 unrouted and 0 violations) (routed 1, failed 0, ripped 1).
+    1.643 INFO  The router's best score (777.78) has not improved by more than 0.5 points since pass #8. Stopping the auto-router after 18 passes (2 items still unconnected).
+    1.643 INFO  Auto-routing stage completed: started with 12 unrouted nets, completed in 0.81 seconds, final score: 777.78 (2 unrouted and 0 violations).
+    1.643 INFO  2 item(s) cannot be routed even on the board as loaded (blocked by pins, keepouts or fixed wiring); they were skipped after their second failure.
+    1.724 INFO  Auto-routing pass #14 was completed in 0.09 seconds with score 777.78 (2 unrouted and 0 violations) (routed 2, failed 3, ripped 1).
+    1.824 INFO  Auto-routing pass #15 was completed in 0.10 seconds with score 666.67 (3 unrouted and 0 violations) (routed 1, failed 2, ripped 2).
+    1.938 INFO  Auto-routing pass #16 was completed in 0.11 seconds with score 666.67 (3 unrouted and 0 violations) (routed 2, failed 2, ripped 2).
+    2.042 INFO  Auto-routing pass #17 was completed in 0.10 seconds with score 666.67 (3 unrouted and 0 violations) (routed 2, failed 3, ripped 2).
+    2.080 INFO  Auto-routing pass #18 was completed in 0.04 seconds with score 888.89 (1 unrouted and 0 violations) (routed 2, failed 0, ripped 0).
+    2.080 INFO  The router's best score (888.89) has not improved by more than 0.5 points since pass #8. Stopping the auto-router after 18 passes (1 item still unconnected).
+    2.080 INFO  Auto-routing stage completed: started with 12 unrouted nets, completed in 1.25 seconds, final score: 888.89 (1 unrouted and 0 violations).
+    2.080 INFO  2 item(s) cannot be routed even on the board as loaded (blocked by pins, keepouts or fixed wiring); they were skipped after their second failure.
+    2.080 INFO  Multi-start variant 1: 1 unrouted, 0 violations, router score 888.89.
+    2.080 INFO  Multi-start variant 2: 1 unrouted, 0 violations, router score 888.89.
+    2.080 INFO  Multi-start variant 3: 2 unrouted, 0 violations, router score 777.78.
+    2.081 INFO  Multi-start: variant 1 is better (1 unrouted, 0 violations; first run 2 unrouted, 0 violations).
+    2.081 INFO  Optimization stage started. Baseline router score: 888.89, optimizer score: 471.99, incomplete connections: 1, clearance violations: 0.
+    2.081 INFO  Optimizer time budget: 60 s (as long as routing took; set router.optimizer.timeout to change).
+    2.166 INFO  Optimizer pass #1: applied 1 more improving candidate(s).
+    2.166 INFO  Optimizer pass #1 was completed in 0.08 seconds (11 of 11 candidates) with the score of 472.12 (1 unrouted and 0 violations).
+    2.167 INFO  checkpoint: best board so far (1 unrouted, 0 violations) written to 'work/board.ses'
+    2.167 INFO  Optimizer pass #1: optimizer score 471.99 -> 472.12 (IMPROVED, 0.0279%), router score: 888.89, incomplete connections: 1, clearance violations: 0.
+    2.167 INFO  Stopping optimizer because the improvement in this pass (0.0279%) is below the threshold (2.50%).
+    2.167 INFO  Optimization stage completed: Baseline router score: 888.89, baseline optimizer score: 471.99, final router score: 888.89, final optimizer score: 472.12, completed in 0.09 seconds.
+    2.167 INFO  routing finished in 2.17 s
+    2.168 INFO  saved 'work/board.ses' (3122 bytes)

@@ -5,3 +5,12 @@ node_modules/
 toolchains/netsmith/upstream/
 toolchains/netsmith/target/
 toolchains/netsmith/bin/
+toolchains/freerouting/*.jar
+toolchains/freerouting/*checksums*
+toolchains/freerouting/cli/
+toolchains/freerouting/*.tar.gz
+toolchains/fastroute/bin/
+toolchains/fastroute/*.tar.gz
+toolchains/fastroute/SHA256SUMS.txt
+toolchains/krt/upstream/
+toolchains/krt/venv/

@@ -15,6 +15,7 @@ import geom
 import grade
 import kicad
 import markdown
+import place
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
@@ -172,7 +173,7 @@ def board_svg(case, path):
 def page(path, title, body, current=None, description=None):
     """Writes one page; `path` is relative to the site, and its links are made relative to it."""
     up = "../" * path.count("/")
-    nav = [("index.html", "pcbhdl-bench"), ("cases.html", "Cases"), ("toolchains.html", "Toolchains"),
+    nav = [("index.html", "pcbhdl-bench"), ("cases.html", "Cases"), ("routers.html", "Routers"), ("toolchains.html", "Toolchains"),
            ("prior.html", "Prior work"), (REPO, "Source")]
     links = "".join(
         f"<a href='{href if href.startswith('http') else up + href}'"
@@ -233,7 +234,8 @@ def index(cases, toolchains, results, runs):
     heads = "".join(f"<th class='num k'>{esc(t['name'])}</th>" for t in toolchains)
     ran_words = " ".join(
         f"{esc(name)} has run {len(got)} and passes {sum(r['outcome'] == 'pass' for r in got.values())}"
-        f" ({esc(runs[name].get('version', ''))}, {runs[name].get('ran', '')})." for name, got in results.items())
+        f" ({esc(runs[name].get('version', ''))}, {runs[name].get('ran', '')})." for name, got in results.items()
+        if runs[name].get("kind", "toolchain") == "toolchain")
     if not results:
         ran_words = "No toolchain has run yet."
     body = f"""<h1>pcbhdl-bench</h1>
@@ -263,6 +265,12 @@ entered</a> are listed with what each can do.</p>
 <div class=scroll><table>
 <thead><tr><th>Category</th><th class=num>Cases</th><th class=num>Specified</th><th>What it asks</th>{heads}</tr></thead>
 <tbody>{''.join(rows)}</tbody></table></div>
+
+<h2>Routing alone</h2>
+<p class=prose>Some cases place every part, and what is left of them is routing. Each of those is also
+written out as a placed, unrouted KiCad board and given to routers that know nothing of any
+language: <a href='routers.html'>the routers' board</a> has them, beside what the toolchains make of
+the same cases.</p>
 
 <h2>How a board is graded</h2>
 <p class=prose>A runner reads nothing but its own implementation of the case and writes a board, as
@@ -380,7 +388,7 @@ def drawing(case, patterns):
             f"<polygon class=edge points='{pts}'/>{marks}</svg>")
 
 
-def case_page(case, patterns, rules, toolchains, results):
+def case_page(case, patterns, rules, toolchains, results, routers=()):
     c = case
     (SITE / "cases" / c["category"]).mkdir(parents=True, exist_ok=True)
     facts = (f"<tr><th>Status</th><td>{badge(c['status'])}</td></tr>"
@@ -405,6 +413,13 @@ def case_page(case, patterns, rules, toolchains, results):
                  f"<th>Placed</th></tr></thead><tbody>{parts}</tbody></table>\n"
                  "<h2>Nets</h2>\n<table><thead><tr><th>Net</th><th>Pins</th></tr></thead>"
                  f"<tbody>{nets}</tbody></table>\n")
+        if place.placeable(c):
+            (SITE / "cases" / f"{c['id']}.placed.kicad_pcb").write_text(place.board(c, patterns, rules))
+            (SITE / "cases" / f"{c['id']}.placed.kicad_pro").write_text(place.project(c, rules))
+            stem = c["id"].split("/")[1]
+            body += (f"<p class=prose>Every part is placed, so this case is also given to <a href='../../routers.html'>the "
+                     f"routers</a>, as a placed, unrouted board: <a href='{stem}.placed.kicad_pcb' download>the board</a> and "
+                     f"<a href='{stem}.placed.kicad_pro' download>its project file</a>, which holds the rules.</p>\n")
     else:
         body += ("<p class='prose muted'>A sketch: its parts, nets and numbers are not yet in its header, "
                  "so it cannot be graded. Pin it down, or argue with it, in "
@@ -419,7 +434,8 @@ def case_page(case, patterns, rules, toolchains, results):
         body += (f"<section class=entry><h3>{esc(name)} <span class='badge {esc(r['outcome'])}'>{esc(r['outcome'])}"
                  f"</span></h3>\n")
         if r.get("refused"):
-            body += f"<p><b>It refused</b>, in its own words: {esc(r.get('why', ''))}</p>\n"
+            body += (f"<p>{esc(r.get('why', ''))}</p>\n" if tool in routers
+                     else f"<p><b>It refused</b>, in its own words: {esc(r.get('why', ''))}</p>\n")
             if r.get("control"):
                 ctl = r["control"]
                 body += (f"<p>Its control, <a href='../../cases/{ctl['case']}.html'>{ctl['case']}</a>, the board beside "
@@ -453,11 +469,66 @@ def case_page(case, patterns, rules, toolchains, results):
             body += f"<p><a href='{c['id'].split('/')[1]}.{name}.kicad_pcb' download>The board as a KiCad file</a></p>\n"
         source = (ROOT / tool["source"].format(id=c["id"], id_snake=c["id"].replace("-", "_"))
                   if tool.get("source") else None)
-        if source and source.exists():
+        if source and source.exists() and "{" in tool["source"]:  # a router's runner is no implementation
             body += (f"<details open><summary>{esc(str(source.relative_to(ROOT)))}</summary>"
                      f"<pre class=code>{esc(source.read_text())}</pre></details>\n")
         body += "</section>\n"
     page(f"cases/{c['id']}.html", f"{c['title']} · pcbhdl-bench", body)
+
+
+def routers_page(cases, tools, results, runs):
+    """The routers' board: the cases that place every part, a row each, and each router's outcome
+    on the placed board, beside the toolchains' on the same case."""
+    placed = [c for c in cases if place.placeable(c)]
+    routers = [r for r in tools.get("routers", []) if r["name"] in results]
+    chains = [t for t in tools["toolchains"] if t.get("command") and t["name"] in results]
+
+    def cell(name, c):
+        r = results[name].get(c["id"])
+        if not r:
+            return "<td class='cell missing'>·</td>"
+        took = f"<small class=muted><br>{r['seconds']:.0f} s</small>" if "seconds" in r else ""
+        left = ""
+        opens = [n for n in (r.get("checks") or {}).get("connectivity", {}).get("notes", []) if n.endswith("is open")]
+        if opens and r["outcome"] != "pass":
+            left = f"<small class=muted><br>{len(opens)} of {len(c['net'])} nets open</small>"
+        return (f"<td class='cell {r['outcome']}' title='{esc(r.get('why', ''), quote=True)}'>"
+                f"<a href='cases/{c['id']}.html'>{r['outcome']}</a>{took}{left}</td>")
+
+    def count(name):
+        got = results[name]
+        return f"<td class=num>{sum(got.get(c['id'], {}).get('outcome') == 'pass' for c in placed)} / {sum(c['id'] in got for c in placed)}</td>"
+    head = ("".join(f"<th class=k>{esc(r['name'])}</th>" for r in routers)
+            + "".join(f"<th class=k><span class=muted>{esc(t['name'])}</span></th>" for t in chains))
+    rows = "".join(
+        f"<tr><td class=case><a href='cases/{c['id']}.html'>{esc(c['title'])}</a><small>{c['id']}</small></td>"
+        f"<td class=num>{len(c['net'])}</td><td class=num>{c['layers']}</td>"
+        + "".join(cell(r["name"], c) for r in routers) + "".join(cell(t["name"], c) for t in chains) + "</tr>"
+        for c in placed)
+    tally = ("<tr><th>Passed</th><td></td><td></td>" + "".join(count(r["name"]) for r in routers)
+             + "".join(count(t["name"]) for t in chains) + "</tr>")
+    about = "".join(
+        f"<tr><td class=name>{link(r['name'], r['url'])}</td><td>{esc(runs.get(r['name'], {}).get('version', ''))}</td>"
+        f"<td>{esc(r.get('license') or '–')}</td><td>{esc(r['note'])}</td></tr>" for r in tools.get("routers", []))
+    body = f"""<h1>Routers</h1>
+<p class=lede>Routing alone. {len(placed)} of the cases place every part; each is written out as a placed,
+unrouted KiCad board, with the case's rules in its project file, and given to a router that knows
+nothing of any language. What comes back is graded as any board is.</p>
+<div class=scroll><table>
+<thead><tr><th>Case</th><th class=num>Nets</th><th class=num>Layers</th>{head}</tr></thead>
+<tbody>{rows}</tbody><tfoot>{tally}</tfoot></table></div>
+<p class=prose>The greyed columns are the two toolchains on the same cases, for comparison: each
+wrote the case in its own language and routed it with its own router, so its failure may be the
+language's or the placer's and not the router's. A router is not asked to refuse: a board it leaves
+unfinished is graded as it stands, <b>placed</b> where its parts and rules are right and nets are
+left open, and its refusal of the board that cannot be made counts, as a toolchain's does, only
+where it routes the one beside it that can.</p>
+<p class=prose>A case's page has the placed board to download, so that another router can be tried on
+it. The time is the whole run: the board out to the router's format, the routing, and back.</p>
+<h2>The routers</h2>
+<div class=scroll><table class=prose><thead><tr><th>Router</th><th>Version</th><th>License</th><th></th></tr></thead>
+<tbody>{about}</tbody></table></div>"""
+    page("routers.html", "Routers · pcbhdl-bench", body, "routers.html")
 
 
 def link(name, url):
@@ -523,8 +594,10 @@ def main():
     entered = [t for t in tools["toolchains"] if t.get("command")]  # a column each; the rest are on their page
     index(cases, entered, results, read_runs())
     cases_page(cases, results)
+    everyone = tools["toolchains"] + tools.get("routers", [])
     for case in cases:
-        case_page(case, patterns, rules, tools["toolchains"], results)
+        case_page(case, patterns, rules, everyone, results, tools.get("routers", []))
+    routers_page(cases, tools, results, read_runs())
     toolchains_page(tools)
     prior_page(json.loads((ROOT / "landscape.json").read_text()))
     public = [{k: v for k, v in c.items() if k != "body"} for c in cases]

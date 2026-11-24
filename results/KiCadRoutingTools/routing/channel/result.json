@@ -1,0 +1,4 @@
+{
+ "outcome": "refused",
+ "why": "KiCadRoutingTools left 2 nets open, and says so"
+}

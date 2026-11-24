@@ -5,6 +5,7 @@
 Writes results/<toolchain>.json, and keeps each board at results/<toolchain>/<case id>/. A case
 left out with --case keeps the result it had. Standard library only."""
 import argparse
+import os
 import datetime
 import json
 import pathlib
@@ -15,6 +16,7 @@ import tomllib
 
 import grade
 import kicad
+import place
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 LIMIT = 600  # seconds a runner has for a case that gives no limit of its own
@@ -42,10 +44,15 @@ def run_case(tool, case, patterns, rules):
     if out.exists():
         shutil.rmtree(out)
     out.mkdir(parents=True)
+    given = case["id"]
+    if tool.get("kind") == "router":  # a router is given the case as a placed board, not its id
+        place.write(case, out / "placed")
+        given = str(out / "placed")
     start = time.monotonic()
     try:
-        done = subprocess.run([*tool["command"], case["id"], str(out)], cwd=ROOT, capture_output=True,
-                              text=True, timeout=case.get("timeout", LIMIT))
+        limit = case.get("timeout", LIMIT)
+        done = subprocess.run([*tool["command"], given, str(out)], cwd=ROOT, capture_output=True, text=True,
+                              timeout=limit, env={**os.environ, "ROUTE_SECONDS": str(limit - 60)})  # a router's share of it
     except subprocess.TimeoutExpired:
         return {"outcome": "timeout", "why": f"Ran past {case.get('timeout', LIMIT)} s."}
     seconds = round(time.monotonic() - start, 2)
@@ -67,6 +74,19 @@ def run_case(tool, case, patterns, rules):
             result["as_built"] = {k: built[k] for k in ("outcome", "why", "metrics")}
         return result
     board = named(kicad.load(out / "board.kicad_pcb"), said)
+    if tool.get("kind") == "router" and "refuse" in case["checks"]:
+        # a router is not asked to refuse: of a board that cannot be made, one it leaves unfinished
+        # and otherwise sound is its refusal, and one with a fault is wrong
+        asked = ["parts", "connectivity", "rules", "outline"] + (["fixed"] if any("at" in p for p in case["part"]) else [])
+        built = grade.grade({**case, "checks": asked}, board, patterns, rules, tool.get("pads", {}))
+        if built["outcome"] == "pass":
+            raise AssertionError(f"{case['id']} is not unsatisfiable: this board passes")
+        if built["outcome"] == "placed":
+            left = sum(n.endswith("is open") for n in built["checks"]["connectivity"]["notes"])
+            return {"outcome": "refused", "refused": True, "seconds": seconds, "metrics": built["metrics"],
+                    "why": f"It left {left} of the {len(case['net'])} nets open, on a board with no other fault."}
+        return {**built, "outcome": "wrong", "seconds": seconds,
+                "why": "A board was written for a case that has none. " + built["why"]}
     result = grade.grade(case, board, patterns, rules, tool.get("pads", {}))
     result["seconds"] = seconds
     return result
@@ -80,11 +100,14 @@ def main():
     patterns = tomllib.loads((ROOT / "patterns.toml").read_text())
     rules = tomllib.loads((ROOT / "rules.toml").read_text())
     cases = [read_case(p) for p in sorted((ROOT / "cases").glob("*/*.md"))]
-    all_cases = [c for c in cases if c["status"] == "specified"]
-    cases = [c for c in all_cases if args.case in (None, c["id"])]
-    for tool in json.loads((ROOT / "toolchains.json").read_text())["toolchains"]:
+    every = cases
+    entered = json.loads((ROOT / "toolchains.json").read_text())
+    for tool in entered["toolchains"] + [dict(r, kind="router") for r in entered.get("routers", [])]:
         if not tool.get("command") or args.toolchain not in (None, tool["name"]):
             continue
+        all_cases = [c for c in every if c["status"] == "specified"
+                     and (tool.get("kind") != "router" or place.placeable(c))]
+        cases = [c for c in all_cases if args.case in (None, c["id"])]
         path = ROOT / "results" / f"{tool['name']}.json"
         kept = json.loads(path.read_text())["cases"] if path.exists() and args.case else {}
         if not cases:  # nothing to run: the results there are judged again
@@ -102,10 +125,10 @@ def main():
         for case in all_cases:
             got = kept.get(case["id"])
             if got and got.get("refused") and "refuse" in case["checks"]:
-                control = kept.get(case["control"], {}).get("outcome")
+                control = kept.get(case["control"], {}).get("outcome")  # a router's is placed for it too
                 got["outcome"] = "pass" if control == "pass" else "refused"
                 got["control"] = {"case": case["control"], "outcome": control or "missing"}
-        path.write_text(json.dumps({"toolchain": tool["name"], "version": version,
+        path.write_text(json.dumps({"toolchain": tool["name"], "kind": tool.get("kind", "toolchain"), "version": version,
                                     "ran": datetime.date.today().isoformat(),
                                     "cases": dict(sorted(kept.items()))}, indent=1, ensure_ascii=False) + "\n")
 

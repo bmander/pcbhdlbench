@@ -1,0 +1,367 @@
+{
+ "toolchain": "fastroute",
+ "kind": "router",
+ "version": "fastroute 0.1.14",
+ "ran": "2026-11-24",
+ "cases": {
+  "basics/header-breakout": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 56.0,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 1.21
+  },
+  "outline/l-shape": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 263.617,
+    "vias": 0,
+    "layers": 2
+   },
+   "seconds": 1.34
+  },
+  "parametric/led-ring-12": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 63.366,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 1.2
+  },
+  "parametric/led-ring-60": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 239.326,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 1.51
+  },
+  "routing/bga-fanout": {
+   "outcome": "placed",
+   "why": "B2 is open; B3 is open; B4 is open; B7 is open; B8 is open; B9 is open; B10 is open; B11 is open; B12 is open; B13 is open; B14 is open; A15 is open; A16 is open; D15 is open; E15 is open; J15 is open; K15 is open; M15 is open; N15 is open; P15 is open; R15 is open; R14 is open; R13 is open; R12 is open; R9 is open; R8 is open; R6 is open; R5 is open; R4 is open; R3 is open; P2 is open; N2 is open; J1 is open; J2 is open; G2 is open; F2 is open; E2 is open; GND is open; VCC is open.",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": false,
+     "notes": [
+      "B2 is open",
+      "B3 is open",
+      "B4 is open",
+      "B7 is open",
+      "B8 is open",
+      "B9 is open",
+      "B10 is open",
+      "B11 is open",
+      "B12 is open",
+      "B13 is open",
+      "B14 is open",
+      "A15 is open",
+      "A16 is open",
+      "D15 is open",
+      "E15 is open",
+      "J15 is open",
+      "K15 is open",
+      "M15 is open",
+      "N15 is open",
+      "P15 is open",
+      "R15 is open",
+      "R14 is open",
+      "R13 is open",
+      "R12 is open",
+      "R9 is open",
+      "R8 is open",
+      "R6 is open",
+      "R5 is open",
+      "R4 is open",
+      "R3 is open",
+      "P2 is open",
+      "N2 is open",
+      "J1 is open",
+      "J2 is open",
+      "G2 is open",
+      "F2 is open",
+      "E2 is open",
+      "GND is open",
+      "VCC is open"
+     ]
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "vias": {
+     "ok": true,
+     "notes": []
+    },
+    "copper": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 2453.85,
+    "vias": 51,
+    "layers": 4,
+    "copper_mm2 (GND on In1.Cu)": 3041.2,
+    "copper_mm2 (VCC on In2.Cu)": 3051.2
+   },
+   "seconds": 87.26
+  },
+  "routing/bus-8": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "layers": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 179.775,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 1.29
+  },
+  "routing/bus-reversed": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 183.462,
+    "vias": 0,
+    "layers": 2
+   },
+   "seconds": 1.44
+  },
+  "routing/channel": {
+   "outcome": "placed",
+   "why": "D11 is open.",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": false,
+     "notes": [
+      "D11 is open"
+     ]
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 338.028,
+    "vias": 0,
+    "layers": 2
+   },
+   "seconds": 3.54
+  },
+  "routing/two-crossings": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 24.97,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 1.22
+  },
+  "unsatisfiable/channel-overfull": {
+   "outcome": "refused",
+   "refused": true,
+   "seconds": 5.23,
+   "metrics": {
+    "track_mm": 381.95,
+    "vias": 0,
+    "layers": 2
+   },
+   "why": "It left 1 of the 13 nets open, on a board with no other fault.",
+   "control": {
+    "case": "routing/channel",
+    "outcome": "placed"
+   }
+  }
+ }
+}

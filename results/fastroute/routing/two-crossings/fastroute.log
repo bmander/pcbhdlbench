@@ -1,0 +1,24 @@
+    0.000 INFO  fastroute 0.1.14
+    0.000 INFO  parsed 'work/board.dsn' in 0.2 ms: 2 layers, 4 components, 2 nets, 0 wires
+    0.001 INFO  built board in 0.5 ms: 13 items (8 pins, 0 vias, 0 traces)
+    0.001 INFO  threads: autorouting passes run on router.autorouter.max_threads threads (1 = sequential); the optimizer uses router.optimizer.max_threads
+    0.001 INFO  optimizer mode: Parallel { threads: 11 }, board time limits: WallClock, stage wall clock limits: enabled
+    0.001 INFO  Pipeline thread limits: autorouter.max_threads=11, optimizer.max_threads=11.
+    0.005 INFO  Fanout pass #1 completed in 0.00 seconds with 4 SMD pins fanouted, 0 not routed, 0 insert errors, +4 extra vias (0 SMD pins still to check in pass, ripup costs=100).
+    0.006 INFO  Fanout pass #2 completed in 0.00 seconds with 0 SMD pins fanouted, 0 not routed, 0 insert errors, +0 extra vias (0 SMD pins still to check in pass, ripup costs=200).
+    0.006 INFO  Fanout stage completed: 2 passes, completed in 0.00 seconds.
+    0.006 INFO  checkpoint: best board so far (2 unrouted, 0 violations) written to 'work/board.ses'
+    0.006 INFO  Auto-routing stage started with baseline score 0.00 for 2 unrouted items.
+    0.010 INFO  Auto-routing pass #1 was completed in 0.00 seconds with score 1000.00 (0 unrouted and 0 violations) (routed 2, failed 0, ripped 0).
+    0.011 INFO  checkpoint: best board so far (0 unrouted, 0 violations) written to 'work/board.ses'
+    0.011 INFO  Auto-routing pass #2 was completed in 0.00 seconds with score 1000.00 (0 unrouted and 0 violations) (routed 0, failed 0, ripped 0).
+    0.011 INFO  Auto-routing stage completed: started with 2 unrouted nets, completed in 0.00 seconds, final score: 1000.00 (0 unrouted and 0 violations).
+    0.011 INFO  Optimization stage started. Baseline router score: 1000.00, optimizer score: 718.75, incomplete connections: 0, clearance violations: 0.
+    0.011 INFO  Optimizer time budget: 60 s (as long as routing took; set router.optimizer.timeout to change).
+    0.014 INFO  Optimizer pass #1 was completed in 0.00 seconds (3 of 3 candidates) with the score of 718.75 (0 unrouted and 0 violations).
+    0.014 INFO  Optimizer pass #1 candidate rejected: OPTIMIZER_SCORE_NOT_IMPROVED. Restoring incumbent (optimizer score 718.75, incomplete connections: 0, clearance violations: 0).
+    0.014 INFO  Optimizer pass #1: optimizer score 718.75 -> 718.75 (UNCHANGED, 0.0000%), router score: 1000.00, incomplete connections: 0, clearance violations: 0.
+    0.014 INFO  Stopping optimizer because the improvement in this pass (0.0000%) is below the threshold (2.50%).
+    0.014 INFO  Optimization stage completed: Baseline router score: 1000.00, baseline optimizer score: 718.75, final router score: 1000.00, final optimizer score: 718.75, completed in 0.00 seconds.
+    0.014 INFO  routing finished in 0.01 s
+    0.015 INFO  saved 'work/board.ses' (1620 bytes)

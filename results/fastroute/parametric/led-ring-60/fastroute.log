@@ -1,0 +1,18 @@
+    0.000 INFO  fastroute 0.1.14
+    0.001 INFO  parsed 'work/board.dsn' in 0.5 ms: 2 layers, 61 components, 61 nets, 0 wires
+    0.003 INFO  built board in 2.6 ms: 184 items (122 pins, 0 vias, 0 traces)
+    0.003 INFO  threads: autorouting passes run on router.autorouter.max_threads threads (1 = sequential); the optimizer uses router.optimizer.max_threads
+    0.003 INFO  optimizer mode: Parallel { threads: 11 }, board time limits: WallClock, stage wall clock limits: enabled
+    0.003 INFO  Pipeline thread limits: autorouter.max_threads=11, optimizer.max_threads=11.
+    0.072 INFO  Fanout pass #1 completed in 0.07 seconds with 61 SMD pins fanouted, 0 not routed, 0 insert errors, +1 extra via (0 SMD pins still to check in pass, ripup costs=100).
+    0.074 INFO  Fanout pass #2 completed in 0.00 seconds with 0 SMD pins fanouted, 0 not routed, 0 insert errors, +0 extra vias (0 SMD pins still to check in pass, ripup costs=200).
+    0.074 INFO  Fanout stage completed: 2 passes, completed in 0.07 seconds.
+    0.085 INFO  checkpoint: best board so far (1 unrouted, 0 violations) written to 'work/board.ses'
+    0.085 INFO  Auto-routing stage started with baseline score 978.14 for 1 unrouted item.
+    0.101 INFO  Auto-routing pass #1 was completed in 0.02 seconds with score 1000.00 (0 unrouted and 0 violations) (routed 1, failed 0, ripped 0).
+    0.103 INFO  checkpoint: best board so far (0 unrouted, 0 violations) written to 'work/board.ses'
+    0.103 INFO  Auto-routing pass #2 was completed in 0.00 seconds with score 1000.00 (0 unrouted and 0 violations) (routed 0, failed 0, ripped 0).
+    0.115 INFO  Auto-routing stage completed: started with 61 unrouted nets, completed in 0.03 seconds, final score: 1000.00 (0 unrouted and 0 violations).
+    0.132 INFO  Skipping optimization stage: the board has no vias to eliminate and trace length (239.33 mm) is within 5% of theoretical minimum (281.09 mm).
+    0.133 INFO  routing finished in 0.13 s
+    0.139 INFO  saved 'work/board.ses' (28307 bytes)

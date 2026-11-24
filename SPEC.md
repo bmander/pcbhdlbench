@@ -1,4 +1,4 @@
-# pcbhdl-bench specification, version 0.3 (a proposal)
+# pcbhdl-bench specification, version 0.4 (a proposal)
 
 pcbhdl-bench works like Rosetta Code. Each **case** describes a circuit board in plain words. Each
 **toolchain** has its own **implementation** of each case, written the way its users write: in its
@@ -190,6 +190,21 @@ case's header: the netlist there is the harness's, to check with.
 
 A toolchain that cannot write KiCad's format writes Gerber X2 and Excellon files, from which the
 harness reads the same copper; the parts are then found by their pads.
+
+## A router
+
+A case that places every one of its parts, on the top, is also a routing problem that needs no
+language. `harness/place.py` writes it as a placed, unrouted KiCad board: the outline, the parts
+where the case puts them with the pads of their land patterns and their nets, the rule set as the
+board's least sizes and its default net class (in the `.kicad_pro` beside it, where KiCad keeps
+them), an unfilled zone over the whole board for each plane the case asks for, and a rule area
+closing each layer the case closes to tracks.
+
+A router's runner is `<command> <dir of the placed board> <out dir>`: it writes
+`board.kicad_pcb` and `result.json` as a toolchain's does, and its board is graded by the same
+checks against the same case. Routers are listed under `routers` in `toolchains.json`, and their
+results are a board of their own. A router that leaves nets open and does not say so is graded on
+what it wrote: *placed*, where nothing else is wrong.
 
 ## An implementation
 

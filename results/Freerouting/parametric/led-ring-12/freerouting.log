@@ -1,0 +1,78 @@
+2026-11-24 00:44:19.167 INFO   Freerouting v2.1.0 (build-date: 2025-04-12)
+2026-11-24 00:44:19.258 WARN   No default constructor found for field: currentLocale
+2026-11-24 00:44:19.259 INFO   Settings were loaded from freerouting.json
+2026-11-24 00:44:20.863 INFO   [7E41A2\2EBDCA] Job '7E41A2\2EBDCA' started at 2026-11-24T08:44:20.863435Z
+2026-11-24 00:44:20.885 INFO   New version available: v2.5.0
+2026-11-24 00:44:21.211 INFO   [7E41A2\2EBDCA] Auto-router pass #1 on board 'f01c75b7d71ae52f7557e2adc3bf35b3' was completed in 0.26 seconds with the score of 995.00.
+2026-11-24 00:44:21.236 INFO   [7E41A2\2EBDCA] Auto-router pass #2 on board 'dd740449b913e71e900d5b783aafc2b0' was completed in 0.00 seconds with the score of 995.00.
+{
+  "host": "KiCad's Pcbnew,10.0.5",
+  "unit": "mm",
+  "board": {
+    "bounding_box": {
+      "x": 1299.4,
+      "y": -1000.6,
+      "width": 1000.6,
+      "height": -1299.4
+    },
+    "size": {
+      "x": 0.0,
+      "y": 0.0,
+      "width": 298.8,
+      "height": 298.8
+    }
+  },
+  "layers": {
+    "total_count": 2,
+    "signal_count": 2
+  },
+  "items": {
+    "total_count": 71,
+    "trace_count": 31,
+    "via_count": 0,
+    "conduction_area_count": 0,
+    "drill_item_count": 26,
+    "pin_count": 0,
+    "component_count": 13,
+    "other_count": 1
+  },
+  "components": {
+    "total_count": 13
+  },
+  "pads": {
+    "total_count": 26
+  },
+  "nets": {
+    "total_count": 13,
+    "class_count": 2
+  },
+  "connections": {
+    "maximum_count": 44,
+    "incomplete_count": 0
+  },
+  "traces": {
+    "total_count": 31,
+    "total_segment_count": 56,
+    "total_length": 629.7776,
+    "total_weighted_length": 1257199.1,
+    "average_length": 20.315405,
+    "total_vertical_length": 77.544,
+    "total_horizontal_length": 105.238,
+    "total_angled_length": 96.2659
+  },
+  "bends": {
+    "total_count": 25,
+    "90_degree_count": 13,
+    "45_degree_count": 12,
+    "other_angle_count": 0
+  },
+  "vias": {
+    "total_count": 0,
+    "through_hole_count": 0,
+    "blind_count": 0,
+    "buried_count": 0
+  },
+  "clearance_violations": {
+    "total_count": 0
+  }
+}

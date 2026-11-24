@@ -1,0 +1,308 @@
+{
+ "toolchain": "KiCadRoutingTools",
+ "kind": "router",
+ "version": "KiCadRoutingTools 0.24.2",
+ "ran": "2026-11-24",
+ "cases": {
+  "basics/header-breakout": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 56.0,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 3.67
+  },
+  "outline/l-shape": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 298.183,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 7.16
+  },
+  "parametric/led-ring-12": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 63.03,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 2.85
+  },
+  "parametric/led-ring-60": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 238.667,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 4.05
+  },
+  "routing/bga-fanout": {
+   "outcome": "wrong",
+   "why": "GND is open; VCC is open; 100 vias in pads of U1.",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": false,
+     "notes": [
+      "GND is open",
+      "VCC is open"
+     ]
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "vias": {
+     "ok": false,
+     "notes": [
+      "100 vias in pads of U1"
+     ]
+    },
+    "copper": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 2380.626,
+    "vias": 147,
+    "layers": 4,
+    "copper_mm2 (GND on In1.Cu)": 3154.3,
+    "copper_mm2 (VCC on In2.Cu)": 3154.3
+   },
+   "seconds": 29.32
+  },
+  "routing/bus-8": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "layers": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 179.747,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 3.08
+  },
+  "routing/bus-reversed": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 168.681,
+    "vias": 3,
+    "layers": 2
+   },
+   "seconds": 3.26
+  },
+  "routing/channel": {
+   "outcome": "refused",
+   "why": "KiCadRoutingTools left 2 nets open, and says so",
+   "seconds": 27.74,
+   "refused": true,
+   "as_built": {
+    "outcome": "placed",
+    "why": "D4 is open; D8 is open.",
+    "metrics": {
+     "track_mm": 431.117,
+     "vias": 22,
+     "layers": 2
+    }
+   }
+  },
+  "routing/two-crossings": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 30.411,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 2.7
+  },
+  "unsatisfiable/channel-overfull": {
+   "outcome": "refused",
+   "why": "KiCadRoutingTools left 4 nets open, and says so",
+   "seconds": 61.44,
+   "refused": true,
+   "control": {
+    "case": "routing/channel",
+    "outcome": "refused"
+   }
+  }
+ }
+}

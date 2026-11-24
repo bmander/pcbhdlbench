@@ -12,7 +12,8 @@ kernels.
 **Status: early.** 82 cases in 11 categories, 23 of them specified down to the netlist and the
 rest one-paragraph sketches. The harness grades fourteen of the checks (`parts`, `connectivity`,
 `rules`, `outline`, `fixed`, `side`, `layers`, `near`, `replica`, `loop`, `apart`, `copper`,
-`width`, `vias`) and refusals, which is what those 23 cases ask. Two toolchains are entered, tscircuit and netsmith; their results are on the site.
+`width`, `vias`) and refusals, which is what those 23 cases ask. Two toolchains are entered, tscircuit and netsmith, and three routers (Freerouting, fastroute and
+KiCadRoutingTools) on the cases that place every part; their results are on the site.
 
 ## Why
 
@@ -59,6 +60,13 @@ legal placement not fully routed. **Refused** ranks above **wrong**. See [SPEC.m
 # netsmith, from source (it has no binary for an Intel Mac); its chips use an installed KiCad's footprints
 git clone https://github.com/noahdgrant/netsmith toolchains/netsmith/upstream
 (cd toolchains/netsmith/upstream && NETSMITH_SKIP_WEB=1 CARGO_TARGET_DIR=../target cargo build --release -p netsmith-cli --locked)
+# the routers; all three need an installed KiCad, whose Python writes and reads Specctra and fills zones
+gh release download v2.1.0 -R freerouting/freerouting -p freerouting-2.1.0.jar -D toolchains/freerouting   # runs on Java 21
+gh release download v0.1.14 -R parisxmas/fastroute -p 'fastroute-0.1.14-macos-x64.tar.gz' -D toolchains/fastroute
+mkdir -p toolchains/fastroute/bin && tar -xzf toolchains/fastroute/*.tar.gz -C toolchains/fastroute/bin
+git clone https://github.com/drandyhaas/KiCadRoutingTools toolchains/krt/upstream
+python3 -m venv toolchains/krt/venv && toolchains/krt/venv/bin/pip install numpy scipy shapely Pillow
+(cd toolchains/krt/upstream && ../venv/bin/python build_router.py)
 python3 harness/run.py                     # run every specified case: results/
 python3 harness/site.py                    # render the board: site/
 python3 -m http.server -d site             # serve it
