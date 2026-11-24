@@ -6,11 +6,14 @@ const $ = (id) => document.getElementById(id);
 const canvas = $('board');
 const ctx = canvas.getContext('2d');
 
+// by the strategy's number in the module, which is also what a link to a board keeps
 const ABOUT = [
-  'Each net in turn sends a wave out from its copper, one grid point further each step, until it meets the pad it wants. It finds the shortest way there is, and looks everywhere to find it.',
+  'Lee, 1961. Each net in turn sends a wave out from its copper, one grid point further each step, until it meets the pad it wants. It finds the shortest way there is, and looks everywhere to find it.',
   'The same search, but the points nearer the pad are tried first, so the wave is a finger and not a pond. What it finds is as short; it looks at far less.',
   'A* until a net is walled in by the nets before it. Then it is routed straight through them, the nets it crossed are taken up, and they are routed again afterwards.',
   'Every net is routed where it likes, through other nets if it likes, at a price. Each round the price of a shared point goes up, and the nets are all routed again, until no point is shared.',
+  'Hadlock, 1977. A step toward the pad is free and a step away is a detour; the points with the fewest detours are tried first. With nothing in the way it walks straight there, and it widens its search one detour at a time. What it finds is as short as Lee\'s.',
+  'Lee\'s wave from both ends at once: one from the net\'s copper, one from the pad, each a step at a time, until they meet. Two small ponds hold less than one big one, so it looks at about half as much.',
 ];
 
 // the board as the page holds it, in mm, y up
@@ -146,6 +149,7 @@ function draw() {
           const c = idx(l, x, y), f = flags[c];
           let fill = null;
           if (f & 8) fill = l === 0 ? 'rgba(110,150,255,0.40)' : 'rgba(110,150,255,0.22)';
+          else if (f & 64) fill = l === 0 ? 'rgba(60,200,170,0.40)' : 'rgba(60,200,170,0.22)';
           else if (f & 4) fill = 'rgba(240,190,40,0.75)';
           else if (nets[c] === -2 && l === layers[layers.length - 1]) fill = 'rgba(140,140,146,0.16)';
           if (fill) {

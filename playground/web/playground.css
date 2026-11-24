@@ -19,6 +19,7 @@
 #netlist .chip i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 .key .sw-open { background: rgba(240, 190, 40, 0.75); }
 .key .sw-closed { background: rgba(110, 150, 255, 0.45); }
+.key .sw-back { background: rgba(60, 200, 170, 0.45); }
 .key .sw-shared { background: #e34948; }
 .key .sw-wall { background: repeating-linear-gradient(45deg, var(--muted) 0 2px, transparent 2px 4px); }
 #stats { min-height: 3em; }

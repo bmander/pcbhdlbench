@@ -79,14 +79,15 @@ pub extern "C" fn load() -> i32 {
     })
 }
 
-/// Begins routing: strategy 0 Lee, 1 A*, 2 rip-up and reroute, 3 negotiated congestion; order 0
-/// as given, 1 the shortest net first, 2 the longest.
+/// Begins routing: strategy 0 Lee, 1 A*, 2 rip-up and reroute, 3 negotiated congestion, 4 Hadlock,
+/// 5 bidirectional; order 0 as given, 1 the shortest net first, 2 the longest.
 #[no_mangle]
 pub extern "C" fn start(strategy: u32, order: u32) {
     HELD.with(|h| {
         let h = &mut *h.borrow_mut();
         if let Some(r) = h.router.as_mut() {
-            let s = [Strategy::Lee, Strategy::AStar, Strategy::RipUp, Strategy::Negotiated][strategy.min(3) as usize];
+            let s = [Strategy::Lee, Strategy::AStar, Strategy::RipUp, Strategy::Negotiated, Strategy::Hadlock,
+                     Strategy::Bidirectional][strategy.min(5) as usize];
             let o = [Order::AsGiven, Order::ShortestFirst, Order::LongestFirst][order.min(2) as usize];
             r.start(s, o, &h.pads);
         }
@@ -119,7 +120,7 @@ pub extern "C" fn nets() -> *const i16 {
 }
 
 /// By point: bit 0 a pad, 1 a track through what another net keeps, 2 open to the search, 3
-/// closed by it, 4 a via, 5 the path laid last.
+/// closed by it, 4 a via, 5 the path laid last, 6 closed by the wave from the pads.
 #[no_mangle]
 pub extern "C" fn flags() -> *const u8 {
     HELD.with(|h| h.borrow().flags.as_ptr())

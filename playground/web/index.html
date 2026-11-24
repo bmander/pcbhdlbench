@@ -19,6 +19,7 @@ search steps a frame, so that the wave can be seen spreading.</p>
     <p class=legend>
       <span class=key><span class=sw-open></span>search, open</span>
       <span class=key><span class=sw-closed></span>search, closed</span>
+      <span class=key><span class=sw-back></span>closed from the far end</span>
       <span class=key><span class=sw-shared></span>shared by two nets</span>
       <span class=key><span class=sw-wall></span>closed to tracks</span>
       <span class=muted>Solid tracks are on the top layer, hollow ones on the bottom.</span>
@@ -27,10 +28,16 @@ search steps a frame, so that the wave can be seen spreading.</p>
   <aside class=panel>
     <h2>Route</h2>
     <label>Strategy <select id=strategy>
-      <option value=0>Lee: a breadth-first wave</option>
-      <option value=1 selected>A*: pulled toward the pad</option>
-      <option value=2>Rip-up and reroute</option>
-      <option value=3>Negotiated congestion (PathFinder)</option>
+      <optgroup label='One net at a time, and what is laid stays'>
+        <option value=0>Lee: a breadth-first wave</option>
+        <option value=5>Bidirectional: a wave from each end</option>
+        <option value=1 selected>A*: pulled toward the pad</option>
+        <option value=4>Hadlock: fewest detours first</option>
+      </optgroup>
+      <optgroup label='Nets taken up and laid again'>
+        <option value=2>Rip-up and reroute</option>
+        <option value=3>Negotiated congestion (PathFinder)</option>
+      </optgroup>
     </select></label>
     <p class=muted id=about></p>
     <label>Order of the nets <select id=order>

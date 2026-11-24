@@ -7,10 +7,13 @@
 //! track's and a via's from the rules. With the pitch at track width plus clearance, the default,
 //! a track's halo is its own points and two nets may run side by side.
 //!
-//! Four strategies share one search:
+//! Six strategies share one search:
 //!
 //! - **Lee**: a breadth-first wave from the net's copper to its next pad, the nets one after another.
+//! - **Bidirectional**: Lee's wave from both ends at once, the two meeting in the middle.
 //! - **A\***: the same search, pulled toward the pad by its distance.
+//! - **Hadlock**: the points are tried in the order of their detours, the steps a way to them
+//!   takes away from the pad; a way with none is followed straight to its end.
 //! - **Rip-up and reroute**: A\*, and where a net is walled in, it is routed through the nets in
 //!   its way, which are taken up and routed again after it.
 //! - **Negotiated congestion** (PathFinder): every net is routed where it likes, sharing points
@@ -73,6 +76,8 @@ pub enum Strategy {
     AStar,
     RipUp,
     Negotiated,
+    Hadlock,
+    Bidirectional,
 }
 
 #[derive(Clone, Copy, PartialEq, Debug)]
@@ -157,6 +162,15 @@ pub struct Router {
     parent: Vec<u32>,
     target: Vec<u32>,
     heap: BinaryHeap<Open>,
+    // the wave from the pads, of the bidirectional search: as the five above
+    g2: Vec<f32>,
+    seen2: Vec<u32>,
+    closed2: Vec<u32>,
+    parent2: Vec<u32>,
+    heap2: BinaryHeap<Open>,
+    /// The cheapest way yet found through a point both waves have reached: its cost, the point
+    /// on the first wave's side, and the one on the other's.
+    meet: (f32, u32, u32),
     tbox: (i32, i32, i32, i32),
     mark: Vec<u32>,
     mark_id: u32,
@@ -228,7 +242,9 @@ impl Router {
             strategy: Strategy::AStar, queue: VecDeque::new(), cur: 0, phase: Phase::Done, ripping: false,
             round: 0, present: 0.5, history: vec![0.0; n],
             sid: 0, g: vec![0.0; n], seen: vec![0; n], closed: vec![0; n], parent: vec![NONE; n], target: vec![0; n],
-            heap: BinaryHeap::new(), tbox: (0, 0, 0, 0), mark: vec![0; n], mark_id: 0,
+            heap: BinaryHeap::new(),
+            g2: vec![0.0; n], seen2: vec![0; n], closed2: vec![0; n], parent2: vec![NONE; n], heap2: BinaryHeap::new(),
+            meet: (f32::INFINITY, NONE, NONE), tbox: (0, 0, 0, 0), mark: vec![0; n], mark_id: 0,
             expansions: 0, total_rips: 0, last_path: Vec::new(),
         };
         // the edge: a track's centre keeps half its width and the edge clearance inside the outline
@@ -421,13 +437,37 @@ impl Router {
         Some(cost)
     }
 
-    fn heuristic(&self, c: u32) -> f32 {
-        if self.strategy == Strategy::Lee {
-            return 0.0;
-        }
+    /// How far a point is from the pads the search is for, in steps, as the crow walks.
+    fn distance(&self, c: u32) -> f32 {
         let (x, y, _) = self.xy(c);
         let (x0, y0, x1, y1) = self.tbox;
         ((x0 - x).max(x - x1).max(0) + (y0 - y).max(y - y1).max(0)) as f32
+    }
+
+    /// What the search adds to a point's cost to order the points it has open.
+    fn heuristic(&self, c: u32) -> f32 {
+        match self.strategy {
+            Strategy::Lee | Strategy::Bidirectional => 0.0,
+            // Hadlock's order is the detours alone; of two points with as many, the nearer first
+            Strategy::Hadlock => self.distance(c) * 1e-4,
+            _ => self.distance(c),
+        }
+    }
+
+    /// What a step costs by the strategy's own measure. Hadlock counts detours: a step toward the
+    /// pads is free and any other is one, and a via is as dear as half its length in steps.
+    fn price(&self, from: u32, to: usize, cost: f32) -> f32 {
+        if self.strategy != Strategy::Hadlock || cost == 0.0 {
+            return cost;
+        }
+        let per = self.gw * self.gh;
+        if from as usize / per != to / per {
+            1.0 + VIA_COST / 2.0
+        } else if self.distance(to as u32) < self.distance(from) {
+            0.0
+        } else {
+            1.0
+        }
     }
 
     /// Opens the search from the net's copper so far to the pads it has yet to reach.
@@ -454,11 +494,21 @@ impl Router {
             let h = self.heuristic(c);
             self.heap.push(Open(h, c));
         }
+        self.heap2.clear();
+        self.meet = (f32::INFINITY, NONE, NONE);
+        if self.strategy == Strategy::Bidirectional {
+            for &c in &targets {
+                self.g2[c as usize] = 0.0;
+                self.seen2[c as usize] = sid;
+                self.parent2[c as usize] = NONE;
+                self.heap2.push(Open(0.0, c));
+            }
+        }
         self.phase = Phase::Searching;
     }
 
     fn relax(&mut self, from: u32, to: usize, cost: f32) {
-        let g = self.g[from as usize] + cost;
+        let g = self.g[from as usize] + self.price(from, to, cost);
         if self.closed[to] != self.sid && (self.seen[to] != self.sid || g < self.g[to]) {
             self.g[to] = g;
             self.seen[to] = self.sid;
@@ -468,8 +518,106 @@ impl Router {
         }
     }
 
+    /// The steps from a point: each point a track may go on to, or the far layer, and its cost.
+    fn steps(&self, c: u32) -> Vec<(usize, f32)> {
+        let (x, y, l) = self.xy(c);
+        let mut out = Vec::with_capacity(5);
+        for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)] {
+            if let Some(to) = self.at(x + dx, y + dy, l) {
+                if let Some(cost) = self.enter(to) {
+                    out.push((to, cost));
+                }
+            }
+        }
+        let to = self.at(x, y, 1 - l).unwrap();
+        let me = self.cur as i16;
+        if self.pad_net[c as usize] == me && self.pad_net[to] == me {
+            out.push((to, 0.0)); // a through-hole pad of the net's own is a way through for nothing
+        } else if let (Some(step), Some(via)) = (self.enter(to), self.via(x, y)) {
+            out.push((to, step + via));
+        }
+        out
+    }
+
+    /// One expansion of the bidirectional search: of the wave that is behind. A step costs the
+    /// same either way, so the two waves' costs add where they meet, and the search is over when
+    /// no way through points still open could be cheaper than the best meeting found.
+    fn expand_both(&mut self) -> bool {
+        let (a, b) = (self.heap.peek().map(|o| o.0), self.heap2.peek().map(|o| o.0));
+        let (Some(a), Some(b)) = (a, b) else {
+            return self.met();
+        };
+        if a + b >= self.meet.0 {
+            return self.met();
+        }
+        let sid = self.sid;
+        if a <= b {
+            let c = self.heap.pop().unwrap().1;
+            if self.closed[c as usize] == sid {
+                return false;
+            }
+            self.closed[c as usize] = sid;
+            self.expansions += 1;
+            for (to, cost) in self.steps(c) {
+                let g = self.g[c as usize] + cost;
+                if self.closed[to] != sid && (self.seen[to] != sid || g < self.g[to]) {
+                    self.g[to] = g;
+                    self.seen[to] = sid;
+                    self.parent[to] = c;
+                    self.heap.push(Open(g, to as u32));
+                }
+                if self.seen2[to] == sid && g + self.g2[to] < self.meet.0 {
+                    self.meet = (g + self.g2[to], c, to as u32);
+                }
+            }
+        } else {
+            let c = self.heap2.pop().unwrap().1;
+            if self.closed2[c as usize] == sid {
+                return false;
+            }
+            self.closed2[c as usize] = sid;
+            self.expansions += 1;
+            for (to, cost) in self.steps(c) {
+                let g = self.g2[c as usize] + cost;
+                if self.closed2[to] != sid && (self.seen2[to] != sid || g < self.g2[to]) {
+                    self.g2[to] = g;
+                    self.seen2[to] = sid;
+                    self.parent2[to] = c;
+                    self.heap2.push(Open(g, to as u32));
+                }
+                if self.seen[to] == sid && g + self.g[to] < self.meet.0 {
+                    self.meet = (g + self.g[to], to as u32, c);
+                }
+            }
+        }
+        false
+    }
+
+    /// The two waves have met, or one has run out: the way through their meeting is laid.
+    fn met(&mut self) -> bool {
+        let (cost, near, far) = self.meet;
+        if cost.is_infinite() {
+            self.dead_end();
+            return true;
+        }
+        let mut path = vec![far];
+        while self.parent2[*path.last().unwrap() as usize] != NONE {
+            path.push(self.parent2[*path.last().unwrap() as usize]);
+        }
+        path.reverse(); // from the pad reached to the meeting
+        path.push(near);
+        while self.parent[*path.last().unwrap() as usize] != NONE {
+            path.push(self.parent[*path.last().unwrap() as usize]);
+        }
+        self.lay(path);
+        true
+    }
+
     /// One expansion of the search. True when the search is over, with a path or without.
     fn expand(&mut self) -> bool {
+        if self.strategy == Strategy::Bidirectional {
+            return self.expand_both();
+        }
         let Some(Open(_, c)) = self.heap.pop() else {
             self.dead_end();
             return true;
@@ -483,20 +631,8 @@ impl Router {
             self.arrive(c);
             return true;
         }
-        let (x, y, l) = self.xy(c);
-        for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)] {
-            if let Some(to) = self.at(x + dx, y + dy, l) {
-                if let Some(cost) = self.enter(to) {
-                    self.relax(c, to, cost);
-                }
-            }
-        }
-        let to = self.at(x, y, 1 - l).unwrap();
-        let me = self.cur as i16;
-        if self.pad_net[c as usize] == me && self.pad_net[to] == me {
-            self.relax(c, to, 0.0); // a through-hole pad of the net's own is a way through for nothing
-        } else if let (Some(step), Some(via)) = (self.enter(to), self.via(x, y)) {
-            self.relax(c, to, step + via);
+        for (to, cost) in self.steps(c) {
+            self.relax(c, to, cost);
         }
         false
     }
@@ -513,12 +649,19 @@ impl Router {
         self.finish_net();
     }
 
-    /// The search has reached a pad: the path is laid, and what it runs through is taken up.
+    /// The search has reached a pad: the way back from it is the path.
     fn arrive(&mut self, end: u32) {
         let mut path = vec![end];
         while self.parent[*path.last().unwrap() as usize] != NONE {
             path.push(self.parent[*path.last().unwrap() as usize]);
         }
+        self.lay(path);
+    }
+
+    /// A path from a pad reached back to the net's copper is laid, and what it runs through is
+    /// taken up.
+    fn lay(&mut self, path: Vec<u32>) {
+        let end = path[0];
         let me = self.cur as i16;
         let mut vias = Vec::new();
         for w in path.windows(2) {
@@ -683,14 +826,17 @@ impl Router {
     /// The board as a page draws it: by point, the net whose copper is there (a track's, else a
     /// pad's), FREE or WALL; and flags, bit 0 a pad's copper, bit 1 a track through what another
     /// net keeps, bit 2 a point the search has open, bit 3 one it has closed, bit 4 a via, bit 5
-    /// the path laid last.
+    /// the path laid last, bit 6 a point closed by the wave from the pads.
     pub fn paint(&mut self, net: &mut [i16], flags: &mut [u8]) {
         let live = self.phase == Phase::Searching;
         for c in 0..net.len() {
             net[c] = if self.pad_net[c] != FREE { self.pad_net[c] } else if self.centre[c] != FREE { self.centre[c] }
                      else if self.fixed[c] == WALL { WALL } else { FREE };
             flags[c] = (self.pad_net[c] != FREE) as u8
-                | if live && self.closed[c] == self.sid { 8 } else if live && self.seen[c] == self.sid { 4 } else { 0 };
+                | if live && self.closed[c] == self.sid { 8 }
+                  else if live && self.closed2[c] == self.sid { 64 }
+                  else if live && (self.seen[c] == self.sid || self.seen2[c] == self.sid) { 4 }
+                  else { 0 };
         }
         for c in self.shared() {
             flags[c as usize] |= 2;
@@ -756,7 +902,7 @@ mod tests {
 
     #[test]
     fn every_strategy_routes_a_crossing() {
-        for s in [Strategy::Lee, Strategy::AStar, Strategy::RipUp, Strategy::Negotiated] {
+        for s in [Strategy::Lee, Strategy::AStar, Strategy::RipUp, Strategy::Negotiated, Strategy::Hadlock, Strategy::Bidirectional] {
             let mut r = solve(&crossing(), s);
             // one net changes layer or goes round the end of the other: either is sound
             assert!(r.sound(), "{s:?} leaves the crossing unrouted or shared");
@@ -767,6 +913,46 @@ mod tests {
     fn a_star_expands_less_than_lee() {
         let (lee, star) = (solve(&crossing(), Strategy::Lee), solve(&crossing(), Strategy::AStar));
         assert!(star.expansions < lee.expansions);
+    }
+
+    /// One net across an empty board, on one layer: nothing to go round, so every search that
+    /// finds a shortest way finds one of the same length, and they differ in how far they look.
+    fn open_field() -> Problem {
+        board(vec![pad(3.0, 3.0, 0, Side::Top), pad(21.0, 12.0, 0, Side::Top)], 24.0, 15.0)
+    }
+
+    #[test]
+    fn the_searches_find_ways_as_short_and_look_less_far_than_lee() {
+        let mut lee = solve(&open_field(), Strategy::Lee);
+        let length = lee.stats()[6];
+        for s in [Strategy::AStar, Strategy::Hadlock, Strategy::Bidirectional] {
+            let mut r = solve(&open_field(), s);
+            assert!(r.sound());
+            assert_eq!(r.stats()[6], length, "{s:?} finds a longer way than Lee");
+            assert_eq!(r.stats()[7], 0, "{s:?} takes a via across an empty board");
+            assert!(r.expansions < lee.expansions, "{s:?} looks as far as Lee: {} against {}", r.expansions, lee.expansions);
+        }
+    }
+
+    #[test]
+    fn hadlock_with_nothing_in_the_way_looks_no_further_than_the_way_is_long() {
+        let mut r = solve(&open_field(), Strategy::Hadlock);
+        let points = r.stats()[6] as f32 / 100.0 / 0.3;
+        assert!((r.expansions as f32) < 2.0 * points + 40.0, "{} expansions for a way of {points} points", r.expansions);
+    }
+
+    #[test]
+    fn on_a_crowded_board_the_searches_end_and_what_they_lay_is_clean() {
+        // which nets a search that takes nothing up gets through depends on the ways it happens
+        // to pick, so the count is not compared: every net is routed or given up, and no track
+        // runs through what another net keeps
+        for s in [Strategy::Lee, Strategy::AStar, Strategy::Hadlock, Strategy::Bidirectional] {
+            let mut r = solve(&reversed(), s);
+            let stats = r.stats();
+            assert_eq!(stats[3] + stats[4], stats[2], "{s:?} leaves a net neither routed nor given up");
+            assert!(stats[3] >= 4, "{s:?} routes only {} of the 8", stats[3]);
+            assert!(r.shared().is_empty(), "{s:?} lays a track through another net's");
+        }
     }
 
     #[test]
