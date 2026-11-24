@@ -1,0 +1,233 @@
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/routing/bga_fanout.lock.toml
+BgaFanout: placing 6 parts
+BgaFanout: placing: seed 0 (1 of 8) [0 s]
+BgaFanout: placing: run 1 sized to the parts: placed [0 s]
+BgaFanout: placing: the courtyards need 1178 mm2 on the front and 329 mm2 on the back, and each face of the 60.0 x 60.0 mm outline holds 3468 mm2 inside its margin [0 s]
+BgaFanout: placing: run 1 in 60.0 x 60.0 mm: placed [0 s]
+BgaFanout: placed on a 60 by 60 mm board with seed 0
+BgaFanout: routing: 256 connections on a 60 by 60 mm board [0 s]
+BgaFanout: routing: try 1 of 2: 240 of 256 connections done, 196 not routed, now net net-j1.p26: J1.26 to U1.A14; 228 tracks and 4 vias so far [2 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p4: J4.4 to U1.P1 (pass 1 of 3), 200 not routed; 288 tracks and 8 vias so far [4 s]
+BgaFanout: routing: try 1 of 2: net GND: U1.J7 to the plane again with less room, 193 not routed; 355 tracks and 15 vias so far [6 s]
+BgaFanout: routing: try 1 of 2: net GND: U1.M6 to the plane again with less room, 157 not routed; 1135 tracks and 51 vias so far [8 s]
+BgaFanout: routing: try 1 of 2: net VCC: U1.G4 to the plane again with less room, 126 not routed; 1736 tracks and 82 vias so far [10 s]
+BgaFanout: routing: try 1 of 2: net VCC: U1.P11 to the plane again with less room, 82 not routed; 2510 tracks and 126 vias so far [12 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.K11 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [16 s]
+BgaFanout: routing: try 1 of 2: ripping up for net GND: U1.E9 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [19 s]
+BgaFanout: routing: try 1 of 2: ripping up for net GND: U1.F12 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [21 s]
+BgaFanout: routing: try 1 of 2: ripping up for net GND: U1.M8 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [24 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.E8 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [29 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.L12 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [33 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.M11 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [37 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.M9 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [40 s]
+BgaFanout: routing: try 1 of 2: ripping up for net GND: U1.D8 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [44 s]
+BgaFanout: routing: try 1 of 2: ripping up for net GND: U1.N9 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [47 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.D7 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [50 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.J4 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [55 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.N10 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [58 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.C10 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [61 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.P5 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [66 s]
+BgaFanout: routing: try 1 of 2: ripping up for net VCC: U1.P7 to the plane (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [69 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j1.p13: J1.13 to U1.B7 (pass 1 of 3), 78 not routed; 2616 tracks and 130 vias so far [72 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j2.p13: J2.13 to U1.G15 (pass 1 of 3), 77 not routed; 2668 tracks and 130 vias so far [79 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p13: J4.13 to U1.K2 (pass 1 of 3), 77 not routed; 2668 tracks and 130 vias so far [83 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j1.p15: J1.15 to U1.B8 (pass 1 of 3), 77 not routed; 2668 tracks and 130 vias so far [87 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p15: J4.15 to U1.J2 (pass 1 of 3), 77 not routed; 2668 tracks and 130 vias so far [90 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j3.p11: J3.11 to U1.R11 (pass 1 of 3), 76 not routed; 2683 tracks and 130 vias so far [93 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p11: J4.11 to U1.L2 (pass 1 of 3), 76 not routed; 2683 tracks and 130 vias so far [95 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p17: J4.17 to U1.H2 (pass 1 of 3), 75 not routed; 2698 tracks and 130 vias so far [100 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j1.p9: J1.9 to U1.B5 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [103 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j3.p9: J3.9 to U1.R12 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [106 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p19: J4.19 to U1.G2 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [110 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j2.p19: J2.19 to U1.K15 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [112 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j2.p7: J2.7 to U1.D15 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [115 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p7: J4.7 to U1.N2 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [117 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p21: J4.21 to U1.F2 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [121 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j2.p21: J2.21 to U1.L15 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [123 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j2.p5: J2.5 to U1.C15 (pass 1 of 3), 74 not routed; 2713 tracks and 130 vias so far [127 s]
+BgaFanout: routing: try 1 of 2: ripping up for net net-j4.p5: J4.5 to U1.P2 (pass 1 of 3), 73 not routed; 2735 tracks and 132 vias so far [131 s]
+BgaFanout: routing: try 1 of 2: ended with 184 of 256 connections routed, 72 left: net VCC: U1.G6 to the plane, net VCC: U1.K11 to the plane, net GND: U1.E9 to the plane, ...; 2757 tracks and 134 vias so far [135 s]
+BgaFanout: 66 connection(s) left with signals at 0.19 mm; routing again at the least track, 0.127 mm
+BgaFanout: routing: 256 connections on a 60 by 60 mm board [141 s]
+BgaFanout: routing: try 1 of 6: 242 of 256 connections done, 197 not routed, now net net-j4.p26: J4.26 to U1.C1; 225 tracks and 4 vias so far [143 s]
+BgaFanout: routing: try 1 of 6: 246 of 256 connections done, 199 not routed, now net net-j3.p26: J3.26 to U1.T3; 235 tracks and 4 vias so far [146 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p4: J4.4 to U1.P1 (pass 1 of 3), 200 not routed; 280 tracks and 8 vias so far [149 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p4: J3.4 to U1.T14 (pass 1 of 3), 200 not routed; 280 tracks and 8 vias so far [152 s]
+BgaFanout: routing: try 1 of 6: net GND: U1.G5 to the plane again with less room, 161 not routed; 479 tracks and 47 vias so far [154 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.G5 to the plane (pass 1 of 3), 90 not routed; 930 tracks and 118 vias so far [157 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.J5 to the plane (pass 1 of 3), 90 not routed; 930 tracks and 118 vias so far [160 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.K12 to the plane (pass 1 of 3), 90 not routed; 930 tracks and 118 vias so far [162 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.E8 to the plane (pass 1 of 3), 89 not routed; 1127 tracks and 119 vias so far [167 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.M7 to the plane (pass 1 of 3), 88 not routed; 1132 tracks and 120 vias so far [170 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.H4 to the plane (pass 1 of 3), 88 not routed; 1132 tracks and 120 vias so far [173 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.D11 to the plane (pass 1 of 3), 88 not routed; 1132 tracks and 120 vias so far [175 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.D5 to the plane (pass 1 of 3), 87 not routed; 1143 tracks and 121 vias so far [180 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.D7 to the plane (pass 1 of 3), 86 not routed; 1162 tracks and 122 vias so far [183 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.D9 to the plane (pass 1 of 3), 85 not routed; 1167 tracks and 123 vias so far [185 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.N6 to the plane (pass 1 of 3), 85 not routed; 1167 tracks and 123 vias so far [188 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.G3 to the plane (pass 1 of 3), 85 not routed; 1167 tracks and 123 vias so far [190 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.J3 to the plane (pass 1 of 3), 83 not routed; 1521 tracks and 125 vias so far [193 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.C10 to the plane (pass 1 of 3), 81 not routed; 1529 tracks and 127 vias so far [196 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.C6 to the plane (pass 1 of 3), 81 not routed; 1529 tracks and 127 vias so far [199 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.P11 to the plane (pass 1 of 3), 81 not routed; 1529 tracks and 127 vias so far [201 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.P5 to the plane (pass 1 of 3), 80 not routed; 1994 tracks and 128 vias so far [203 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.P9 to the plane (pass 1 of 3), 78 not routed; 2040 tracks and 130 vias so far [207 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p13: J1.13 to U1.B7 (pass 1 of 3), 77 not routed; 2045 tracks and 131 vias so far [210 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p13: J3.13 to U1.R10 (pass 1 of 3), 76 not routed; 2108 tracks and 131 vias so far [213 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p15: J3.15 to U1.R9 (pass 1 of 3), 75 not routed; 2071 tracks and 132 vias so far [215 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p15: J2.15 to U1.H15 (pass 1 of 3), 73 not routed; 2101 tracks and 136 vias so far [218 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p11: J1.11 to U1.B6 (pass 1 of 3), 72 not routed; 2214 tracks and 138 vias so far [220 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p11: J4.11 to U1.L2 (pass 1 of 3), 71 not routed; 2149 tracks and 140 vias so far [222 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p17: J4.17 to U1.H2 (pass 1 of 3), 70 not routed; 2179 tracks and 140 vias so far [225 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p17: J1.17 to U1.B9 (pass 1 of 3), 70 not routed; 2179 tracks and 140 vias so far [228 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p17: J2.17 to U1.J15 (pass 1 of 3), 69 not routed; 2159 tracks and 140 vias so far [230 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p9: J2.9 to U1.E15 (pass 1 of 3), 69 not routed; 2159 tracks and 140 vias so far [232 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p9: J3.9 to U1.R12 (pass 1 of 3), 68 not routed; 2177 tracks and 141 vias so far [234 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p19: J3.19 to U1.R7 (pass 1 of 3), 67 not routed; 2202 tracks and 145 vias so far [237 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p19: J4.19 to U1.G2 (pass 1 of 3), 67 not routed; 2202 tracks and 145 vias so far [239 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p19: J1.19 to U1.B10 (pass 1 of 3), 67 not routed; 2202 tracks and 145 vias so far [242 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p7: J2.7 to U1.D15 (pass 1 of 3), 66 not routed; 2227 tracks and 147 vias so far [245 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p7: J3.7 to U1.R13 (pass 1 of 3), 65 not routed; 2296 tracks and 148 vias so far [247 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p21: J3.21 to U1.R6 (pass 1 of 3), 65 not routed; 2296 tracks and 148 vias so far [250 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p21: J4.21 to U1.F2 (pass 1 of 3), 64 not routed; 2316 tracks and 150 vias so far [253 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p21: J2.21 to U1.L15 (pass 1 of 3), 63 not routed; 2336 tracks and 152 vias so far [256 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p5: J3.5 to U1.R14 (pass 1 of 3), 63 not routed; 2336 tracks and 152 vias so far [258 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p23: J4.23 to U1.E2 (pass 1 of 3), 62 not routed; 2345 tracks and 153 vias so far [261 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p23: J2.23 to U1.M15 (pass 1 of 3), 62 not routed; 2345 tracks and 153 vias so far [264 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p3: J2.3 to U1.B15 (pass 1 of 3), 62 not routed; 2345 tracks and 153 vias so far [266 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p25: J1.25 to U1.B13 (pass 1 of 3), 61 not routed; 2356 tracks and 154 vias so far [269 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p25: J3.25 to U1.R4 (pass 1 of 3), 61 not routed; 2356 tracks and 154 vias so far [272 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p27: J3.27 to U1.R3 (pass 1 of 3), 61 not routed; 2356 tracks and 154 vias so far [275 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p27: J1.27 to U1.B14 (pass 1 of 3), 61 not routed; 2356 tracks and 154 vias so far [277 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p4: J1.4 to U1.A3 (pass 1 of 3), 61 not routed; 2356 tracks and 154 vias so far [280 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p4: J2.4 to U1.C16 (pass 1 of 3), 59 not routed; 2392 tracks and 156 vias so far [282 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.J5 to the plane (pass 2 of 3), 55 not routed; 2521 tracks and 159 vias so far [285 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.M7 to the plane (pass 2 of 3), 54 not routed; 2532 tracks and 160 vias so far [288 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.H4 to the plane (pass 2 of 3), 54 not routed; 2532 tracks and 160 vias so far [291 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.J13 to the plane (pass 2 of 3), 53 not routed; 2547 tracks and 161 vias so far [293 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.D9 to the plane (pass 2 of 3), 52 not routed; 2550 tracks and 162 vias so far [295 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.N12 to the plane (pass 2 of 3), 51 not routed; 2441 tracks and 163 vias so far [298 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.N6 to the plane (pass 2 of 3), 50 not routed; 2461 tracks and 165 vias so far [301 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.C10 to the plane (pass 2 of 3), 50 not routed; 2461 tracks and 165 vias so far [304 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.C6 to the plane (pass 2 of 3), 50 not routed; 2461 tracks and 165 vias so far [307 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p13: J1.13 to U1.B7 (pass 2 of 3), 50 not routed; 2461 tracks and 165 vias so far [310 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p15: J2.15 to U1.H15 (pass 2 of 3), 49 not routed; 2487 tracks and 165 vias so far [313 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p11: J3.11 to U1.R11 (pass 2 of 3), 49 not routed; 2487 tracks and 165 vias so far [315 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p17: J4.17 to U1.H2 (pass 2 of 3), 49 not routed; 2487 tracks and 165 vias so far [317 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p17: J2.17 to U1.J15 (pass 2 of 3), 49 not routed; 2487 tracks and 165 vias so far [320 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p9: J4.9 to U1.M2 (pass 2 of 3), 49 not routed; 2487 tracks and 165 vias so far [323 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p19: J3.19 to U1.R7 (pass 2 of 3), 49 not routed; 2487 tracks and 165 vias so far [325 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p19: J4.19 to U1.G2 (pass 2 of 3), 48 not routed; 2512 tracks and 166 vias so far [328 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p19: J2.19 to U1.K15 (pass 2 of 3), 48 not routed; 2512 tracks and 166 vias so far [331 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p7: J4.7 to U1.N2 (pass 2 of 3), 48 not routed; 2512 tracks and 166 vias so far [334 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p21: J2.21 to U1.L15 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [337 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p5: J2.5 to U1.C15 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [339 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p23: J3.23 to U1.R5 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [342 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p23: J2.23 to U1.M15 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [345 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p3: J2.3 to U1.B15 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [347 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p25: J2.25 to U1.N15 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [350 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p25: J4.25 to U1.D2 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [353 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p27: J4.27 to U1.C2 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [356 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p27: J2.27 to U1.P15 (pass 2 of 3), 47 not routed; 2527 tracks and 167 vias so far [360 s]
+BgaFanout: routing: try 1 of 6: ripping up for net GND: U1.G5 to the plane (pass 3 of 3), 47 not routed; 2527 tracks and 167 vias so far [363 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.M7 to the plane (pass 3 of 3), 45 not routed; 2545 tracks and 169 vias so far [367 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.D11 to the plane (pass 3 of 3), 45 not routed; 2545 tracks and 169 vias so far [371 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.N12 to the plane (pass 3 of 3), 45 not routed; 2545 tracks and 169 vias so far [373 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.N8 to the plane (pass 3 of 3), 44 not routed; 2570 tracks and 170 vias so far [376 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.C10 to the plane (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [379 s]
+BgaFanout: routing: try 1 of 6: ripping up for net VCC: U1.C6 to the plane (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [384 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p13: J1.13 to U1.B7 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [387 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p11: J1.11 to U1.B6 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [390 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p17: J4.17 to U1.H2 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [394 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p17: J2.17 to U1.J15 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [397 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p19: J4.19 to U1.G2 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [401 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p19: J2.19 to U1.K15 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [404 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p21: J1.21 to U1.B11 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [407 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p5: J1.5 to U1.B3 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [410 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p5: J4.5 to U1.P2 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [413 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p23: J1.23 to U1.B12 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [416 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p3: J1.3 to U1.B2 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [419 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j1.p25: J1.25 to U1.B13 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [422 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p25: J3.25 to U1.R4 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [424 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j3.p27: J3.27 to U1.R3 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [428 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j4.p27: J4.27 to U1.C2 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [430 s]
+BgaFanout: routing: try 1 of 6: ripping up for net net-j2.p27: J2.27 to U1.P15 (pass 3 of 3), 43 not routed; 2587 tracks and 171 vias so far [433 s]
+BgaFanout: routing: try 1 of 6: negotiating for net VCC: U1.M9 to the plane (round 1 of 6), 41 not routed; 2688 tracks and 173 vias so far [435 s]
+BgaFanout: routing: try 1 of 6: negotiating for net VCC: U1.C10 to the plane (round 1 of 6), 38 not routed; 2790 tracks and 176 vias so far [447 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j2.p15: J2.15 to U1.H15 (round 1 of 6), 61 not routed; 2431 tracks and 153 vias so far [451 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j1.p11: J1.11 to U1.B6 (round 1 of 6), 63 not routed; 2415 tracks and 153 vias so far [461 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j3.p11: J3.11 to U1.R11 (round 1 of 6), 62 not routed; 2454 tracks and 156 vias so far [466 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j4.p17: J4.17 to U1.H2 (round 1 of 6), 60 not routed; 2502 tracks and 160 vias so far [473 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j1.p9: J1.9 to U1.B5 (round 1 of 6), 112 not routed; 1573 tracks and 114 vias so far [478 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j4.p9: J4.9 to U1.M2 (round 1 of 6), 111 not routed; 1529 tracks and 115 vias so far [482 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j1.p7: J1.7 to U1.B4 (round 1 of 6), 121 not routed; 1227 tracks and 100 vias so far [484 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j2.p5: J2.5 to U1.C15 (round 1 of 6), 117 not routed; 1362 tracks and 116 vias so far [489 s]
+BgaFanout: routing: try 1 of 6: negotiating for net net-j4.p23: J4.23 to U1.E2 (round 1 of 6), 114 not routed; 1395 tracks and 124 vias so far [492 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net VCC: U1.F9 to the plane (round 1 of 6), 43 not routed; 2587 tracks and 171 vias so far [494 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net VCC: U1.M9 to the plane (round 1 of 6), 100 not routed; 1527 tracks and 116 vias so far [497 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j3.p11: J3.11 to U1.R11 (round 1 of 6), 104 not routed; 1205 tracks and 122 vias so far [500 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j2.p19: J2.19 to U1.K15 (round 1 of 6), 105 not routed; 1218 tracks and 119 vias so far [503 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j2.p3: J2.3 to U1.B15 (round 1 of 6), 107 not routed; 1247 tracks and 120 vias so far [505 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j4.p25: J4.25 to U1.D2 (round 1 of 6), 110 not routed; 1234 tracks and 115 vias so far [508 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net GND: U1.E7 to the plane (round 2 of 6), 107 not routed; 1262 tracks and 122 vias so far [510 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j3.p5: J3.5 to U1.R14 (round 2 of 6), 104 not routed; 1310 tracks and 129 vias so far [512 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j3.p24: J3.24 to U1.T4 (round 2 of 6), 102 not routed; 1331 tracks and 129 vias so far [516 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j3.p23: J3.23 to U1.R5 (round 3 of 6), 99 not routed; 1354 tracks and 133 vias so far [518 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j2.p13: J2.13 to U1.G15 (round 4 of 6), 100 not routed; 1356 tracks and 133 vias so far [520 s]
+BgaFanout: routing: try 1 of 6: ripping up whole nets for net net-j1.p25: J1.25 to U1.B13 (round 6 of 6), 100 not routed; 1378 tracks and 135 vias so far [522 s]
+BgaFanout: routing: try 1 of 6: ended with 213 of 256 connections routed, 43 left: net VCC: U1.F9 to the plane, net VCC: U1.M7 to the plane, net VCC: U1.M9 to the plane, ...; 2587 tracks and 171 vias so far [523 s]
+BgaFanout: routing: try 2 of 6: 244 of 256 connections done, 198 not routed, now net net-j2.p26: J2.26 to U1.P16; 230 tracks and 4 vias so far [525 s]
+BgaFanout: routing: try 2 of 6: 251 of 256 connections done, 200 not routed, now net net-j4.p2: J4.2 to U1.R1; 255 tracks and 5 vias so far [527 s]
+BgaFanout: routing: try 2 of 6: ripping up for net net-j2.p4: J2.4 to U1.C16 (pass 1 of 3), 200 not routed; 280 tracks and 8 vias so far [530 s]
+BgaFanout: routing: try 2 of 6: net GND: U1.H8 to the plane again with less room, 200 not routed; 280 tracks and 8 vias so far [533 s]
+BgaFanout: routing: try 2 of 6: net VCC: U1.N14 to the plane again with less room, 93 not routed; 905 tracks and 115 vias so far [535 s]
+BgaFanout: routing: try 2 of 6: ripping up for net GND: U1.H12 to the plane (pass 1 of 3), 90 not routed; 930 tracks and 118 vias so far [538 s]
+BgaFanout: routing: try 2 of 6: ended with 166 of 256 connections routed, 90 left: net VCC: U1.F9 to the plane, net VCC: U1.L8 to the plane, net GND: U1.G5 to the plane, ...; 930 tracks and 118 vias so far [541 s]
+BgaFanout: INCOMPLETE: 43 connections are not routed; writing the board and the Gerbers anyway, marked incomplete
+error: BgaFanout: 43 connections could not be routed (stopped after the route timeout of 540 s, on try 2 of the router; raise it with --route-timeout):
+  net VCC: U1.C10 to the plane
+  net VCC: U1.C12 to the plane
+  net VCC: U1.C6 to the plane
+  net VCC: U1.C8 to the plane
+  net VCC: U1.D11 to the plane
+  net VCC: U1.D9 to the plane
+  net VCC: U1.F9 to the plane
+  net VCC: U1.M7 to the plane
+  net VCC: U1.M9 to the plane
+  net VCC: U1.N12 to the plane
+  net net-j1.p11: J1.11 to U1.B6
+  net net-j1.p13: J1.13 to U1.B7
+  net net-j1.p21: J1.21 to U1.B11
+  net net-j1.p23: J1.23 to U1.B12
+  net net-j1.p25: J1.25 to U1.B13
+  net net-j1.p27: J1.27 to U1.B14
+  net net-j1.p3: J1.3 to U1.B2
+  net net-j1.p5: J1.5 to U1.B3
+  net net-j1.p7: J1.7 to U1.B4
+  net net-j1.p9: J1.9 to U1.B5
+  net net-j2.p15: J2.15 to U1.H15
+  net net-j2.p17: J2.17 to U1.J15
+  net net-j2.p19: J2.19 to U1.K15
+  net net-j2.p21: J2.21 to U1.L15
+  net net-j2.p23: J2.23 to U1.M15
+  net net-j2.p25: J2.25 to U1.N15
+  net net-j2.p27: J2.27 to U1.P15
+  net net-j2.p3: J2.3 to U1.B15
+  net net-j2.p5: J2.5 to U1.C15
+  net net-j3.p11: J3.11 to U1.R11
+  net net-j3.p23: J3.23 to U1.R5
+  net net-j3.p25: J3.25 to U1.R4
+  net net-j3.p27: J3.27 to U1.R3
+  net net-j3.p7: J3.7 to U1.R13
+  net net-j4.p11: J4.11 to U1.L2
+  net net-j4.p17: J4.17 to U1.H2
+  net net-j4.p19: J4.19 to U1.G2
+  net net-j4.p23: J4.23 to U1.E2
+  net net-j4.p25: J4.25 to U1.D2
+  net net-j4.p27: J4.27 to U1.C2
+  net net-j4.p3: J4.3 to U1.R2
+  net net-j4.p5: J4.5 to U1.P2
+  net net-j4.p9: J4.9 to U1.M2
+  INCOMPLETE: the board file is in results/netsmith/routing/bga-fanout/fab/BgaFanout with the Gerbers (BgaFanout-gerbers.zip) and fab-notes.txt; they are NOT ready to order
+  every unrouted connection with its net and pads is in results/netsmith/routing/bga-fanout/fab/BgaFanout/routing-failure.txt

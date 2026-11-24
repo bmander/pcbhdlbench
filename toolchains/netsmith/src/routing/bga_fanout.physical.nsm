@@ -1,0 +1,26 @@
+import std::pcb::Outline
+
+physical for BgaFanout {
+    case {
+        .outline: Outline { .width &= 60mm; .height &= 60mm }
+    }
+    // Every part is where the case puts it. A header's place is the middle of its pads.
+    .u1.place.x &= 30mm
+    .u1.place.y &= 30mm
+    .u1.place.rotation &= 0
+    .j1.place.x &= 30mm
+    .j1.place.y &= 6.73mm
+    .j1.place.rotation &= 90
+    .j2.place.x &= 53.27mm
+    .j2.place.y &= 30mm
+    .j2.place.rotation &= 0
+    .j3.place.x &= 30mm
+    .j3.place.y &= 53.27mm
+    .j3.place.rotation &= 270
+    .j4.place.x &= 6.73mm
+    .j4.place.y &= 30mm
+    .j4.place.rotation &= 180
+    .j5.place.x &= 5.27mm
+    .j5.place.y &= 56mm
+    .j5.place.rotation &= 90
+}

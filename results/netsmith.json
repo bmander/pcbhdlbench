@@ -1,7 +1,7 @@
 {
  "toolchain": "netsmith",
  "version": "netsmith 0.8.0 (1b5e697)",
- "ran": "2026-11-23",
+ "ran": "2026-11-24",
  "cases": {
   "basics/both-sides": {
    "outcome": "pass",
@@ -348,6 +348,23 @@
    },
    "seconds": 5.44
   },
+  "routing/bga-fanout": {
+   "outcome": "refused",
+   "why": "error: BgaFanout: 43 connections could not be routed (stopped after the route timeout of 540 s, on try 2 of the router; raise it with --route-timeout):; INCOMPLETE: the board file is in results/netsmith/routing/bga-fanout/fab/BgaFanout with the Gerbers (BgaFanout-gerbers.zip) and fab-notes.txt; they are NOT ready to order",
+   "seconds": 574.55,
+   "refused": true,
+   "as_built": {
+    "outcome": "placed",
+    "why": "B2 is open; B3 is open; B4 is open; B5 is open; B6 is open; B7 is open; B11 is open; B12 is open; B13 is open; B14 is open; B15 is open; C15 is open; H15 is open; J15 is open; K15 is open; L15 is open; M15 is open; N15 is open; P15 is open; R13 is open; R11 is open; R5 is open; R4 is open; R3 is open; R2 is open; P2 is open; M2 is open; L2 is open; H2 is open; G2 is open; E2 is open; D2 is open; C2 is open; GND is open; VCC is open.",
+    "metrics": {
+     "track_mm": 2284.737,
+     "vias": 171,
+     "layers": 4,
+     "copper_mm2 (GND on In1.Cu)": 2981.7,
+     "copper_mm2 (VCC on In2.Cu)": 2981.1
+    }
+   }
+  },
   "routing/bus-8": {
    "outcome": "pass",
    "why": "",
@@ -418,7 +435,7 @@
   },
   "routing/channel": {
    "outcome": "refused",
-   "why": "Channel: routing: try 1 of 1: ripping up for net net-j1.p8: J1.8 to J2.8 (pass 1 of 3), 6 not routed; 49 tracks and 1 vias so far [2 s]; Channel: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 1 of 3), 4 not routed; 85 tracks and 3 vias so far [5 s]; Channel: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 2 of 3), 4 not routed; 85 tracks and 3 vias so far [7 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p7: J1.7 to J2.7 (round 1 of 6), 4 not routed; 84 tracks and 4 vias so far [22 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p8: J1.8 to J2.8 (round 1 of 6), 5 not routed; 69 tracks and 3 vias so far [31 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p4: J1.4 to J2.4 (round 2 of 6), 4 not routed; 79 tracks and 3 vias so far [38 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p11: J1.11 t",
+   "why": "error: Channel: 4 connections could not be routed (stopped after the route timeout of 540 s, on try 3 of the router; raise it with --route-timeout):; INCOMPLETE: the board file is in results/netsmith/routing/channel/fab/Channel with the Gerbers (Channel-gerbers.zip) and fab-notes.txt; they are NOT ready to order",
    "seconds": 540.61,
    "refused": true,
    "as_built": {
@@ -497,7 +514,7 @@
   },
   "unsatisfiable/channel-overfull": {
    "outcome": "refused",
-   "why": "ChannelOverfull: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 1 of 3), 7 not routed; 46 tracks and 5 vias so far [2 s]; ChannelOverfull: routing: try 1 of 1: ripping up for net net-j1.p5: J1.5 to J2.5 (pass 1 of 3), 6 not routed; 71 tracks and 2 vias so far [5 s]; ChannelOverfull: routing: try 1 of 1: ripping up for net net-j1.p8: J1.8 to J2.8 (pass 1 of 3), 5 not routed; 73 tracks and 2 vias so far [7 s]; ChannelOverfull: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 2 of 3), 5 not routed; 73 tracks and 2 vias so far [9 s]; ChannelOverfull: routing: try 1 of 1: negotiating for net net-j1.p5: J1.5 to J2.5 (round 1 of 6), 5 not routed; 75 tracks and 2 vias so far [15 s]; ChannelOverfull: routing: try 1 of 1: negotiating for net net-j1.p6: J1.6 to J2.6 (round 1 of 6), 6 not routed; 66 tracks and 2 vias so far [20 s]; ChannelOverfull: routing",
+   "why": "error: ChannelOverfull: 5 connections could not be routed (stopped after the route timeout of 540 s, on try 3 of the router; raise it with --route-timeout):; INCOMPLETE: the board file is in results/netsmith/unsatisfiable/channel-overfull/fab/ChannelOverfull with the Gerbers (ChannelOverfull-gerbers.zip) and fab-notes.txt; they are NOT ready to order",
    "seconds": 540.32,
    "refused": true,
    "control": {

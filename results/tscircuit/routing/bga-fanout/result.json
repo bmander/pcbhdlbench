@@ -1,0 +1,4 @@
+{
+ "outcome": "refused",
+ "why": "pcb_trace_error: PCB trace .U1 > .J6 to net.VCC is too close to .U1 > .J7 to net.GND (gap: 0.100mm); pcb_trace_error: PCB trace .U1 > .J6 to net.VCC is too close to .U1 > .J5 to net.GND (gap: 0.072mm); pcb_trace_error: PCB trace .U1 > .L6 to net.VCC is too close to .U1 > .L5 to net.GND (gap: 0.073mm); pcb_trace_error: PCB trace .U1 > .L6 to net.VCC is too close to .U1 > .M6 to net.GND (gap: 0.100mm); and 336 more"
+}

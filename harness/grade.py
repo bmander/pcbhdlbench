@@ -26,7 +26,11 @@ def pose(pattern, pads, side, names):
     mirror = -1 if side == "bottom" else 1
     named = sorted(names.get(pad["name"], pad["name"]) for pad in pads)
     if named != sorted(p[0] for p in pattern["pads"]):
-        return f"pads {named}, where its pattern has {sorted(p[0] for p in pattern['pads'])}"
+        ours = sorted(p[0] for p in pattern["pads"])
+
+        def some(names):
+            return ", ".join(names[:6]) + (f" … ({len(names)})" if len(names) > 6 else "")
+        return f"pads named {some(named)}, where its pattern has {some(ours)}"
     # the part is laid over its pattern by the pads whose names are theirs alone
     want = {p[0]: p for p in pattern["pads"] if named.count(p[0]) == 1}
     have = {names.get(pad["name"], pad["name"]): pad for pad in pads
@@ -139,8 +143,9 @@ def painted(pieces, layer=None, step=0.02):
             continue
         polys = [s for p in pieces if name in p["layers"] for s in shapes(p)]
         boxes = [geom.bbox(s) for s in polys]
-        y = min(b[1] for b in boxes) + step / 2
         top = max(b[3] for b in boxes)
+        step = max(step, (top - min(b[1] for b in boxes)) / 1500)  # a plane needs no finer
+        y = min(b[1] for b in boxes) + step / 2
         while y < top:
             spans = []
             for s, b in zip(polys, boxes):
@@ -452,6 +457,12 @@ def grade(case, board, patterns, rules, names):
 
     # the vias of a net, at least so many
     for rule in case.get("vias", []) if "vias" in notes else []:
+        if "not_in" in rule:  # no via in a pad of the part named
+            pads = [p for p in pieces if p.get("ref") == rule["not_in"] and p["drill"] is None]
+            n = sum(1 for v in board["vias"] if any(v["layers"] & p["layers"] and gap(v, p) <= TOUCH for p in pads))
+            if n:
+                notes["vias"].append(f"{n} vias in pads of {rule['not_in']}")
+            continue
         n = sum(1 for p in copper_of(rule["net"]) if "drill" in p and "size" in p)
         measures[f"vias_n ({rule['net']})"] = n
         if n < rule["min"]:
@@ -464,7 +475,8 @@ def grade(case, board, patterns, rules, names):
     elif failed == ["connectivity"] and not shorts:
         outcome, why = "placed", "; ".join(opens)
     else:
-        outcome, why = "wrong", "; ".join(n for c in failed for n in notes[c])
+        said = [n for c in failed for n in notes[c]]  # all of it is in `checks`; the summary is the first few
+        outcome, why = "wrong", "; ".join(said[:6]) + (f"; and {len(said) - 6} more" if len(said) > 6 else "")
     return {"outcome": outcome, "why": why[:1].upper() + why[1:] + ("." if why else ""), "checks": checks,
             "metrics": {"track_mm": round(sum(t["length"] for t in board["tracks"]), 3),
                         "vias": len(board["vias"]), "layers": len(used), **measures}}

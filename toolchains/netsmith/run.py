@@ -81,7 +81,7 @@ def main():
     shutil.rmtree(fab, ignore_errors=True)  # the Gerbers, the libraries and the 3D scene are not kept
     if done.returncode != 0 or not boards:
         said = [l.strip() for l in (done.stderr + done.stdout).splitlines()
-                if re.match(r"\s*(error|INCOMPLETE|refused)", l) or "connections left" in l or "not routed" in l]
+                if re.match(r"\s*(error|INCOMPLETE|refused)", l)]  # not the router's running commentary
         said = said or (done.stderr + done.stdout).strip().splitlines()[-3:]
         finish({"outcome": "refused", "why": "; ".join(dict.fromkeys(said))[:900],
                 "refs": refs(done.stdout + done.stderr, source)})

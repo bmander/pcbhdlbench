@@ -1,0 +1,5 @@
+{
+ "outcome": "refused",
+ "why": "error: BgaFanout: 43 connections could not be routed (stopped after the route timeout of 540 s, on try 2 of the router; raise it with --route-timeout):; INCOMPLETE: the board file is in results/netsmith/routing/bga-fanout/fab/BgaFanout with the Gerbers (BgaFanout-gerbers.zip) and fab-notes.txt; they are NOT ready to order",
+ "refs": {}
+}

@@ -79,3 +79,15 @@ kind = "Ldo1117"
 package = "SOT-223"
 default = true
 footprint = "Package_TO_SOT_SMD:SOT-223-3_TabPin2"
+
+[[part]]
+kind = "Bga256"
+package = "BGA-256"
+default = true
+footprint = "Package_BGA:BGA-256_14.0x14.0mm_Layout16x16_P0.8mm_Ball0.45mm_Pad0.32mm_NSMD"
+
+[[part]]
+kind = "Header2x14"
+package = "2.54mm"
+default = true
+footprint = "gen:PinHeader(pins=14, rows=2, pitch=2.54mm)"
