@@ -14,6 +14,7 @@ const ABOUT = [
   'Every net is routed where it likes, through other nets if it likes, at a price. Each round the price of a shared point goes up, and the nets are all routed again, until no point is shared.',
   'Hadlock, 1977. A step toward the pad is free and a step away is a detour; the points with the fewest detours are tried first. With nothing in the way it walks straight there, and it widens its search one detour at a time. What it finds is as short as Lee\'s.',
   'Lee\'s wave from both ends at once: one from the net\'s copper, one from the pad, each a step at a time, until they meet. Two small ponds hold less than one big one, so it looks at about half as much.',
+  'A* first. Then, move after move: a net left unrouted is pushed through whatever is in its way, the nets it displaced are laid again round it, and the move is kept if the board is better for it. While the temperature is high a worse board is sometimes kept too, which is how it gets out of a corner; as it cools it settles.',
 ];
 
 // the board as the page holds it, in mm, y up
@@ -28,7 +29,7 @@ let running = false;
 let loaded = false;
 let wasm = null;
 let grid = { w: 0, h: 0 };
-let stats = new Int32Array(12);
+let stats = new Int32Array(14);
 let drag = null;
 
 const hue = (n) => (n * 67 + 200) % 360;
@@ -60,8 +61,8 @@ function send() {
   const v = [b.width, b.height, b.pitch, b.track, b.clearance, b.via, b.edge, b.outline.length];
   for (const [x, y] of b.outline) v.push(x, y);
   v.push(b.pads.length);
-  const poured = b.pour != null && $('pour').checked ? b.pour : -2;
-  for (const p of b.pads) v.push(p.x, p.y, p.w, p.h, p.side, p.round ? 1 : 0, p.net === poured ? -1 : p.net);
+  const poured = $('pour').checked ? b.pour ?? [] : [];
+  for (const p of b.pads) v.push(p.x, p.y, p.w, p.h, p.side, p.round ? 1 : 0, poured.includes(p.net) ? -1 : p.net);
   const at = wasm.buffer(v.length);
   new Float32Array(wasm.memory.buffer, at, v.length).set(v);
   loaded = wasm.load() === 1;
@@ -75,7 +76,7 @@ function send() {
   grid = { w: wasm.grid_width(), h: wasm.grid_height() };
   hemmed = wasm.hemmed();
   wasm.paint();
-  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 12).slice();   // how many nets there are, before any is routed
+  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 14).slice();   // how many nets there are, before any is routed
   buttons();
 }
 
@@ -83,7 +84,7 @@ let started = false;
 let hemmed = 0;      // pads with no way out on this grid
 function begin() {
   if (!loaded) return;
-  wasm.start(+$('strategy').value, +$('order').value);
+  wasm.start(+$('strategy').value, +$('order').value, $('diagonal').checked ? 1 : 0);
   started = true;
 }
 
@@ -102,7 +103,7 @@ function advance(n) {
   }
   if (over) running = false;
   wasm.paint();
-  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 12).slice();
+  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 14).slice();
   buttons();
 }
 
@@ -147,6 +148,7 @@ function draw() {
     const n = 2 * grid.w * grid.h;
     const nets = new Int16Array(wasm.memory.buffer, wasm.nets(), n);
     const flags = new Uint8Array(wasm.memory.buffer, wasm.flags(), n);
+    const links = new Uint8Array(wasm.memory.buffer, wasm.links(), n);
     const show = $('view').value;
     const layers = show === 'top' ? [0] : show === 'bottom' ? [1] : [1, 0];
     const g = board.pitch * view.s;          // a grid step in pixels
@@ -173,19 +175,21 @@ function draw() {
         }
       }
     }
-    // the tracks: a line from each point of a net's track to the same net's point to its right and above
+    // the tracks, piece by piece as the router laid them: from each point east, north, north-east and north-west
     const w = Math.max(board.track * view.s, 1.5);
     for (const l of layers) {
       const byNet = new Map();
-      const isTrack = (c) => nets[c] >= 0;
       for (let y = 0; y < grid.h; y++) {
         for (let x = 0; x < grid.w; x++) {
-          const c = idx(l, x, y);
-          if (!isTrack(c) || (flags[c] & 1 && !(flags[c] & 32) && !touches(nets, flags, l, x, y))) continue;
-          const path = byNet.get(nets[c]) ?? byNet.set(nets[c], new Path2D()).get(nets[c]);
+          const c = idx(l, x, y), k = links[c];
+          if (!k) continue;
+          const id = nets[c] >= 0 ? nets[c] : 0;
+          const path = byNet.get(id) ?? byNet.set(id, new Path2D()).get(id);
           const X = px(x * board.pitch), Y = py(y * board.pitch);
-          if (x + 1 < grid.w && nets[idx(l, x + 1, y)] === nets[c]) { path.moveTo(X, Y); path.lineTo(X + g, Y); }
-          if (y + 1 < grid.h && nets[idx(l, x, y + 1)] === nets[c]) { path.moveTo(X, Y); path.lineTo(X, Y - g); }
+          if (k & 1) { path.moveTo(X, Y); path.lineTo(X + g, Y); }
+          if (k & 2) { path.moveTo(X, Y); path.lineTo(X, Y - g); }
+          if (k & 4) { path.moveTo(X, Y); path.lineTo(X + g, Y - g); }
+          if (k & 8) { path.moveTo(X, Y); path.lineTo(X - g, Y - g); }
         }
       }
       ctx.lineCap = 'round';
@@ -307,19 +311,9 @@ function paintGrid(nets, flags, layers) {
 }
 const px0 = () => view.ox;
 
-/** Whether a pad's point has a track of its own net beside it, so that the track is drawn into the pad. */
-function touches(nets, flags, l, x, y) {
-  const at = (X, Y) => (X >= 0 && Y >= 0 && X < grid.w && Y < grid.h ? (l * grid.h + Y) * grid.w + X : -1);
-  const me = nets[at(x, y)];
-  return [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => {
-    const c = at(x + dx, y + dy);
-    return c >= 0 && nets[c] === me && !(flags[c] & 1);
-  });
-}
-
 function say() {
   if (!loaded) return;
-  const [done, round, nets, routed, failed, expansions, length, vias, shared, current, rips, ripping] = stats;
+  const [done, round, nets, routed, failed, expansions, length, vias, shared, current, rips, ripping, heat, kept] = stats;
   const strategy = +$('strategy').value;
   const bits = [];
   if (!started) {
@@ -331,6 +325,7 @@ function say() {
     bits.push(`${routed} of ${nets} nets routed${failed ? `, ${failed} given up` : ''}.`);
     if (strategy === 3) bits.push(`Round ${round}: ${shared} point${shared === 1 ? '' : 's'} shared.`);
     if (strategy === 2 && rips) bits.push(`${rips} net${rips === 1 ? '' : 's'} taken up and routed again.`);
+    if (strategy === 6 && round) bits.push(`${round} move${round === 1 ? '' : 's'}, ${kept} kept, at temperature ${(heat / 10).toFixed(0)}.`);
     bits.push(`${(length / 100).toFixed(1)} mm of track, ${vias} via${vias === 1 ? '' : 's'}, ${expansions.toLocaleString()} search steps.`);
   }
   // when the attempt is over, the line is its verdict: routed, not finished (nets given up), or
@@ -375,6 +370,7 @@ $('step').onclick = () => { running = false; if (stats[0]) send(); advance(Math.
 $('reset').onclick = () => send();
 $('strategy').onchange = () => { $('about').textContent = ABOUT[+$('strategy').value]; send(); save(); };
 $('order').onchange = () => { send(); save(); };
+$('diagonal').onchange = () => { send(); save(); };
 $('speed').oninput = () => { $('speedout').textContent = `${perFrame().toLocaleString()} steps a frame`; };
 
 for (const id of ['width', 'height', 'track', 'clearance', 'via', 'pitch']) {
@@ -547,7 +543,7 @@ async function pick(i) {
   }
   board = { width: p.width, height: p.height, track: p.track ?? 0.15, clearance: p.clearance ?? 0.15, via: p.via ?? 0.6,
             edge: p.edge ?? 0.3, pitch: p.pitch ?? +((p.track ?? 0.15) + (p.clearance ?? 0.15)).toFixed(3),
-            outline: p.outline ?? [], pads: p.pads.map((q) => ({ ...q })), pour: p.pour ?? null, names: p.nets ?? null };
+            outline: p.outline ?? [], pads: p.pads.map((q) => ({ ...q })), pour: p.pour == null ? null : [p.pour].flat(), names: p.nets ?? null };
   opened = p.id ?? null;
   for (const [x, y] of p.walls ?? []) board.pads.push({ x, y, w: 1.2, h: 4.2, side: 2, round: false, net: -1 });
   selected = -1;
@@ -562,8 +558,9 @@ async function pick(i) {
     : '';
   $('pourline').hidden = board.pour == null;
   if (board.pour != null) {
-    const on = board.pads.filter((q) => q.net === board.pour).length;
-    $('pourname').textContent = `Leave ${board.names?.[board.pour] ?? 'the ground'} unrouted (${on} pads): the real board joins it with a pour or a plane`;
+    const on = board.pads.filter((q) => board.pour.includes(q.net)).length;
+    const names = board.pour.map((n) => board.names?.[n] ?? 'the ground').join(' and ');
+    $('pourname').textContent = `Leave ${names} unrouted (${on} pads): the real board joins ${board.pour.length > 1 ? 'them' : 'it'} with a pour or a plane`;
   }
   fields();
   send();
@@ -576,7 +573,7 @@ function save() {
     history.replaceState(null, '', location.pathname + (opened ? `?case=${opened}` : ''));
     return;
   }
-  const s = { b: board, s: +$('strategy').value, o: +$('order').value };
+  const s = { b: board, s: +$('strategy').value, o: +$('order').value, d: $('diagonal').checked ? 1 : 0 };
   // the board is in the link's fragment; a ?case= it was opened by is dropped, so that a reload keeps the edits
   history.replaceState(null, '', location.pathname + '#' + btoa(unescape(encodeURIComponent(JSON.stringify(s)))));
 }
@@ -589,6 +586,8 @@ function restore() {
     board = s.b;
     $('strategy').value = s.s ?? 1;
     $('order').value = s.o ?? 0;
+    $('diagonal').checked = (s.d ?? 0) === 1;      // a link from before there were diagonals keeps its square tracks
+    if (!Array.isArray(board.pour)) board.pour = board.pour == null ? null : [board.pour];
     $('about').textContent = ABOUT[+$('strategy').value];
     fields();
     send();

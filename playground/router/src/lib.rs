@@ -19,6 +19,13 @@
 //! - **Negotiated congestion** (PathFinder): every net is routed where it likes, sharing points
 //!   at a price; the price of a shared point rises each round, and the rounds go on until none
 //!   is shared.
+//! - **Simulated annealing**: A\* first, then moves: a net left unrouted is routed through the
+//!   nets in its way, those are laid again round it, and the move is kept if the board is the
+//!   better for it, or, while the temperature is high, sometimes when it is the worse.
+//!
+//! A track may also step diagonally where the board is told to allow it. A diagonal step passes
+//! between two points, which must both be free to its net and which it keeps as its own, so that
+//! nothing else runs through them beside it.
 //!
 //! `ffi` is the C ABI the page calls; nothing here depends on any crate.
 
@@ -78,6 +85,7 @@ pub enum Strategy {
     Negotiated,
     Hadlock,
     Bidirectional,
+    Anneal,
 }
 
 #[derive(Clone, Copy, PartialEq, Debug)]
@@ -93,12 +101,41 @@ struct Net {
     /// The points its tracks run through, and those of its vias on the top layer.
     centres: Vec<u32>,
     vias: Vec<u32>,
+    /// Its tracks, piece by piece: the two points each runs between, on one layer.
+    segs: Vec<(u32, u32)>,
     /// Every point its tracks and vias keep others out of, once for each time it is kept.
     halo: Vec<u32>,
     routed: bool,
     failed: bool,
     rips: u32,
 }
+
+/// A net's routing as it was, to be put back if an annealing move is not kept.
+struct Saved {
+    net: usize,
+    centres: Vec<u32>,
+    vias: Vec<u32>,
+    segs: Vec<(u32, u32)>,
+    halo: Vec<u32>,
+    connected: Vec<bool>,
+    routed: bool,
+    failed: bool,
+}
+
+/// An annealing move in hand: the nets it has touched as they were, those it took up and has
+/// yet to lay again, and what the board cost before it.
+struct Move {
+    saved: Vec<Saved>,
+    todo: Vec<usize>,
+    before: f32,
+    /// How many nets the move has laid again. The first few push through what is in their way
+    /// as the move's own net did, so that a move can shift a whole neighbourhood over; after
+    /// that a net goes round what is there, and the move ends.
+    relaid: u32,
+}
+
+/// How many of a move's displaced nets may displace others in their turn.
+const RIPPLE: u32 = 10;
 
 #[derive(PartialEq)]
 struct Open(f32, u32);
@@ -185,7 +222,24 @@ pub struct Router {
     pub expansions: u64,
     total_rips: u32,
     last_path: Vec<u32>,
+
+    /// Whether a track may step diagonally.
+    pub diagonal: bool,
+    // the annealing: the move in hand, the temperature and how it cools, the moves made and kept
+    mv: Option<Move>,
+    temp: f32,
+    alpha: f32,
+    moves: u32,
+    max_moves: u32,
+    accepted: u32,
+    rng: u64,
 }
+
+const DIAGONAL: f32 = std::f32::consts::SQRT_2;
+/// What an unrouted net costs the annealing, in steps of track; and where it starts and ends hot.
+const UNROUTED: f32 = 600.0;
+const HOT: f32 = 300.0;
+const COLD: f32 = 3.0;
 
 fn point_segment(px: f32, py: f32, a: (f32, f32), b: (f32, f32)) -> f32 {
     let (dx, dy) = (b.0 - a.0, b.1 - a.1);
@@ -243,6 +297,7 @@ impl Router {
             g2: vec![0.0; n], seen2: vec![0; n], closed2: vec![0; n], parent2: vec![NONE; n], heap2: BinaryHeap::new(),
             meet: (f32::INFINITY, NONE, NONE), tbox: (0, 0, 0, 0), mark: vec![0; n], mark_id: 0,
             expansions: 0, total_rips: 0, last_path: Vec::new(),
+            diagonal: false, mv: None, temp: HOT, alpha: 1.0, moves: 0, max_moves: 0, accepted: 0, rng: 0x9E3779B97F4A7C15,
         };
         // the edge: a track's centre keeps half its width and the edge clearance inside the outline
         let keep = p.edge + p.track / 2.0 - eps;
@@ -353,7 +408,7 @@ impl Router {
         for net in 0..nets {
             let pads: Vec<usize> = (0..p.pads.len()).filter(|&i| p.pads[i].net == net as i32).collect();
             r.nets.push(Net { connected: vec![false; pads.len()], pads, centres: Vec::new(), vias: Vec::new(),
-                              halo: Vec::new(), routed: false, failed: false, rips: 0 });
+                              segs: Vec::new(), halo: Vec::new(), routed: false, failed: false, rips: 0 });
         }
         Ok(r)
     }
@@ -389,6 +444,18 @@ impl Router {
         self.phase = Phase::Next;
         self.heap.clear();
         self.last_path.clear();
+        self.ripping = false;
+        self.mv = None;
+        (self.temp, self.alpha, self.moves, self.max_moves, self.accepted) = (HOT, 1.0, 0, 0, 0);
+        self.rng = 0x9E3779B97F4A7C15;   // the same moves every time: a run can be watched again
+    }
+
+    /// A number from 0 up to 1, the next of a fixed sequence.
+    fn random(&mut self) -> f32 {
+        self.rng ^= self.rng << 13;
+        self.rng ^= self.rng >> 7;
+        self.rng ^= self.rng << 17;
+        (self.rng >> 40) as f32 / (1u64 << 24) as f32
     }
 
     fn xy(&self, c: u32) -> (i32, i32, usize) {
@@ -417,6 +484,7 @@ impl Router {
         net.halo.clear();
         net.centres.clear();
         net.vias.clear();
+        net.segs.clear();
         net.routed = false;
         net.connected.iter_mut().for_each(|c| *c = false);
     }
@@ -448,6 +516,52 @@ impl Router {
                 }
             }
         }
+    }
+
+    /// A net's routing as it is now.
+    fn snapshot(&self, i: usize) -> Saved {
+        let n = &self.nets[i];
+        Saved { net: i, centres: n.centres.clone(), vias: n.vias.clone(), segs: n.segs.clone(), halo: n.halo.clone(),
+                connected: n.connected.clone(), routed: n.routed, failed: n.failed }
+    }
+
+    /// Puts a net's routing back as it was saved. The net has been taken up first.
+    fn restore(&mut self, s: Saved) {
+        for &c in &s.halo {
+            self.usage[c as usize] += 1;
+            self.around(c, |r, at| r.near[at] += 1);
+        }
+        for &c in &s.centres {
+            if self.pad_net[c as usize] == FREE {
+                self.centre[c as usize] = s.net as i16;
+            }
+        }
+        let n = &mut self.nets[s.net];
+        (n.centres, n.vias, n.segs, n.halo, n.connected, n.routed, n.failed) =
+            (s.centres, s.vias, s.segs, s.halo, s.connected, s.routed, s.failed);
+    }
+
+    /// How long a net's tracks are, in steps.
+    fn length(&self, i: usize) -> f32 {
+        self.nets[i].segs.iter().map(|&(a, b)| {
+            let ((ax, ay, _), (bx, by, _)) = (self.xy(a), self.xy(b));
+            if ax != bx && ay != by { DIAGONAL } else { 1.0 }
+        }).sum()
+    }
+
+    /// What the board costs the annealing: its tracks' length, its vias, and a great deal for
+    /// each net that is not whole.
+    fn cost(&self) -> f32 {
+        (0..self.nets.len()).filter(|&i| self.nets[i].pads.len() > 1).map(|i| {
+            let n = &self.nets[i];
+            self.length(i) + VIA_COST * n.vias.len() as f32 + if n.routed && !n.failed { 0.0 } else { UNROUTED }
+        }).sum()
+    }
+
+    /// The two points a diagonal step passes between, or nothing for a step that is not diagonal.
+    fn beside(&self, a: u32, b: u32) -> Option<(usize, usize)> {
+        let ((ax, ay, l), (bx, by, lb)) = (self.xy(a), self.xy(b));
+        (l == lb && ax != bx && ay != by).then(|| (self.at(bx, ay, l).unwrap(), self.at(ax, by, l).unwrap()))
     }
 
     /// How many other nets keep a point.
@@ -491,7 +605,8 @@ impl Router {
     fn distance(&self, c: u32) -> f32 {
         let (x, y, _) = self.xy(c);
         let (x0, y0, x1, y1) = self.tbox;
-        ((x0 - x).max(x - x1).max(0) + (y0 - y).max(y - y1).max(0)) as f32
+        let (dx, dy) = ((x0 - x).max(x - x1).max(0) as f32, (y0 - y).max(y - y1).max(0) as f32);
+        if self.diagonal { dx.max(dy) + (DIAGONAL - 1.0) * dx.min(dy) } else { dx + dy }
     }
 
     /// What the search adds to a point's cost to order the points it has open.
@@ -504,8 +619,9 @@ impl Router {
         }
     }
 
-    /// What a step costs by the strategy's own measure. Hadlock counts detours: a step toward the
-    /// pads is free and any other is one, and a via is as dear as half its length in steps.
+    /// What a step costs by the strategy's own measure. Hadlock counts detours: how much further
+    /// a step goes than it brings the pads nearer, so that a step straight at them is free and a
+    /// step straight away costs two. A via is as dear as half its length in steps.
     fn price(&self, from: u32, to: usize, cost: f32) -> f32 {
         if self.strategy != Strategy::Hadlock || cost == 0.0 {
             return cost;
@@ -513,10 +629,8 @@ impl Router {
         let per = self.gw * self.gh;
         if from as usize / per != to / per {
             1.0 + VIA_COST / 2.0
-        } else if self.distance(to as u32) < self.distance(from) {
-            0.0
         } else {
-            1.0
+            (cost + self.distance(to as u32) - self.distance(from)).max(0.0)
         }
     }
 
@@ -571,11 +685,22 @@ impl Router {
     /// The steps from a point: each point a track may go on to, or the far layer, and its cost.
     fn steps(&self, c: u32) -> Vec<(usize, f32)> {
         let (x, y, l) = self.xy(c);
-        let mut out = Vec::with_capacity(5);
+        let mut out = Vec::with_capacity(9);
         for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)] {
             if let Some(to) = self.at(x + dx, y + dy, l) {
                 if let Some(cost) = self.enter(to) {
                     out.push((to, cost));
+                }
+            }
+        }
+        if self.diagonal {
+            // a diagonal step passes between two points: both must be free to the net, and what
+            // they cost beyond a plain point is paid too
+            for (dx, dy) in [(1, 1), (1, -1), (-1, 1), (-1, -1)] {
+                let Some(to) = self.at(x + dx, y + dy, l) else { continue };
+                let (a, b) = (self.at(x + dx, y, l).unwrap(), self.at(x, y + dy, l).unwrap());
+                if let (Some(cost), Some(ca), Some(cb)) = (self.enter(to), self.enter(a), self.enter(b)) {
+                    out.push((to, DIAGONAL * cost + (ca - 1.0).max(0.0) + (cb - 1.0).max(0.0)));
                 }
             }
         }
@@ -722,10 +847,13 @@ impl Router {
                 vias.push((x, y));
             }
         }
+        // a diagonal step keeps the two points it passes between as well as its ends
+        let beside: Vec<u32> = path.windows(2).filter_map(|w| self.beside(w[0], w[1]))
+            .flat_map(|(a, b)| [a as u32, b as u32]).collect();
         if self.ripping {
             // every net that keeps a point the path needs is in its way
             self.mark_id += 1;
-            for &c in &path {
+            for &c in path.iter().chain(&beside) {
                 self.mark[c as usize] = self.mark_id;
             }
             for &(x, y) in &vias {
@@ -742,6 +870,22 @@ impl Router {
             let blockers: Vec<usize> = (0..self.nets.len())
                 .filter(|&i| i != self.cur && self.nets[i].halo.iter().any(|&c| self.mark[c as usize] == self.mark_id))
                 .collect();
+            if self.strategy == Strategy::Anneal {
+                // the nets in the way are taken up, as they were kept, to be laid again after
+                // this one; the search goes on through other nets until this net is whole
+                let mut mv = self.mv.take().expect("an annealing move is in hand while it routes through nets");
+                for &i in &blockers {
+                    if !mv.saved.iter().any(|s| s.net == i) {
+                        mv.saved.push(self.snapshot(i));
+                    }
+                    if !mv.todo.contains(&i) {
+                        mv.todo.push(i);
+                    }
+                    self.rip(i);
+                    self.total_rips += 1;
+                }
+                self.mv = Some(mv);
+            } else {
             self.ripping = false;
             if blockers.iter().any(|&i| self.nets[i].rips >= MAX_RIPS) {
                 self.nets[self.cur].failed = true;
@@ -754,6 +898,7 @@ impl Router {
                 self.total_rips += 1;
                 self.queue.push_back(i);
             }
+            }
         }
         for &c in &path {
             let (x, y, l) = self.xy(c);
@@ -762,6 +907,15 @@ impl Router {
                 self.centre[c as usize] = me;
             }
             self.nets[self.cur].centres.push(c);
+        }
+        for &c in &beside {
+            let (x, y, l) = self.xy(c);
+            self.keep(x, y, l, self.rt);
+        }
+        for w in path.windows(2) {
+            if self.xy(w[0]).2 == self.xy(w[1]).2 {
+                self.nets[self.cur].segs.push((w[0], w[1]));
+            }
         }
         for &(x, y) in &vias {
             self.keep(x, y, 0, self.rv);
@@ -833,6 +987,10 @@ impl Router {
             self.phase = Phase::Begin;
             return;
         }
+        if self.strategy == Strategy::Anneal {
+            self.anneal();
+            return;
+        }
         if self.strategy == Strategy::Negotiated {
             let shared = self.shared();
             if !shared.is_empty() && self.round < MAX_ROUNDS {
@@ -846,6 +1004,62 @@ impl Router {
             }
         }
         self.phase = Phase::Done;
+    }
+
+    /// The annealing, between searches: the next net of the move in hand, or the move judged and
+    /// the next one begun.
+    fn anneal(&mut self) {
+        let unrouted = |r: &Router| -> Vec<usize> {
+            (0..r.nets.len()).filter(|&i| r.nets[i].pads.len() > 1 && (r.nets[i].failed || !r.nets[i].routed)).collect()
+        };
+        if let Some(mv) = self.mv.as_mut() {
+            if let Some(i) = mv.todo.pop() {
+                // a net the move took up is laid again: the first few through what is in their
+                // way, the rest round what is there now
+                mv.relaid += 1;
+                let through = mv.relaid <= RIPPLE;
+                self.cur = i;
+                self.ripping = through;
+                self.nets[i].failed = false;
+                self.nets[i].connected[0] = true;
+                self.phase = Phase::Begin;
+                return;
+            }
+            // the move is whole: kept if the board is no worse for it, or by chance while it is hot
+            let mv = self.mv.take().unwrap();
+            let worse = self.cost() - mv.before;
+            if worse <= 0.0 || self.random() < (-worse / self.temp).exp() {
+                self.accepted += 1;
+            } else {
+                for s in &mv.saved {
+                    self.rip(s.net);
+                }
+                for s in mv.saved {
+                    self.restore(s);
+                }
+            }
+            self.temp = (self.temp * self.alpha).max(COLD * 0.1);
+            self.moves += 1;
+        } else {
+            // the first pass is over: the cooling is set by how much is left to do
+            self.max_moves = 30 * unrouted(self).len() as u32 + 40;
+            self.alpha = (COLD / HOT).powf(1.0 / (0.7 * self.max_moves as f32));
+        }
+        self.ripping = false;
+        let left = unrouted(self);
+        if left.is_empty() || self.moves >= self.max_moves {
+            self.phase = Phase::Done;
+            return;
+        }
+        // a move: one of the nets left, routed through whatever is in its way
+        let i = left[((self.random() * left.len() as f32) as usize).min(left.len() - 1)];
+        self.mv = Some(Move { saved: vec![self.snapshot(i)], todo: Vec::new(), before: self.cost(), relaid: 0 });
+        self.rip(i);
+        self.cur = i;
+        self.nets[i].failed = false;
+        self.nets[i].connected[0] = true;
+        self.ripping = true;
+        self.phase = Phase::Begin;
     }
 
     /// Advances the routing by up to `budget` search expansions. True when it is over.
@@ -901,35 +1115,57 @@ impl Router {
         count
     }
 
+    /// The nets of two pads or more that are not whole, and of each, how many of its pads the
+    /// routing has reached.
+    pub fn unrouted(&self) -> Vec<(usize, usize, usize)> {
+        (0..self.nets.len())
+            .filter(|&i| self.nets[i].pads.len() > 1 && (self.nets[i].failed || !self.nets[i].routed))
+            .map(|i| (i, self.nets[i].connected.iter().filter(|&&c| c).count(), self.nets[i].pads.len()))
+            .collect()
+    }
+
     pub fn done(&self) -> bool {
         self.phase == Phase::Done
     }
 
     /// What there is to say of the routing so far: see `ffi::stats` for the order.
-    pub fn stats(&mut self) -> [i32; 12] {
+    pub fn stats(&mut self) -> [i32; 14] {
         let shared = if self.strategy == Strategy::Negotiated { self.shared().len() } else { 0 };
         let wired = self.nets.iter().filter(|n| n.pads.len() > 1);
         [
             self.done() as i32,
-            self.round as i32,
+            if self.strategy == Strategy::Anneal { self.moves as i32 } else { self.round as i32 },
             wired.clone().count() as i32,
             wired.clone().filter(|n| n.routed).count() as i32,
             wired.filter(|n| n.failed).count() as i32,
             self.expansions.min(i32::MAX as u64) as i32,
-            (self.nets.iter().map(|n| n.centres.len()).sum::<usize>() as f32 * self.pitch * 100.0) as i32,
+            ((0..self.nets.len()).map(|i| self.length(i)).sum::<f32>() * self.pitch * 100.0) as i32,
             self.nets.iter().map(|n| n.vias.len()).sum::<usize>() as i32,
             shared as i32,
             if self.phase == Phase::Searching || self.phase == Phase::Begin { self.cur as i32 } else { -1 },
             self.total_rips as i32,
             self.ripping as i32,
+            (self.temp * 10.0) as i32,
+            self.accepted as i32,
         ]
     }
 
     /// The board as a page draws it: by point, the net whose copper is there (a track's, else a
     /// pad's), FREE or WALL; and flags, bit 0 a pad's copper, bit 1 a track through what another
     /// net keeps, bit 2 a point the search has open, bit 3 one it has closed, bit 4 a via, bit 5
-    /// the path laid last, bit 6 a point closed by the wave from the pads.
-    pub fn paint(&mut self, net: &mut [i16], flags: &mut [u8]) {
+    /// the path laid last, bit 6 a point closed by the wave from the pads. And by point, the
+    /// tracks that leave it: bit 0 to the east, 1 to the north, 2 to the north-east, 3 to the
+    /// north-west (a track is drawn from one of its ends only).
+    pub fn paint(&mut self, net: &mut [i16], flags: &mut [u8], links: &mut [u8]) {
+        links.iter_mut().for_each(|l| *l = 0);
+        for n in &self.nets {
+            for &(a, b) in &n.segs {
+                let ((ax, ay, _), (bx, by, _)) = (self.xy(a), self.xy(b));
+                // from the lower end, or the western of two on a row
+                let (from, dx) = if by > ay || (by == ay && bx > ax) { (a, bx - ax) } else { (b, ax - bx) };
+                links[from as usize] |= if ay == by { 1 } else if dx == 0 { 2 } else if dx > 0 { 4 } else { 8 };
+            }
+        }
         let live = self.phase == Phase::Searching;
         for c in 0..net.len() {
             net[c] = if self.pad_net[c] != FREE { self.pad_net[c] } else if self.centre[c] != FREE { self.centre[c] }
@@ -975,7 +1211,12 @@ mod tests {
     }
 
     fn solve(p: &Problem, s: Strategy) -> Router {
+        solve_with(p, s, false)
+    }
+
+    fn solve_with(p: &Problem, s: Strategy, diagonal: bool) -> Router {
         let mut r = Router::new(p).unwrap();
+        r.diagonal = diagonal;
         r.start(s, Order::AsGiven, &p.pads);
         let mut steps = 0;
         while !r.step(10_000) {
@@ -984,6 +1225,9 @@ mod tests {
         }
         r
     }
+
+    const ALL: [Strategy; 7] = [Strategy::Lee, Strategy::AStar, Strategy::RipUp, Strategy::Negotiated, Strategy::Hadlock,
+                                Strategy::Bidirectional, Strategy::Anneal];
 
     /// Two nets on a board's diagonals: their straight routes cross.
     fn crossing() -> Problem {
@@ -1004,7 +1248,7 @@ mod tests {
 
     #[test]
     fn every_strategy_routes_a_crossing() {
-        for s in [Strategy::Lee, Strategy::AStar, Strategy::RipUp, Strategy::Negotiated, Strategy::Hadlock, Strategy::Bidirectional] {
+        for s in ALL {
             let mut r = solve(&crossing(), s);
             // one net changes layer or goes round the end of the other: either is sound
             assert!(r.sound(), "{s:?} leaves the crossing unrouted or shared");
@@ -1059,9 +1303,52 @@ mod tests {
 
     #[test]
     fn the_reversed_bus_is_routed_by_the_strategies_that_take_nets_up() {
-        for s in [Strategy::RipUp, Strategy::Negotiated] {
+        for s in [Strategy::RipUp, Strategy::Negotiated, Strategy::Anneal] {
             let mut r = solve(&reversed(), s);
             assert!(r.sound(), "{s:?} leaves the reversed bus unrouted or shared: {:?}", r.stats());
+        }
+    }
+
+    #[test]
+    fn with_diagonal_steps_every_strategy_is_still_clean_and_the_way_is_shorter() {
+        for s in ALL {
+            let mut r = solve_with(&crossing(), s, true);
+            assert!(r.sound(), "{s:?} with diagonals leaves the crossing unrouted or shared");
+        }
+        for s in [Strategy::RipUp, Strategy::Negotiated, Strategy::Anneal] {
+            let mut r = solve_with(&reversed(), s, true);
+            assert!(r.sound(), "{s:?} with diagonals leaves the reversed bus unrouted or shared: {:?}", r.stats());
+        }
+        // across an empty board a diagonal way is shorter than a square one, and every search finds one as short
+        let square = solve(&open_field(), Strategy::Lee).stats()[6];
+        let slant = solve_with(&open_field(), Strategy::Lee, true).stats()[6];
+        assert!(slant < square, "a diagonal way of {slant} is no shorter than a square one of {square}");
+        for s in [Strategy::AStar, Strategy::Hadlock, Strategy::Bidirectional] {
+            let got = solve_with(&open_field(), s, true).stats()[6];
+            assert!((got - slant).abs() <= 1, "{s:?} with diagonals finds a way of {got}, and Lee one of {slant}");
+        }
+    }
+
+    #[test]
+    fn a_diagonal_track_keeps_the_points_it_passes_between() {
+        // one net laid diagonally across the board, then a second that must cross it: it may not
+        // slip between two of the first's points, so it changes layer or goes round
+        let p = board(vec![pad(3.0, 3.0, 0, Side::Top), pad(9.0, 9.0, 0, Side::Top),
+                           pad(3.0, 9.0, 1, Side::Top), pad(9.0, 3.0, 1, Side::Top)], 12.0, 12.0);
+        let mut r = solve_with(&p, Strategy::AStar, true);
+        assert!(r.sound());
+        let mut links = vec![0u8; 2 * r.gw * r.gh];
+        let (mut net, mut flags) = (vec![0i16; links.len()], vec![0u8; links.len()]);
+        r.paint(&mut net, &mut flags, &mut links);
+        // no north-east piece of one net crosses a north-west piece of another in the same square
+        let (gw, gh) = (r.gw, r.gh);
+        for l in 0..2 {
+            for y in 0..gh - 1 {
+                for x in 0..gw - 1 {
+                    let (sw, se) = ((l * gh + y) * gw + x, (l * gh + y) * gw + x + 1);
+                    assert!(!(links[sw] & 4 != 0 && links[se] & 8 != 0), "two diagonal tracks cross at ({x}, {y})");
+                }
+            }
         }
     }
 

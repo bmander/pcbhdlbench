@@ -37,12 +37,14 @@ search steps a frame, so that the wave can be seen spreading.</p>
       <optgroup label='Nets taken up and laid again'>
         <option value=2>Rip-up and reroute</option>
         <option value=3>Negotiated congestion (PathFinder)</option>
+        <option value=6>Simulated annealing</option>
       </optgroup>
     </select></label>
     <p class=muted id=about></p>
     <label>Order of the nets <select id=order>
       <option value=0>as numbered</option><option value=1>shortest first</option><option value=2>longest first</option>
     </select></label>
+    <label><input type=checkbox id=diagonal checked> Tracks may run at 45°</label>
     <div class=pick>
       <button type=button id=run>Run</button>
       <button type=button id=step>Step</button>

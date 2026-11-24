@@ -17,7 +17,8 @@ struct Held {
     router: Option<Router>,
     nets: Vec<i16>,
     flags: Vec<u8>,
-    stats: [i32; 12],
+    links: Vec<u8>,
+    stats: [i32; 14],
     error: Vec<u8>,
 }
 
@@ -35,7 +36,8 @@ pub extern "C" fn buffer(len: usize) -> *mut f32 {
     })
 }
 
-fn read(v: &[f32]) -> Option<Problem> {
+/// A board from the run of floats the page writes (see the module's words).
+pub fn read(v: &[f32]) -> Option<Problem> {
     let mut at = 0;
     let mut next = || {
         at += 1;
@@ -66,6 +68,7 @@ pub extern "C" fn load() -> i32 {
                 let n = 2 * router.gw * router.gh;
                 h.nets = vec![-1; n];
                 h.flags = vec![0; n];
+                h.links = vec![0; n];
                 h.router = Some(router);
                 h.pads = pads;
                 1
@@ -80,14 +83,16 @@ pub extern "C" fn load() -> i32 {
 }
 
 /// Begins routing: strategy 0 Lee, 1 A*, 2 rip-up and reroute, 3 negotiated congestion, 4 Hadlock,
-/// 5 bidirectional; order 0 as given, 1 the shortest net first, 2 the longest.
+/// 5 bidirectional, 6 simulated annealing; order 0 as given, 1 the shortest net first, 2 the
+/// longest; diagonal 1 where a track may step diagonally.
 #[no_mangle]
-pub extern "C" fn start(strategy: u32, order: u32) {
+pub extern "C" fn start(strategy: u32, order: u32, diagonal: u32) {
     HELD.with(|h| {
         let h = &mut *h.borrow_mut();
         if let Some(r) = h.router.as_mut() {
             let s = [Strategy::Lee, Strategy::AStar, Strategy::RipUp, Strategy::Negotiated, Strategy::Hadlock,
-                     Strategy::Bidirectional][strategy.min(5) as usize];
+                     Strategy::Bidirectional, Strategy::Anneal][strategy.min(6) as usize];
+            r.diagonal = diagonal != 0;
             let o = [Order::AsGiven, Order::ShortestFirst, Order::LongestFirst][order.min(2) as usize];
             r.start(s, o, &h.pads);
         }
@@ -106,7 +111,7 @@ pub extern "C" fn paint() {
     HELD.with(|h| {
         let h = &mut *h.borrow_mut();
         if let Some(r) = h.router.as_mut() {
-            r.paint(&mut h.nets, &mut h.flags);
+            r.paint(&mut h.nets, &mut h.flags, &mut h.links);
             h.stats = r.stats();
         }
     })
@@ -126,10 +131,16 @@ pub extern "C" fn flags() -> *const u8 {
     HELD.with(|h| h.borrow().flags.as_ptr())
 }
 
-/// Twelve numbers: 1 when over; the round; the nets of two pads or more; those routed; those
+/// By point: the tracks that leave it, bit 0 east, 1 north, 2 north-east, 3 north-west.
+#[no_mangle]
+pub extern "C" fn links() -> *const u8 {
+    HELD.with(|h| h.borrow().links.as_ptr())
+}
+
+/// Fourteen numbers: 1 when over; the round (or the annealing's move); the nets of two pads or more; those routed; those
 /// given up; the search's expansions; the tracks' length in hundredths of a mm; the vias; the
 /// points still shared; the net being routed, or -1; the times a net was taken up; 1 while the
-/// search is routing through other nets.
+/// search is routing through other nets; the annealing's temperature, in tenths; its moves kept.
 #[no_mangle]
 pub extern "C" fn stats() -> *const i32 {
     HELD.with(|h| h.borrow().stats.as_ptr())

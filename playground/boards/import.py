@@ -8,7 +8,8 @@ playground's routers start from the pads. A pad is kept as a rectangle or a circ
 (one at an odd angle as a circle of its lesser size), on the top, the bottom or through; a hole
 with no copper as a pad of no net; a net of one pad as no net. The outline is the largest closed
 loop of the edge cuts, its arcs and curves as short straight pieces. `--pour` names the net the
-real board joins with a pour or a plane, which the playground can leave unrouted.
+real board joins with a pour or a plane (or several, with commas), which the playground can leave
+unrouted.
 
 An Eagle board (.brd, XML) goes through KiCad first:  kicad-cli pcb import --format eagle -o b.kicad_pcb b.brd
 
@@ -161,13 +162,13 @@ def main():
         "width": r(x1 - x0), "height": r(y1 - y0),
         "outline": [list(p) for p in outline] if len(outline) != 4 else [],
         "track": 0.15, "clearance": 0.15, "via": 0.6, "edge": 0.3, "pitch": args.pitch,
-        "nets": names, "pour": index.get(args.pour) if args.pour else None,
+        "nets": names, "pour": [index[n] for n in args.pour.split(",") if n in index] if args.pour else None,
         "pads": [{"x": move(p)[0], "y": move(p)[1], "w": r(p[2]), "h": r(p[3]), "side": p[4], "round": p[5],
                   "net": index.get(p[6], -1)} for p in inside],
     }
     pathlib.Path(args.out).write_text(json.dumps(board, separators=(",", ":")) + "\n")
     print(f"{args.out}: {board['width']} x {board['height']} mm, {len(board['pads'])} pads, {len(names)} nets, "
-          f"an outline of {len(outline)} corners" + (f", {args.pour} is net {board['pour']}" if args.pour else ""))
+          f"an outline of {len(outline)} corners" + (f", {args.pour}: net {board['pour']}" if args.pour else ""))
 
 
 main()

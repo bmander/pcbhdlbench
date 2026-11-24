@@ -79,7 +79,8 @@ board is kept at `results/<toolchain>/<case>/board.kicad_pcb`, and the site draw
 ## The playground
 
 `playground/` is a page for watching autorouters work: place pads, name nets, pick a strategy
-(Lee, bidirectional, A*, Hadlock, rip-up and reroute, negotiated congestion) and see the search spread and the tracks
+(Lee, bidirectional, A*, Hadlock, rip-up and reroute, negotiated congestion, simulated annealing),
+with tracks square or at 45°, and see the search spread and the tracks
 laid. The routers are a small Rust crate with no dependencies, `playground/router`, compiled to
 WebAssembly behind a C ABI; the page around it is plain JavaScript and a canvas. The cases that
 place every part of a two-layer board are among the boards it starts from, and so are three
@@ -92,6 +93,11 @@ cargo test --release --manifest-path playground/router/Cargo.toml
 cargo build --release --target wasm32-unknown-unknown --manifest-path playground/router/Cargo.toml
 python3 harness/site.py     # copies the page and the module to site/playground/
 ```
+
+A board can be routed with no page, for timing: `python3 playground/boards/floats.py
+playground/boards/corne-keyboard.json /tmp/corne.f32`, then `cargo run --release --example route
+--manifest-path playground/router/Cargo.toml -- /tmp/corne.f32 6 1 300` (the strategy's number, 1
+for diagonal steps, and the seconds to go on for).
 
 These are teaching routers on a coarse grid, not entrants: they are not on the routers' board.
 
