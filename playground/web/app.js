@@ -49,8 +49,8 @@ async function boot() {
   // ?case=routing/bus-8 opens that case of the bench; otherwise the board in the link, or the first example
   const asked = new URLSearchParams(location.search).get('case');
   const found = asked ? presets.findIndex((p) => p.id === asked) : -1;
-  if (found >= 0) pick(found);
-  else restore() || pick(0);
+  if (found >= 0) await pick(found);
+  else restore() || await pick(0);
   frame();
 }
 
@@ -60,7 +60,8 @@ function send() {
   const v = [b.width, b.height, b.pitch, b.track, b.clearance, b.via, b.edge, b.outline.length];
   for (const [x, y] of b.outline) v.push(x, y);
   v.push(b.pads.length);
-  for (const p of b.pads) v.push(p.x, p.y, p.w, p.h, p.side, p.round ? 1 : 0, p.net);
+  const poured = b.pour != null && $('pour').checked ? b.pour : -2;
+  for (const p of b.pads) v.push(p.x, p.y, p.w, p.h, p.side, p.round ? 1 : 0, p.net === poured ? -1 : p.net);
   const at = wasm.buffer(v.length);
   new Float32Array(wasm.memory.buffer, at, v.length).set(v);
   loaded = wasm.load() === 1;
@@ -72,24 +73,34 @@ function send() {
     return;
   }
   grid = { w: wasm.grid_width(), h: wasm.grid_height() };
+  hemmed = wasm.hemmed();
   wasm.paint();
-  stats = new Int32Array(12);
+  stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 12).slice();   // how many nets there are, before any is routed
   buttons();
 }
 
 let started = false;
+let hemmed = 0;      // pads with no way out on this grid
 function begin() {
   if (!loaded) return;
   wasm.start(+$('strategy').value, +$('order').value);
   started = true;
 }
 
-const perFrame = () => Math.round(Math.pow(10, ($('speed').value / 100) * 4.6));  // 1 to 40,000
+const perFrame = () => Math.round(Math.pow(10, ($('speed').value / 100) * 5.3));  // 1 to 200,000
 
 function advance(n) {
   if (!loaded) return;
   if (!started) begin();
-  if (wasm.step(n)) running = false;
+  // a frame's worth: the steps asked for, or as many of them as fit in a sixtieth of a second
+  // (at the top of the slider, most of a twentieth: a big board is worth a slower picture)
+  const until = performance.now() + (+$('speed').value >= 95 ? 45 : 14);
+  let over = false;
+  for (let left = n; left > 0 && !over; left -= 2000) {
+    over = wasm.step(Math.min(left, 2000)) === 1;
+    if (performance.now() > until) break;
+  }
+  if (over) running = false;
   wasm.paint();
   stats = new Int32Array(wasm.memory.buffer, wasm.stats(), 12).slice();
   buttons();
@@ -141,6 +152,9 @@ function draw() {
     const g = board.pitch * view.s;          // a grid step in pixels
     const half = Math.max(g / 2, 0.5);
     const idx = (l, x, y) => (l * grid.h + y) * grid.w + x;
+    if (grid.w * grid.h > 45000) {
+      paintGrid(nets, flags, layers);
+    } else {
 
     // what is closed to tracks, and the search's wave
     for (const l of layers) {
@@ -190,7 +204,9 @@ function draw() {
         }
       }
     }
+    }
     // tracks through what another net keeps, and the vias
+    if (grid.w * grid.h <= 45000)
     for (let y = 0; y < grid.h; y++) {
       for (let x = 0; x < grid.w; x++) {
         for (const l of layers) {
@@ -240,6 +256,57 @@ function draw() {
   });
 }
 
+// a net's colour as the four bytes of a pixel, and the same dimmed for the bottom layer
+const rgba = new Map();
+function pixel(n, dim) {
+  const key = n * 2 + (dim ? 1 : 0);
+  if (!rgba.has(key)) {
+    const h = hue(n) / 60, s = 0.72, l = dim ? 0.36 : 0.58;
+    const c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h % 2) - 1)), m = l - c / 2;
+    const [r, g, b] = [[c, x, 0], [x, c, 0], [0, c, x], [0, x, c], [x, 0, c], [c, 0, x]][Math.floor(h) % 6];
+    rgba.set(key, (255 << 24) | (Math.round((b + m) * 255) << 16) | (Math.round((g + m) * 255) << 8) | Math.round((r + m) * 255));
+  }
+  return rgba.get(key);
+}
+
+let raster = null;
+/** A big board: every point a pixel, the tracks, the wave and the vias in one pass, scaled up to the board. */
+function paintGrid(nets, flags, layers) {
+  const { w, h } = grid;
+  if (!raster || raster.canvas.width !== w || raster.canvas.height !== h) {
+    const c = document.createElement('canvas');
+    c.width = w;
+    c.height = h;
+    raster = { canvas: c, ctx: c.getContext('2d'), image: new ImageData(w, h) };
+  }
+  const out = new Uint32Array(raster.image.data.buffer);
+  const OPEN = 0xc028bef0, CLOSED = 0x66ff966e, BACK = 0x66aac83c, WALL = 0x2992928c, SHARED = 0xff4849e3, VIA = 0xffffffff;
+  const per = w * h, top = layers.includes(0), bottom = layers.includes(1);
+  for (let y = 0; y < h; y++) {
+    const row = (h - 1 - y) * w;                    // the picture's rows run down, the board's up
+    for (let x = 0; x < w; x++) {
+      const a = y * w + x, b = per + a;
+      const fa = top ? flags[a] : 0, fb = bottom ? flags[b] : 0;
+      let px = 0;
+      if ((fa | fb) & 2) px = SHARED;
+      else if ((fa | fb) & 16) px = VIA;
+      else if (top && nets[a] >= 0 && !(fa & 1)) px = pixel(nets[a], false);
+      else if (bottom && nets[b] >= 0 && !(fb & 1)) px = pixel(nets[b], true);
+      else if ((fa | fb) & 4) px = OPEN;
+      else if ((fa | fb) & 8) px = CLOSED;
+      else if ((fa | fb) & 64) px = BACK;
+      else if ((top ? nets[a] : nets[b]) === -2) px = WALL;
+      out[row + x] = px;
+    }
+  }
+  raster.ctx.putImageData(raster.image, 0, 0);
+  const g = board.pitch * view.s;
+  ctx.imageSmoothingEnabled = g < 1.5;              // smoothed only where a point is under a pixel or so
+  ctx.drawImage(raster.canvas, px0() - g / 2, py((h - 1) * board.pitch) - g / 2, w * g, h * g);
+  ctx.imageSmoothingEnabled = true;
+}
+const px0 = () => view.ox;
+
 /** Whether a pad's point has a track of its own net beside it, so that the track is drawn into the pad. */
 function touches(nets, flags, l, x, y) {
   const at = (X, Y) => (X >= 0 && Y >= 0 && X < grid.w && Y < grid.h ? (l * grid.h + Y) * grid.w + X : -1);
@@ -255,7 +322,10 @@ function say() {
   const [done, round, nets, routed, failed, expansions, length, vias, shared, current, rips, ripping] = stats;
   const strategy = +$('strategy').value;
   const bits = [];
-  if (!started) bits.push(`${nets} net${nets === 1 ? '' : 's'} to route on a grid of ${grid.w} by ${grid.h} points, two layers.`);
+  if (!started) {
+    bits.push(`${nets} net${nets === 1 ? '' : 's'} to route on a grid of ${grid.w} by ${grid.h} points, two layers.`);
+    if (hemmed) bits.push(`${hemmed} pad${hemmed === 1 ? ' has' : 's have'} no way out on this grid, hemmed in by the pads beside ${hemmed === 1 ? 'it' : 'them'}: a finer grid or less clearance lets ${hemmed === 1 ? 'it' : 'them'} out.`);
+  }
   else {
     bits.push(done ? (failed || shared ? 'Finished, not clean.' : 'Routed.') : current >= 0 ? `Routing net ${current + 1}${ripping ? ', through the nets in its way' : ''}…` : 'Working…');
     bits.push(`${routed} of ${nets} nets routed${failed ? `, ${failed} given up` : ''}.`);
@@ -321,9 +391,13 @@ function fields() {
   const list = $('netlist');
   const current = p ? p.net : net;
   const chips = [];
-  for (let n = 0; n < Math.max(netCount(), net + 1); n++) {
-    chips.push(`<button type=button class=chip data-net=${n} aria-pressed=${n === current}><i style='background:${colour(n)}'></i>net ${n + 1}</button>`);
+  const all = Math.max(netCount(), net + 1);
+  const name = (n) => (board.names?.[n] ?? `net ${n + 1}`).replace(/[<>&]/g, '');
+  for (let n = 0; n < all; n++) {
+    if (all > 24 && n !== current) continue;       // a board of a hundred nets shows the one in hand
+    chips.push(`<button type=button class=chip data-net=${n} aria-pressed=${n === current}><i style='background:${colour(n)}'></i>${name(n)}</button>`);
   }
+  if (all > 24) chips.push(`<span class=muted>one of ${all} nets</span>`);
   chips.push(`<button type=button class=chip data-net=new aria-pressed=false>+ a new net</button>`);
   chips.push(`<button type=button class=chip data-net=-1 aria-pressed=${current === -1}><i style='background:${colour(-1)}'></i>no net</button>`);
   list.innerHTML = chips.join('');
@@ -360,6 +434,7 @@ for (const id of ['padw', 'padh', 'kind']) {
 $('delete').onclick = () => remove();
 $('clear').onclick = () => { board.pads = []; board.outline = []; selected = -1; net = 0; fields(); send(); save(); };
 $('view').onchange = () => {};
+$('pour').onchange = () => send();
 $('share').onclick = async () => {
   save();
   try { await navigator.clipboard.writeText(location.href); $('share').textContent = 'Copied'; }
@@ -369,6 +444,7 @@ $('share').onclick = async () => {
 
 function remove() {
   if (!board.pads[selected]) return;
+  opened = null;
   board.pads.splice(selected, 1);
   selected = -1;
   fields();
@@ -391,6 +467,7 @@ canvas.onpointerdown = (e) => {
   const at = mm(e);
   if (tool === 'pad') {
     if (at.x < 0 || at.y < 0 || at.x > board.width || at.y > board.height) return;
+    opened = null;
     board.pads.push({ x: +snap(at.x).toFixed(3), y: +snap(at.y).toFixed(3), w: last.w, h: last.h, side: last.side, round: last.side === 2 && last.w === last.h, net });
     send();
     save();
@@ -413,7 +490,7 @@ canvas.onpointermove = (e) => {
   const at = mm(e);
   const x = +Math.min(board.width, Math.max(0, snap(at.x + drag.dx))).toFixed(3);
   const y = +Math.min(board.height, Math.max(0, snap(at.y + drag.dy))).toFixed(3);
-  if (x !== p.x || y !== p.y) { p.x = x; p.y = y; drag.moved = true; send(); }
+  if (x !== p.x || y !== p.y) { p.x = x; p.y = y; drag.moved = true; opened = null; send(); }
 };
 canvas.onpointerup = () => { if (drag?.moved) save(); drag = null; };
 
@@ -438,32 +515,55 @@ async function loadPresets() {
     presets = presets.concat(more);
   } catch { /* the page stands without the bench's cases */ }
   const option = (p, i) => `<option value=${i}>${p.title.replace(/</g, '&lt;')}</option>`;
-  const group = (label, own) => {
-    const mine = presets.map((p, i) => [p, i]).filter(([p]) => Boolean(p.id) === own).map(([p, i]) => option(p, i)).join('');
+  const of = (label, test) => {
+    const mine = presets.map((p, i) => [p, i]).filter(([p]) => test(p)).map(([p, i]) => option(p, i)).join('');
     return mine ? `<optgroup label='${label}'>${mine}</optgroup>` : '';
   };
-  $('preset').innerHTML = group('Examples', false) + group('Cases of the bench', true);
+  $('preset').innerHTML = of('Examples', (p) => !p.id) + of('Cases of the bench', (p) => p.id && !p.file)
+    + of('Open hardware, to be routed again', (p) => Boolean(p.file));
   $('preset').onchange = () => pick(+$('preset').value);
 }
 
-function pick(i) {
-  const p = presets[i];
+let opened = null;   // the id of the case or the board that is open, while it is as it was opened
+
+async function pick(i) {
+  let p = presets[i];
+  if (p.file && !p.pads) {                         // a board of open hardware is fetched when it is asked for
+    $('stats').textContent = `Fetching ${p.title}…`;
+    try { p = presets[i] = { ...(await (await fetch(p.file)).json()), ...p }; }
+    catch (e) { $('stats').textContent = `${p.title} could not be fetched: ${e.message}`; return; }
+  }
   board = { width: p.width, height: p.height, track: p.track ?? 0.15, clearance: p.clearance ?? 0.15, via: p.via ?? 0.6,
-            edge: p.edge ?? 0.3, pitch: +((p.track ?? 0.15) + (p.clearance ?? 0.15)).toFixed(3),
-            outline: p.outline ?? [], pads: p.pads.map((q) => ({ ...q })) };
+            edge: p.edge ?? 0.3, pitch: p.pitch ?? +((p.track ?? 0.15) + (p.clearance ?? 0.15)).toFixed(3),
+            outline: p.outline ?? [], pads: p.pads.map((q) => ({ ...q })), pour: p.pour ?? null, names: p.nets ?? null };
+  opened = p.id ?? null;
   for (const [x, y] of p.walls ?? []) board.pads.push({ x, y, w: 1.2, h: 4.2, side: 2, round: false, net: -1 });
   selected = -1;
   net = 0;
   $('preset').value = i;
-  $('case').innerHTML = p.id
+  const text = (s) => String(s).replace(/[<>&'"]/g, (c) => `&#${c.charCodeAt(0)};`);
+  $('case').innerHTML = p.maker
+    ? `<a href='${text(p.source)}'>${text(p.title)}</a>, by ${text(p.maker)}, under <a href='${text(p.license_url)}'>${text(p.license)}</a>. `
+      + `Its pads and nets alone: the routing is taken away, and a pad is a plain rectangle or circle. ${text(p.note ?? '')}`
+    : p.id
     ? `This is <a href='../cases/${p.id}.html'>${p.id}</a> of the bench, as its parts are placed: see how the routers and the toolchains do on it there.`
     : '';
+  $('pourline').hidden = board.pour == null;
+  if (board.pour != null) {
+    const on = board.pads.filter((q) => q.net === board.pour).length;
+    $('pourname').textContent = `Leave ${board.names?.[board.pour] ?? 'the ground'} unrouted (${on} pads): the real board joins it with a pour or a plane`;
+  }
   fields();
   send();
   save();
 }
 
 function save() {
+  if (board.pads.length > 150) {
+    // too big for a link to hold: the link names the board, while it is as it was opened
+    history.replaceState(null, '', location.pathname + (opened ? `?case=${opened}` : ''));
+    return;
+  }
   const s = { b: board, s: +$('strategy').value, o: +$('order').value };
   // the board is in the link's fragment; a ?case= it was opened by is dropped, so that a reload keeps the edits
   history.replaceState(null, '', location.pathname + '#' + btoa(unescape(encodeURIComponent(JSON.stringify(s)))));

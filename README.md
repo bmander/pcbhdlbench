@@ -82,7 +82,10 @@ board is kept at `results/<toolchain>/<case>/board.kicad_pcb`, and the site draw
 (Lee, bidirectional, A*, Hadlock, rip-up and reroute, negotiated congestion) and see the search spread and the tracks
 laid. The routers are a small Rust crate with no dependencies, `playground/router`, compiled to
 WebAssembly behind a C ABI; the page around it is plain JavaScript and a canvas. The cases that
-place every part of a two-layer board are among the boards it starts from.
+place every part of a two-layer board are among the boards it starts from, and so are three
+boards of open hardware with their routing taken away (`playground/boards`, which says whose
+they are and under what licences): an Arduino Uno R3, the Castor & Pollux synthesiser's
+mainboard and the Corne keyboard.
 
 ```bash
 cargo test --release --manifest-path playground/router/Cargo.toml

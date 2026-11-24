@@ -135,6 +135,12 @@ pub extern "C" fn stats() -> *const i32 {
     HELD.with(|h| h.borrow().stats.as_ptr())
 }
 
+/// How many pads have no way out on this grid, hemmed in by their neighbours' halos.
+#[no_mangle]
+pub extern "C" fn hemmed() -> usize {
+    HELD.with(|h| h.borrow_mut().router.as_mut().map_or(0, |r| r.hemmed()))
+}
+
 #[no_mangle]
 pub extern "C" fn grid_width() -> usize {
     HELD.with(|h| h.borrow().router.as_ref().map_or(0, |r| r.gw))

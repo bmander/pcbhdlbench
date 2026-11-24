@@ -582,6 +582,11 @@ def playground(cases, patterns, rules):
         presets.append({"id": c["id"], "title": c["title"], "width": max(p[0] for p in outline),
                         "height": max(p[1] for p in outline), "outline": outline if len(outline) != 4 else [],
                         "track": r["track"], "clearance": r["clearance"], "via": r["via_pad"], "edge": r["edge"], "pads": pads})
+    # the boards of open hardware: each is fetched when it is asked for
+    (out / "boards").mkdir()
+    for f in sorted((ROOT / "playground" / "boards").glob("*.json")):
+        shutil.copy(f, out / "boards" / f.name)
+        presets.append({"id": f"hardware/{f.stem}", "title": json.loads(f.read_text())["title"], "file": f"boards/{f.name}"})
     (out / "presets.json").write_text(json.dumps(presets, separators=(",", ":")))
 
 

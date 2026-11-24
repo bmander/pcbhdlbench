@@ -139,6 +139,13 @@ pub struct Router {
     /// now being routed.
     usage: Vec<u16>,
     own: Vec<u16>,
+    /// By place (a point of either layer): what stands within a via's halo of it on either layer.
+    /// `via_fixed` is of the pads: FREE, one net's alone, or WALL. `near` and `near_own` are of
+    /// the tracks and vias: `usage` and `own` summed over the halo, so that whether a via fits is
+    /// looked up and not counted.
+    via_fixed: Vec<i16>,
+    near: Vec<u32>,
+    near_own: Vec<u32>,
     /// By point: the net whose track runs through it, the last to if several do.
     centre: Vec<i16>,
     /// The halo of a track and of a via, in points, as a square's half side.
@@ -187,17 +194,6 @@ fn point_segment(px: f32, py: f32, a: (f32, f32), b: (f32, f32)) -> f32 {
     ((px - a.0 - t * dx).powi(2) + (py - a.1 - t * dy).powi(2)).sqrt()
 }
 
-fn inside(px: f32, py: f32, poly: &[(f32, f32)]) -> bool {
-    let mut hit = false;
-    for i in 0..poly.len() {
-        let (a, b) = (poly[i], poly[(i + 1) % poly.len()]);
-        if (a.1 > py) != (b.1 > py) && px < a.0 + (py - a.1) * (b.0 - a.0) / (b.1 - a.1) {
-            hit = !hit;
-        }
-    }
-    hit
-}
-
 impl Pad {
     /// How far a point is from the pad's copper: nothing, or less, inside it.
     fn distance(&self, px: f32, py: f32) -> f32 {
@@ -223,8 +219,8 @@ impl Router {
         }
         let gw = (p.width / p.pitch + 1e-4).floor() as usize + 1;
         let gh = (p.height / p.pitch + 1e-4).floor() as usize + 1;
-        if gw * gh > 640 * 640 {
-            return Err("the grid is over 640 by 640 points: widen the pitch or shrink the board");
+        if gw * gh > 800_000 {
+            return Err("the grid is over 800,000 points a layer: widen the grid or shrink the board");
         }
         let n = 2 * gw * gh;
         let eps = 1e-4;
@@ -237,6 +233,7 @@ impl Router {
             gw, gh, pitch: p.pitch,
             fixed: vec![FREE; n], pad_net: vec![FREE; n], pad_at: vec![NONE; n], pad_cells: vec![Vec::new(); p.pads.len()],
             nets: Vec::new(), usage: vec![0; n], own: vec![0; n], centre: vec![FREE; n],
+            via_fixed: vec![FREE; n / 2], near: vec![0; n / 2], near_own: vec![0; n / 2],
             rt: (((p.track + p.clearance) / p.pitch - eps).ceil() as i32 - 1).max(0),
             rv: (((p.via / 2.0 + p.clearance + p.track / 2.0) / p.pitch - eps).ceil() as i32 - 1).max(0),
             strategy: Strategy::AStar, queue: VecDeque::new(), cur: 0, phase: Phase::Done, ripping: false,
@@ -249,14 +246,35 @@ impl Router {
         };
         // the edge: a track's centre keeps half its width and the edge clearance inside the outline
         let keep = p.edge + p.track / 2.0 - eps;
+        // outside it, row by row: between the outline's crossings of the row, a point is inside
         for y in 0..gh {
+            let py = y as f32 * p.pitch + 1e-5;
+            let mut xs: Vec<f32> = (0..outline.len())
+                .filter_map(|i| {
+                    let (a, b) = (outline[i], outline[(i + 1) % outline.len()]);
+                    ((a.1 > py) != (b.1 > py)).then(|| a.0 + (py - a.1) * (b.0 - a.0) / (b.1 - a.1))
+                })
+                .collect();
+            xs.sort_by(f32::total_cmp);
             for x in 0..gw {
-                let (px, py) = (x as f32 * p.pitch, y as f32 * p.pitch);
-                let d = (0..outline.len()).map(|i| point_segment(px, py, outline[i], outline[(i + 1) % outline.len()]))
-                    .fold(f32::INFINITY, f32::min);
-                if d < keep || !inside(px, py, &outline) {
+                let px = x as f32 * p.pitch;
+                if xs.iter().filter(|&&c| c < px).count() % 2 == 0 {
                     r.fixed[y * gw + x] = WALL;
                     r.fixed[(gh + y) * gw + x] = WALL;
+                }
+            }
+        }
+        // and too near it: the points within the margin of each of its edges
+        for i in 0..outline.len() {
+            let (a, b) = (outline[i], outline[(i + 1) % outline.len()]);
+            let lo = |u: f32, v: f32| ((u.min(v) - keep) / p.pitch).floor().max(0.0) as usize;
+            let hi = |u: f32, v: f32, max: usize| (((u.max(v) + keep) / p.pitch).ceil().max(0.0) as usize).min(max - 1);
+            for y in lo(a.1, b.1)..=hi(a.1, b.1, gh) {
+                for x in lo(a.0, b.0)..=hi(a.0, b.0, gw) {
+                    if point_segment(x as f32 * p.pitch, y as f32 * p.pitch, a, b) < keep {
+                        r.fixed[y * gw + x] = WALL;
+                        r.fixed[(gh + y) * gw + x] = WALL;
+                    }
                 }
             }
         }
@@ -305,6 +323,30 @@ impl Router {
                         }
                         r.fixed[c] = if r.fixed[c] == FREE || r.fixed[c] == own { own } else { WALL };
                     }
+                }
+            }
+        }
+        // what the pads leave of each place for a via: nothing, one net's own, or no via at all
+        for c in 0..n {
+            let f = r.fixed[c];
+            if f == FREE {
+                continue;
+            }
+            let (x, y, _) = r.xy(c as u32);
+            for dy in -r.rv..=r.rv {
+                for dx in -r.rv..=r.rv {
+                    if let Some(at) = r.at(x + dx, y + dy, 0) {
+                        let v = &mut r.via_fixed[at];
+                        *v = if *v == FREE || *v == f { f } else { WALL };
+                    }
+                }
+            }
+        }
+        // a place too near the board's edge for a via's halo has no via either
+        for y in 0..gh as i32 {
+            for x in 0..gw as i32 {
+                if x < r.rv || y < r.rv || x >= gw as i32 - r.rv || y >= gh as i32 - r.rv {
+                    r.via_fixed[y as usize * gw + x as usize] = WALL;
                 }
             }
         }
@@ -361,10 +403,12 @@ impl Router {
 
     /// Takes a net's tracks and vias up.
     fn rip(&mut self, i: usize) {
-        let net = &mut self.nets[i];
-        for &c in &net.halo {
+        for k in 0..self.nets[i].halo.len() {
+            let c = self.nets[i].halo[k];
             self.usage[c as usize] -= 1;
+            self.around(c, |r, at| r.near[at] -= 1);
         }
+        let net = &mut self.nets[i];
         for &c in &net.centres {
             if self.centre[c as usize] == i as i16 {
                 self.centre[c as usize] = FREE;
@@ -377,6 +421,18 @@ impl Router {
         net.connected.iter_mut().for_each(|c| *c = false);
     }
 
+    /// Calls `f` with each place within a via's halo of a point.
+    fn around(&mut self, c: u32, f: impl Fn(&mut Router, usize)) {
+        let (x, y, _) = self.xy(c);
+        for dy in -self.rv..=self.rv {
+            for dx in -self.rv..=self.rv {
+                if let Some(at) = self.at(x + dx, y + dy, 0) {
+                    f(self, at);
+                }
+            }
+        }
+    }
+
     /// Keeps the points within `r` of (x, y) on layer `l` for the net now being routed.
     fn keep(&mut self, x: i32, y: i32, l: usize, r: i32) {
         for dy in -r..=r {
@@ -385,6 +441,10 @@ impl Router {
                     self.usage[c] += 1;
                     self.own[c] += 1;
                     self.nets[self.cur].halo.push(c as u32);
+                    self.around(c as u32, |r, at| {
+                        r.near[at] += 1;
+                        r.near_own[at] += 1;
+                    });
                 }
             }
         }
@@ -412,29 +472,19 @@ impl Router {
 
     /// What a via at (x, y) costs the current net beyond its two points, or None where none fits.
     fn via(&self, x: i32, y: i32) -> Option<f32> {
-        let mut cost = VIA_COST;
-        for l in 0..2 {
-            for dy in -self.rv..=self.rv {
-                for dx in -self.rv..=self.rv {
-                    let c = self.at(x + dx, y + dy, l)?;
-                    if dx == 0 && dy == 0 {
-                        continue;
-                    }
-                    let f = self.fixed[c];
-                    if f == WALL || (f >= 0 && f as usize != self.cur) {
-                        return None;
-                    }
-                    let others = self.others(c) as f32;
-                    cost += match self.strategy {
-                        Strategy::Negotiated => self.present * others,
-                        _ if others == 0.0 => 0.0,
-                        _ if self.ripping => RIP_COST * others,
-                        _ => return None,
-                    };
-                }
-            }
+        let at = y as usize * self.gw + x as usize;
+        let f = self.via_fixed[at];
+        if f == WALL || (f >= 0 && f as usize != self.cur) {
+            return None;
         }
-        Some(cost)
+        // what other nets keep within the via's halo, on both layers, each time it is kept
+        let others = (self.near[at] - self.near_own[at]) as f32;
+        match self.strategy {
+            Strategy::Negotiated => Some(VIA_COST + self.present * others.min(40.0)),
+            _ if others == 0.0 => Some(VIA_COST),
+            _ if self.ripping => Some(VIA_COST + RIP_COST * others.min(8.0)),
+            _ => None,
+        }
     }
 
     /// How far a point is from the pads the search is for, in steps, as the crow walks.
@@ -533,8 +583,10 @@ impl Router {
         let me = self.cur as i16;
         if self.pad_net[c as usize] == me && self.pad_net[to] == me {
             out.push((to, 0.0)); // a through-hole pad of the net's own is a way through for nothing
-        } else if let (Some(step), Some(via)) = (self.enter(to), self.via(x, y)) {
-            out.push((to, step + via));
+        } else if self.closed[to] != self.sid || self.strategy == Strategy::Bidirectional {
+            if let (Some(step), Some(via)) = (self.enter(to), self.via(x, y)) {
+                out.push((to, step + via));
+            }
         }
         out
     }
@@ -717,10 +769,23 @@ impl Router {
             let c = self.at(x, y, 0).unwrap() as u32;
             self.nets[self.cur].vias.push(c);
         }
-        let pad = self.pad_at[end as usize] as usize;
-        let k = self.nets[self.cur].pads.iter().position(|&p| p == pad).unwrap();
-        self.nets[self.cur].connected[k] = true;
+        // every pad of the net that has the point reached is reached: pads of one net may overlap
+        // (a tab and its pin, a hole in a land), and the point is one pad's by name alone
+        let mut reached = false;
+        for k in 0..self.nets[self.cur].pads.len() {
+            let pad = self.nets[self.cur].pads[k];
+            if !self.nets[self.cur].connected[k] && self.pad_cells[pad].contains(&end) {
+                self.nets[self.cur].connected[k] = true;
+                reached = true;
+            }
+        }
         self.last_path = path;
+        if !reached {
+            // no pad left has the point: the search would find it again for ever
+            self.nets[self.cur].failed = true;
+            self.finish_net();
+            return;
+        }
         if self.nets[self.cur].connected.iter().all(|&c| c) {
             self.nets[self.cur].routed = true;
             self.finish_net();
@@ -731,8 +796,9 @@ impl Router {
 
     fn finish_net(&mut self) {
         for i in 0..self.nets[self.cur].halo.len() {
-            let c = self.nets[self.cur].halo[i] as usize;
-            self.own[c] = 0;
+            let c = self.nets[self.cur].halo[i];
+            self.own[c as usize] = 0;
+            self.around(c, |r, at| r.near_own[at] = 0);
         }
         self.phase = Phase::Next;
     }
@@ -797,6 +863,42 @@ impl Router {
             }
         }
         self.phase == Phase::Done
+    }
+
+    /// How many pads of a net of two or more have no way out on this grid: their points, and what
+    /// their net may step to from them, are a dozen points or fewer, hemmed in by other pads'
+    /// halos. A finer grid, or less clearance, lets them out.
+    pub fn hemmed(&mut self) -> usize {
+        let mut count = 0;
+        for i in 0..self.nets.len() {
+            if self.nets[i].pads.len() < 2 {
+                continue;
+            }
+            for k in 0..self.nets[i].pads.len() {
+                let pad = self.nets[i].pads[k];
+                self.mark_id += 1;
+                let mut reach: Vec<u32> = self.pad_cells[pad].clone();
+                for &c in &reach {
+                    self.mark[c as usize] = self.mark_id;
+                }
+                let (mut at, limit) = (0, self.pad_cells[pad].len() + 12);
+                while at < reach.len() && reach.len() <= limit {
+                    let (x, y, l) = self.xy(reach[at]);
+                    at += 1;
+                    for (dx, dy) in [(1, 0), (-1, 0), (0, 1), (0, -1)] {
+                        if let Some(to) = self.at(x + dx, y + dy, l) {
+                            let f = self.fixed[to];
+                            if self.mark[to] != self.mark_id && (f == FREE || f == i as i16) {
+                                self.mark[to] = self.mark_id;
+                                reach.push(to as u32);
+                            }
+                        }
+                    }
+                }
+                count += (reach.len() <= limit) as usize;
+            }
+        }
+        count
     }
 
     pub fn done(&self) -> bool {
@@ -960,6 +1062,18 @@ mod tests {
         for s in [Strategy::RipUp, Strategy::Negotiated] {
             let mut r = solve(&reversed(), s);
             assert!(r.sound(), "{s:?} leaves the reversed bus unrouted or shared: {:?}", r.stats());
+        }
+    }
+
+    #[test]
+    fn pads_of_one_net_that_overlap_are_reached_together() {
+        // a land with a hole in it, as two pads, and a third pad of the net across the board
+        let mut pads = vec![pad(3.0, 3.0, 0, Side::Top), pad(3.0, 3.0, 0, Side::Through), pad(9.0, 9.0, 0, Side::Top)];
+        pads.push(pad(9.0, 3.0, 1, Side::Top));
+        pads.push(pad(3.0, 9.0, 1, Side::Top));
+        for s in [Strategy::AStar, Strategy::Bidirectional, Strategy::Negotiated] {
+            let mut r = solve(&board(pads.clone(), 12.0, 12.0), s);
+            assert!(r.sound(), "{s:?}: {:?}", r.stats());
         }
     }
 
