@@ -1,0 +1,7 @@
+import std::pcb::Outline
+
+physical for Ne555Blinker {
+    case {
+        .outline: Outline { .width &= 20mm; .height &= 15mm }
+    }
+}

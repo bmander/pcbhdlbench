@@ -1,0 +1,5 @@
+{
+ "outcome": "refused",
+ "why": "error: `Header1x4` has no member `p5`",
+ "refs": {}
+}

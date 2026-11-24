@@ -1,0 +1,19 @@
+import std::pcb::Outline
+
+physical for TwoCrossings {
+    case {
+        .outline: Outline { .width &= 15mm; .height &= 15mm }
+    }
+    .r1.place.x &= 3mm
+    .r1.place.y &= 12mm
+    .r1.place.rotation &= 0
+    .r2.place.x &= 12mm
+    .r2.place.y &= 12mm
+    .r2.place.rotation &= 0
+    .r3.place.x &= 12mm
+    .r3.place.y &= 3mm
+    .r3.place.rotation &= 0
+    .r4.place.x &= 3mm
+    .r4.place.y &= 3mm
+    .r4.place.rotation &= 0
+}

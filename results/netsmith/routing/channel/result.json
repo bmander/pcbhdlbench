@@ -1,0 +1,5 @@
+{
+ "outcome": "refused",
+ "why": "Channel: routing: try 1 of 1: ripping up for net net-j1.p8: J1.8 to J2.8 (pass 1 of 3), 6 not routed; 49 tracks and 1 vias so far [2 s]; Channel: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 1 of 3), 4 not routed; 85 tracks and 3 vias so far [5 s]; Channel: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 2 of 3), 4 not routed; 85 tracks and 3 vias so far [7 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p7: J1.7 to J2.7 (round 1 of 6), 4 not routed; 84 tracks and 4 vias so far [22 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p8: J1.8 to J2.8 (round 1 of 6), 5 not routed; 69 tracks and 3 vias so far [31 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p4: J1.4 to J2.4 (round 2 of 6), 4 not routed; 79 tracks and 3 vias so far [38 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p11: J1.11 t",
+ "refs": {}
+}

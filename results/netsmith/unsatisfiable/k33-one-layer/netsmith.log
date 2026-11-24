@@ -1,0 +1,21 @@
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/unsatisfiable/k33_one_layer.lock.toml
+K33OneLayer: placing 6 parts
+K33OneLayer: placing: seed 0 (1 of 8) [0 s]
+K33OneLayer: placing: run 1 sized to the parts: placed [0 s]
+K33OneLayer: placed on a 30 by 30 mm board with seed 0
+K33OneLayer: routing: 9 connections on a 30 by 30 mm board [0 s]
+K33OneLayer: routing: try 1 of 1: ended with 8 of 9 connections routed, 1 left: net net-h2.p3: U2.3 to U6.2; 66 tracks and 0 vias so far [2 s]
+K33OneLayer: 1 connection(s) left with signals at 0.22 mm; routing again at the least track, 0.15 mm
+K33OneLayer: routing: 9 connections on a 30 by 30 mm board [2 s]
+K33OneLayer: routing: try 1 of 5: ended with 8 of 9 connections routed, 1 left: net net-h2.p2: U2.2 to U5.2; 49 tracks and 0 vias so far [2 s]
+K33OneLayer: routing: try 2 of 5: ended with 8 of 9 connections routed, 1 left: net net-h2.p2: U2.2 to U5.2; 49 tracks and 0 vias so far [3 s]
+K33OneLayer: routing: try 3 of 5: ended with 8 of 9 connections routed, 1 left: net net-h2.p2: U2.2 to U5.2; 44 tracks and 0 vias so far [4 s]
+K33OneLayer: routing: try 4 of 5: ended with 8 of 9 connections routed, 1 left: net net-h2.p2: U2.2 to U5.2; 41 tracks and 0 vias so far [4 s]
+K33OneLayer: routing: try 5 of 5: ended with 8 of 9 connections routed, 1 left: net net-h2.p2: U2.2 to U5.2; 41 tracks and 0 vias so far [4 s]
+K33OneLayer: INCOMPLETE: 1 connections are not routed; writing the board and the Gerbers anyway, marked incomplete
+error: K33OneLayer: 1 connections could not be routed (after 5 tries with the lines in different orders, ripping up the nets in the way):
+  net net-h2.p2: U2.2 to U5.2
+vias in pads forbidden: the router went out between the pads, and it cost 1 open connection(s) of the 1 left, each ending at a pad a via could stand in (net net-h2.p2: U2.2 to U5.2); with vias in pads allowed (the process's `.via_in_pad`, not narrowed to `0mm`) the router may reach them through a filled and capped via, which costs extra
+  INCOMPLETE: the board file is in results/netsmith/unsatisfiable/k33-one-layer/fab/K33OneLayer with the Gerbers (K33OneLayer-gerbers.zip) and fab-notes.txt; they are NOT ready to order
+  every unrouted connection with its net and pads is in results/netsmith/unsatisfiable/k33-one-layer/fab/K33OneLayer/routing-failure.txt

@@ -1,0 +1,16 @@
+import std::pcb::Outline
+
+physical for LShape {
+    case {
+        .outline: Outline { 
+            polygon (0mm, 30mm) (40mm, 30mm) (40mm, 20mm) (10mm, 20mm) (10mm, 0mm) (0mm, 0mm)
+         }
+    }
+    // J1 lies along the south arm and J2 stands up the west arm, pin 1s nearest the corner.
+    .j1.place.x &= 28.89mm
+    .j1.place.y &= 25mm
+    .j1.place.rotation &= 90
+    .j2.place.x &= 5mm
+    .j2.place.y &= 11.11mm
+    .j2.place.rotation &= 180
+}

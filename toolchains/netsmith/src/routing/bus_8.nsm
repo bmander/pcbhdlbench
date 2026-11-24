@@ -1,0 +1,26 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::connector::Header1x8
+
+board Bus8 {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .j1: Header1x8
+    .j2: Header1x8
+
+    .j1.p1 ~ .j2.p1
+    .j1.p2 ~ .j2.p2
+    .j1.p3 ~ .j2.p3
+    .j1.p4 ~ .j2.p4
+    .j1.p5 ~ .j2.p5
+    .j1.p6 ~ .j2.p6
+    .j1.p7 ~ .j2.p7
+    .j1.p8 ~ .j2.p8
+}

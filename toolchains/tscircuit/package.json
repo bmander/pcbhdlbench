@@ -1,0 +1,11 @@
+{
+  "name": "pcbhdl-bench-tscircuit",
+  "private": true,
+  "description": "pcbhdl-bench's runner for tscircuit: the toolchain, and bun, which its CLI runs on",
+  "dependencies": {
+    "tscircuit": "^0.0.3288"
+  },
+  "devDependencies": {
+    "bun": "^1.4.5"
+  }
+}

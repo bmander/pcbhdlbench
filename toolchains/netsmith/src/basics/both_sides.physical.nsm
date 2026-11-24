@@ -1,0 +1,11 @@
+import std::pcb::Outline
+
+physical for BothSides {
+    case {
+        .outline: Outline { .width &= 20mm; .height &= 10mm }
+    }
+    .r[0].place.side &= "bottom"
+    .r[1].place.side &= "bottom"
+    .r[2].place.side &= "bottom"
+    .r[3].place.side &= "bottom"
+}

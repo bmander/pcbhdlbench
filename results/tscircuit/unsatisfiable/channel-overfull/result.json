@@ -1,0 +1,4 @@
+{
+ "outcome": "refused",
+ "why": "pcb_trace_error: PCB trace .J1 > .pin12 to .J2 > .pin12 is too close to .J1 > .pin8 to .J2 > .pin8 (gap: 0.132mm); pcb_trace_error: PCB trace .J1 > .pin12 to .J2 > .pin12 is too close to .J1 > .pin10 to .J2 > .pin10 (gap: 0.136mm); pcb_trace_error: PCB trace .J1 > .pin11 to .J2 > .pin11 is too close to .J1 > .pin10 to .J2 > .pin10 (gap: 0.110mm); pcb_trace_error: PCB trace .J1 > .pin8 to .J2 > .pin8 is too close to .J1 > .pin7 to .J2 > .pin7 (gap: 0.088mm); and 28 more"
+}

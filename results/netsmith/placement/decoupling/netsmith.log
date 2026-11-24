@@ -1,0 +1,14 @@
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/placement/decoupling.lock.toml
+Decoupling: placing 6 parts
+Decoupling: placing: seed 0 (1 of 8) [0 s]
+Decoupling: placing: run 1 sized to the parts: placed [0 s]
+Decoupling: placed on a 25 by 25 mm board with seed 0
+Decoupling: routing: 16 connections on a 25 by 25 mm board [0 s]
+Decoupling: routing: try 1 of 2: ended with 16 of 16 connections routed; 94 tracks and 6 vias so far [0 s]
+Decoupling: routed, writing files
+error: Decoupling: design rules check: 3 errors: no package written (the KiCad board is in results/netsmith/placement/decoupling/fab/Decoupling); --allow-drc-violations packages the board anyway and says in fab-notes.txt that it is not clean; --for-review writes the files to look at
+
+error [constraint] constraint c2 within 3 mm of u1.p12 (toolchains/netsmith/src/placement/decoupling.physical.nsm:10) is violated: the nearest of pad 1 of C2 is 8.167 mm from pad 12 of U1, centre to centre, and it allows at most 3 mm (5.167 mm over): move C2 nearer U1 at (33.875, 33.871): Footprint C2; Footprint U1
+error [constraint] constraint c3 within 3 mm of u1.p20 (toolchains/netsmith/src/placement/decoupling.physical.nsm:11) is violated: the nearest of pad 1 of C3 is 3.1283 mm from pad 20 of U1, centre to centre, and it allows at most 3 mm (0.1283 mm over): move C3 nearer U1 at (42.206, 34.315): Footprint C3; Footprint U1
+error [constraint] constraint c4 within 3 mm of u1.p28 (toolchains/netsmith/src/placement/decoupling.physical.nsm:12) is violated: the nearest of pad 1 of C4 is 8.1949 mm from pad 28 of U1, centre to centre, and it allows at most 3 mm (5.1949 mm over): move C4 nearer U1 at (33.710, 30.369): Footprint C4; Footprint U1

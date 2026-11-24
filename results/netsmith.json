@@ -1,0 +1,425 @@
+{
+ "toolchain": "netsmith",
+ "version": "netsmith 0.8.0 (1b5e697)",
+ "ran": "2026-11-23",
+ "cases": {
+  "basics/both-sides": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "side": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 27.396,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 0.76
+  },
+  "basics/header-breakout": {
+   "outcome": "refused",
+   "why": "error: HeaderBreakout: the outline is 20.0 x 12.0 mm, which leaves 18.8 x 10.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j1` (J1) (Header1x4) has a courtyard of 3.6 x 11.2 mm turned 180 degrees (only the turns a layout file or a requirement leave it were tried); error: HeaderBreakout: the outline is 20.0 x 12.0 mm, which leaves 18.8 x 10.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j2` (J2) (Header1x4) has a courtyard of 3.6 x 11.2 mm turned 180 degrees (only the turns a layout file or a requirement leave it were tried)",
+   "seconds": 0.14,
+   "refused": true
+  },
+  "basics/led-resistor": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 9.688,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 0.59
+  },
+  "basics/rc-lowpass": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 17.095,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 0.65
+  },
+  "basics/voltage-divider": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 13.801,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 0.57
+  },
+  "integration/ne555-blinker": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 72.163,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 1.28
+  },
+  "outline/l-shape": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 294.551,
+    "vias": 0,
+    "layers": 2
+   },
+   "seconds": 1.25
+  },
+  "placement/decoupling": {
+   "outcome": "refused",
+   "why": "error: Decoupling: design rules check: 3 errors: no package written (the KiCad board is in results/netsmith/placement/decoupling/fab/Decoupling); --allow-drc-violations packages the board anyway and says in fab-notes.txt that it is not clean; --for-review writes the files to look at; error [constraint] constraint c2 within 3 mm of u1.p12 (toolchains/netsmith/src/placement/decoupling.physical.nsm:10) is violated: the nearest of pad 1 of C2 is 8.167 mm from pad 12 of U1, centre to centre, and it allows at most 3 mm (5.167 mm over): move C2 nearer U1 at (33.875, 33.871): Footprint C2; Footprint U1; error [constraint] constraint c3 within 3 mm of u1.p20 (toolchains/netsmith/src/placement/decoupling.physical.nsm:11) is violated: the nearest of pad 1 of C3 is 3.12",
+   "seconds": 1.3,
+   "refused": true,
+   "as_built": {
+    "outcome": "wrong",
+    "why": "C2.1 is 7.14 mm from U1.12, over 2; C3.1 is 2.16 mm from U1.20, over 2; C4.1 is 7.35 mm from U1.28, over 2.",
+    "metrics": {
+     "track_mm": 86.489,
+     "vias": 6,
+     "layers": 2
+    }
+   }
+  },
+  "reuse/eight-channels": {
+   "outcome": "wrong",
+   "why": "7 of 8 instances are not laid out as RS1's is: those of RS2, RS3, RS4, RS5 ….",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "replica": {
+     "ok": false,
+     "notes": [
+      "7 of 8 instances are not laid out as RS1's is: those of RS2, RS3, RS4, RS5 …"
+     ]
+    }
+   },
+   "metrics": {
+    "track_mm": 246.178,
+    "vias": 11,
+    "layers": 2
+   },
+   "seconds": 5.44
+  },
+  "routing/bus-8": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "layers": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 179.775,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 0.52
+  },
+  "routing/bus-reversed": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 179.294,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 1.37
+  },
+  "routing/channel": {
+   "outcome": "refused",
+   "why": "Channel: routing: try 1 of 1: ripping up for net net-j1.p8: J1.8 to J2.8 (pass 1 of 3), 6 not routed; 49 tracks and 1 vias so far [2 s]; Channel: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 1 of 3), 4 not routed; 85 tracks and 3 vias so far [5 s]; Channel: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 2 of 3), 4 not routed; 85 tracks and 3 vias so far [7 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p7: J1.7 to J2.7 (round 1 of 6), 4 not routed; 84 tracks and 4 vias so far [22 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p8: J1.8 to J2.8 (round 1 of 6), 5 not routed; 69 tracks and 3 vias so far [31 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p4: J1.4 to J2.4 (round 2 of 6), 4 not routed; 79 tracks and 3 vias so far [38 s]; Channel: routing: try 1 of 1: negotiating for net net-j1.p11: J1.11 t",
+   "seconds": 540.61,
+   "refused": true,
+   "as_built": {
+    "outcome": "placed",
+    "why": "D2 is open; D4 is open; D11 is open; D12 is open.",
+    "metrics": {
+     "track_mm": 265.418,
+     "vias": 1,
+     "layers": 2
+    }
+   }
+  },
+  "routing/k4-planar": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "layers": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 62.214,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 0.9
+  },
+  "routing/two-crossings": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 24.054,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 0.73
+  },
+  "unsatisfiable/channel-overfull": {
+   "outcome": "refused",
+   "why": "ChannelOverfull: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 1 of 3), 7 not routed; 46 tracks and 5 vias so far [2 s]; ChannelOverfull: routing: try 1 of 1: ripping up for net net-j1.p5: J1.5 to J2.5 (pass 1 of 3), 6 not routed; 71 tracks and 2 vias so far [5 s]; ChannelOverfull: routing: try 1 of 1: ripping up for net net-j1.p8: J1.8 to J2.8 (pass 1 of 3), 5 not routed; 73 tracks and 2 vias so far [7 s]; ChannelOverfull: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 2 of 3), 5 not routed; 73 tracks and 2 vias so far [9 s]; ChannelOverfull: routing: try 1 of 1: negotiating for net net-j1.p5: J1.5 to J2.5 (round 1 of 6), 5 not routed; 75 tracks and 2 vias so far [15 s]; ChannelOverfull: routing: try 1 of 1: negotiating for net net-j1.p6: J1.6 to J2.6 (round 1 of 6), 6 not routed; 66 tracks and 2 vias so far [20 s]; ChannelOverfull: routing",
+   "seconds": 540.32,
+   "refused": true,
+   "control": {
+    "case": "routing/channel",
+    "outcome": "refused"
+   }
+  },
+  "unsatisfiable/k33-one-layer": {
+   "outcome": "pass",
+   "why": "K33OneLayer: INCOMPLETE: 1 connections are not routed; writing the board and the Gerbers anyway, marked incomplete; error: K33OneLayer: 1 connections could not be routed (after 5 tries with the lines in different orders, ripping up the nets in the way):; INCOMPLETE: the board file is in results/netsmith/unsatisfiable/k33-one-layer/fab/K33OneLayer with the Gerbers (K33OneLayer-gerbers.zip) and fab-notes.txt; they are NOT ready to order",
+   "seconds": 4.93,
+   "refused": true,
+   "control": {
+    "case": "routing/k4-planar",
+    "outcome": "pass"
+   }
+  },
+  "unsatisfiable/too-small": {
+   "outcome": "pass",
+   "why": "error: TooSmall: the outline is 10.0 x 10.0 mm, which leaves 8.8 x 8.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j1` (J1) (Header1x4) has a courtyard of 3.6 x 11.2 mm turned 0 degrees, 11.2 x 3.6 mm turned 90 degrees, 3.6 x 11.2 mm turned 180 degrees, 11.2 x 3.6 mm turned 270 degrees; error: TooSmall: the outline is 10.0 x 10.0 mm, which leaves 8.8 x 8.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j2` (J2) (Header1x4) has a courtyard of 3.6 x 11.2 mm turned 0 degrees, 11.2 x 3.6 mm turned 90 degrees, 3.6 x 11.2 mm turned 180 degrees, 11.2 x 3.6 mm turned 270 degrees; error: TooSmall: the outline is 10.0 x 10.0 mm, which leaves 8.8 x 8.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j3` (J3) (Header1x4) has a courtyard of 3.6 x 11.2 mm turne",
+   "seconds": 0.16,
+   "refused": true,
+   "control": {
+    "case": "basics/voltage-divider",
+    "outcome": "pass"
+   }
+  },
+  "unsatisfiable/unknown-pin": {
+   "outcome": "pass",
+   "why": "error: `Header1x4` has no member `p5`",
+   "seconds": 0.14,
+   "refused": true,
+   "control": {
+    "case": "basics/led-resistor",
+    "outcome": "pass"
+   }
+  }
+ }
+}

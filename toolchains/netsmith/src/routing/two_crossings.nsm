@@ -1,0 +1,23 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::passive::Resistor
+
+board TwoCrossings {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .r1: Resistor { .resistance &= 1kohm +/- 1%; .package &= "0603" }
+    .r2: Resistor { .resistance &= 1kohm +/- 1%; .package &= "0603" }
+    .r3: Resistor { .resistance &= 1kohm +/- 1%; .package &= "0603" }
+    .r4: Resistor { .resistance &= 1kohm +/- 1%; .package &= "0603" }
+
+    // The two diagonals of the square, between the inner pads.
+    .r1.b ~ .r3.a
+    .r2.a ~ .r4.b
+}

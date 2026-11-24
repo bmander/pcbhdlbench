@@ -1,0 +1,16 @@
+import std::pcb::Outline
+
+physical for K33OneLayer {
+    case {
+        .outline: Outline { .width &= 30mm; .height &= 30mm }
+    }
+    .h1.p1 route one_layer
+    .h1.p2 route one_layer
+    .h1.p3 route one_layer
+    .h2.p1 route one_layer
+    .h2.p2 route one_layer
+    .h2.p3 route one_layer
+    .h3.p1 route one_layer
+    .h3.p2 route one_layer
+    .h3.p3 route one_layer
+}

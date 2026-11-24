@@ -1,0 +1,4 @@
+{
+ "outcome": "refused",
+ "why": "pcb_packing_error: Unable to pack all PCB components within the layout bounds: No valid candidates found; pcb_component_outside_board_error: Component J1 extends outside board boundaries by 0.58mm. Try moving it 0.58mm right to fit within the board edge.; pcb_component_outside_board_error: Component J2 extends outside board boundaries by 0.58mm. Try moving it 0.58mm right to fit within the board edge.; pcb_component_outside_board_error: Component J3 extends outside board boundaries by 0.58mm. Try moving it 0.58mm right to fit within the board edge.; and 16 more"
+}

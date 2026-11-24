@@ -1,0 +1,5 @@
+{
+ "outcome": "refused",
+ "why": "error: Decoupling: design rules check: 3 errors: no package written (the KiCad board is in results/netsmith/placement/decoupling/fab/Decoupling); --allow-drc-violations packages the board anyway and says in fab-notes.txt that it is not clean; --for-review writes the files to look at; error [constraint] constraint c2 within 3 mm of u1.p12 (toolchains/netsmith/src/placement/decoupling.physical.nsm:10) is violated: the nearest of pad 1 of C2 is 8.167 mm from pad 12 of U1, centre to centre, and it allows at most 3 mm (5.167 mm over): move C2 nearer U1 at (33.875, 33.871): Footprint C2; Footprint U1; error [constraint] constraint c3 within 3 mm of u1.p20 (toolchains/netsmith/src/placement/decoupling.physical.nsm:11) is violated: the nearest of pad 1 of C3 is 3.12",
+ "refs": {}
+}

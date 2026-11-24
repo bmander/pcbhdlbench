@@ -1,0 +1,62 @@
+EightChannels: 24 part(s) on 3 BOM line(s), 24 placement(s), 9 file(s) in the zip
+  process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+  buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C32713274 x2, HX PZ2.54-1x8P ZZ, for J1, J2 (hand-solder); C42431798 x1, PH2.54-1X2P-H25, for J3 (hand-solder)
+  offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+  most vias (nets no zone pours, 2 or more): net-ch1.c.b 8 vias (78.56 mm routed, straight 73.73 mm)
+  hand-solder: J1, J2, J3
+  origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+  design rules check: passed
+  design rules warnings: 1
+    warning [fiducial_count] the front of the board has parts the board house assembles and 0 fiducial(s); it asks for at least 2 on each assembled side ("a minimum of two, but three fiducial marks are strongly recommended") at (20.000, 20.000) on F.Cu
+wrote results/netsmith/reuse/eight-channels/fab/EightChannels
+where each footprint's origin is, in mm from the outline's top left corner (y down), and how far it is from the centre of the body that `.place.x` and `.place.y` measure: to put the origin at (x, y) with the part on that face and turned so, write `.place.x &= x - dx` and `.place.y &= y - dy`:
+  C1 (`ch1.c`) top, turned 0: origin (28.4, 7.15), body centre (28.4, 7.15), dx 0 dy 0
+  R1 (`ch1.rl`) top, turned 270: origin (27.95, 10.45), body centre (27.95, 10.45), dx 0 dy 0
+  R2 (`ch1.rs`) top, turned 90: origin (25.1, 7.85), body centre (25.1, 7.85), dx 0 dy 0
+  C2 (`ch2.c`) top, turned 90: origin (12.85, 7.85), body centre (12.85, 7.85), dx 0 dy 0
+  R3 (`ch2.rl`) top, turned 0: origin (16.15, 7.95), body centre (16.15, 7.95), dx 0 dy 0
+  R4 (`ch2.rs`) top, turned 180: origin (16.2, 11), body centre (16.2, 11), dx 0 dy 0
+  C3 (`ch3.c`) top, turned 90: origin (12.9, 11.9), body centre (12.9, 11.9), dx 0 dy 0
+  R5 (`ch3.rl`) top, turned 90: origin (10.3, 11.7), body centre (10.3, 11.7), dx 0 dy 0
+  R6 (`ch3.rs`) top, turned 180: origin (16.15, 14.05), body centre (16.15, 14.05), dx 0 dy 0
+  C4 (`ch4.c`) top, turned 270: origin (12.15, 17.9), body centre (12.15, 17.9), dx 0 dy 0
+  R7 (`ch4.rl`) top, turned 90: origin (9.55, 15.75), body centre (9.55, 15.75), dx 0 dy 0
+  R8 (`ch4.rs`) top, turned 180: origin (15.6, 17.1), body centre (15.6, 17.1), dx 0 dy 0
+  C5 (`ch5.c`) top, turned 0: origin (27.75, 20.65), body centre (27.75, 20.65), dx 0 dy 0
+  R9 (`ch5.rl`) top, turned 90: origin (27, 16.95), body centre (27, 16.95), dx 0 dy 0
+  R10 (`ch5.rs`) top, turned 270: origin (24.5, 19.9), body centre (24.5, 19.9), dx 0 dy 0
+  C6 (`ch6.c`) top, turned 270: origin (9.45, 22.35), body centre (9.45, 22.35), dx 0 dy 0
+  R11 (`ch6.rl`) top, turned 0: origin (12.45, 21.55), body centre (12.45, 21.55), dx 0 dy 0
+  R12 (`ch6.rs`) top, turned 180: origin (16.3, 21.6), body centre (16.3, 21.6), dx 0 dy 0
+  C7 (`ch7.c`) top, turned 0: origin (29.1, 24.1), body centre (29.1, 24.1), dx 0 dy 0
+  R13 (`ch7.rl`) top, turned 0: origin (29.15, 26.6), body centre (29.15, 26.6), dx 0 dy 0
+  R14 (`ch7.rs`) top, turned 270: origin (24.45, 24.5), body centre (24.45, 24.5), dx 0 dy 0
+  C8 (`ch8.c`) top, turned 0: origin (12.05, 27.2), body centre (12.05, 27.2), dx 0 dy 0
+  R15 (`ch8.rl`) top, turned 0: origin (15.05, 24.65), body centre (15.05, 24.65), dx 0 dy 0
+  R16 (`ch8.rs`) top, turned 180: origin (16.1, 27.2), body centre (16.1, 27.2), dx 0 dy 0
+  J1 (`j1`) top, turned 0: origin (20.7, 8.9), body centre (20.7, 17.79), dx 0 dy -8.89
+  J2 (`j2`) top, turned 0: origin (5.8, 8.85), body centre (5.8, 17.74), dx 0 dy -8.89
+  J3 (`j3`) top, turned 0: origin (32.1, 13.45), body centre (32.1, 14.72), dx 0 dy -1.27
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/reuse/eight_channels.lock.toml
+EightChannels: placing 27 parts
+EightChannels: placing: seed 0 (1 of 8) [0 s]
+EightChannels: placing: run 1 sized to the parts: placed [2 s]
+EightChannels: placing: the courtyards need 280 mm2 on the front and 52 mm2 on the back, and each face of the 40.0 x 30.0 mm outline holds 1117 mm2 inside its margin [2 s]
+EightChannels: placing: run 1 in 40.0 x 30.0 mm: placed [4 s]
+EightChannels: placed on a 40 by 30 mm board with seed 0
+EightChannels: routing: 49 connections on a 40 by 30 mm board [0 s]
+EightChannels: routing: try 1 of 1: ended with 49 of 49 connections routed; 210 tracks and 11 vias so far [0 s]
+EightChannels: routed, writing files
+
+before you order (EightChannels):
+fab-notes for EightChannels
+process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C32713274 x2, HX PZ2.54-1x8P ZZ, for J1, J2 (hand-solder); C42431798 x1, PH2.54-1X2P-H25, for J3 (hand-solder)
+offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+most vias (nets no zone pours, 2 or more): net-ch1.c.b 8 vias (78.56 mm routed, straight 73.73 mm)
+hand-solder: J1, J2, J3
+origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+design rules check: passed
+design rules warnings: 1
+  warning [fiducial_count] the front of the board has parts the board house assembles and 0 fiducial(s); it asks for at least 2 on each assembled side ("a minimum of two, but three fiducial marks are strongly recommended") at (20.000, 20.000) on F.Cu

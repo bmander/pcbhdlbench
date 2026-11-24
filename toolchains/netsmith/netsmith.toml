@@ -1,0 +1,7 @@
+[project]
+name = "pcbhdl-bench"
+netsmith = "0.8.0"
+top_level = []
+out = "out"
+fab = "fab"
+kicad = 9

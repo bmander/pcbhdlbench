@@ -1,0 +1,513 @@
+{
+ "toolchain": "tscircuit",
+ "version": "tscircuit 0.0.3288 (core 0.0.2464)",
+ "ran": "2026-11-23",
+ "cases": {
+  "basics/both-sides": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "side": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 34.163,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 7.04
+  },
+  "basics/header-breakout": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 56.0,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 7.42
+  },
+  "basics/led-resistor": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 12.417,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 7.63
+  },
+  "basics/rc-lowpass": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 15.321,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 7.77
+  },
+  "basics/voltage-divider": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 13.583,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 8.39
+  },
+  "integration/ne555-blinker": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 59.17,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 7.76
+  },
+  "outline/l-shape": {
+   "outcome": "refused",
+   "why": "pcb_trace_error: PCB trace .J1 > .pin7 to .J2 > .pin7 is too close to .J1 > .pin5 to .J2 > .pin5 (gap: 0.138mm); pcb_trace_error: Trace too close to board edge (0.327mm < 0.375mm required, margin: 0.3mm); pcb_trace_error: Trace too close to board edge (0.224mm < 0.375mm required, margin: 0.3mm); pcb_trace_error: Trace too close to board edge (0.120mm < 0.375mm required, margin: 0.3mm); and 12 more",
+   "seconds": 8.3,
+   "refused": true,
+   "as_built": {
+    "outcome": "wrong",
+    "why": "Clearance 0.138 mm, under 0.15, at 2 places; copper 0.252 mm from the edge, under 0.3.",
+    "metrics": {
+     "track_mm": 283.923,
+     "vias": 2,
+     "layers": 2
+    }
+   }
+  },
+  "parametric/led-ring-12": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 63.246,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 7.39
+  },
+  "parametric/led-ring-60": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 244.327,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 13.75
+  },
+  "placement/decoupling": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "near": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 75.333,
+    "vias": 8,
+    "layers": 2
+   },
+   "seconds": 10.92
+  },
+  "reuse/eight-channels": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "replica": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 257.084,
+    "vias": 8,
+    "layers": 2
+   },
+   "seconds": 8.95
+  },
+  "routing/bus-8": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    },
+    "layers": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 179.883,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 8.94
+  },
+  "routing/bus-reversed": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 165.189,
+    "vias": 12,
+    "layers": 2
+   },
+   "seconds": 9.7
+  },
+  "routing/channel": {
+   "outcome": "refused",
+   "why": "pcb_trace_error: PCB trace .J1 > .pin11 to .J2 > .pin11 is too close to .J1 > .pin9 to .J2 > .pin9 (gap: 0.118mm); pcb_trace_error: PCB trace .J1 > .pin10 to .J2 > .pin10 is too close to .J1 > .pin8 to .J2 > .pin8 (gap: 0.123mm); pcb_trace_error: PCB trace .J1 > .pin9 to .J2 > .pin9 is too close to .J1 > .pin6 to .J2 > .pin6 (gap: 0.092mm); pcb_trace_error: PCB trace .J1 > .pin6 to .J2 > .pin6 is too close to .J1 > .pin5 to .J2 > .pin5 (gap: 0.127mm); and 26 more",
+   "seconds": 346.49,
+   "refused": true,
+   "as_built": {
+    "outcome": "wrong",
+    "why": "Clearance 0.040 mm, under 0.15, at 491 places; copper 0.283 mm from the edge, under 0.3.",
+    "metrics": {
+     "track_mm": 394.993,
+     "vias": 5,
+     "layers": 2
+    }
+   }
+  },
+  "routing/k4-planar": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "layers": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 43.864,
+    "vias": 0,
+    "layers": 1
+   },
+   "seconds": 6.37
+  },
+  "routing/two-crossings": {
+   "outcome": "pass",
+   "why": "",
+   "checks": {
+    "parts": {
+     "ok": true,
+     "notes": []
+    },
+    "connectivity": {
+     "ok": true,
+     "notes": []
+    },
+    "rules": {
+     "ok": true,
+     "notes": []
+    },
+    "outline": {
+     "ok": true,
+     "notes": []
+    },
+    "fixed": {
+     "ok": true,
+     "notes": []
+    }
+   },
+   "metrics": {
+    "track_mm": 26.426,
+    "vias": 2,
+    "layers": 2
+   },
+   "seconds": 6.29
+  },
+  "unsatisfiable/channel-overfull": {
+   "outcome": "refused",
+   "why": "pcb_trace_error: PCB trace .J1 > .pin12 to .J2 > .pin12 is too close to .J1 > .pin8 to .J2 > .pin8 (gap: 0.132mm); pcb_trace_error: PCB trace .J1 > .pin12 to .J2 > .pin12 is too close to .J1 > .pin10 to .J2 > .pin10 (gap: 0.136mm); pcb_trace_error: PCB trace .J1 > .pin11 to .J2 > .pin11 is too close to .J1 > .pin10 to .J2 > .pin10 (gap: 0.110mm); pcb_trace_error: PCB trace .J1 > .pin8 to .J2 > .pin8 is too close to .J1 > .pin7 to .J2 > .pin7 (gap: 0.088mm); and 28 more",
+   "seconds": 200.96,
+   "refused": true,
+   "control": {
+    "case": "routing/channel",
+    "outcome": "refused"
+   }
+  },
+  "unsatisfiable/k33-one-layer": {
+   "outcome": "pass",
+   "why": "pcb_trace_error: PCB trace .H3 > .pin3 to .U3 > .pin3 is too close to .H1 > .pin1 to .U1 > .pin1 (gap: 0.124mm); pcb_trace_error: PCB trace .H2 > .pin1 to .U1 > .pin2 is too close to .H1 > .pin1 to .U1 > .pin1 (gap: 0.116mm); pcb_trace_error: PCB trace .H2 > .pin1 to .U1 > .pin2 overlaps with pcb_smtpad \"U1.pin1\" (accidental contact); pcb_trace_error: PCB trace .H1 > .pin2 to .U2 > .pin1 overlaps with .H1 > .pin1 to .U1 > .pin1 (accidental contact)",
+   "seconds": 6.62,
+   "refused": true,
+   "control": {
+    "case": "routing/k4-planar",
+    "outcome": "pass"
+   }
+  },
+  "unsatisfiable/too-small": {
+   "outcome": "pass",
+   "why": "pcb_packing_error: Unable to pack all PCB components within the layout bounds: No valid candidates found; pcb_component_outside_board_error: Component J1 extends outside board boundaries by 0.58mm. Try moving it 0.58mm right to fit within the board edge.; pcb_component_outside_board_error: Component J2 extends outside board boundaries by 0.58mm. Try moving it 0.58mm right to fit within the board edge.; pcb_component_outside_board_error: Component J3 extends outside board boundaries by 0.58mm. Try moving it 0.58mm right to fit within the board edge.; and 16 more",
+   "seconds": 5.6,
+   "refused": true,
+   "control": {
+    "case": "basics/voltage-divider",
+    "outcome": "pass"
+   }
+  },
+  "unsatisfiable/unknown-pin": {
+   "outcome": "pass",
+   "why": "source_trace_not_connected_error: Could not find port for selector \".J1 > .pin5\". Component \".J1 > \" found, but does not have pin \"pin5\". It has no ports",
+   "seconds": 5.71,
+   "refused": true,
+   "control": {
+    "case": "basics/led-resistor",
+    "outcome": "pass"
+   }
+  }
+ }
+}

@@ -1,0 +1,40 @@
+BothSides: 4 part(s) on 1 BOM line(s), 4 placement(s), 11 file(s) in the zip
+  process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+  offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+  hand-solder: J1
+  bottom side unverified (rotation and mirroring): check JLCPCB's order preview: R1, R2, R3, R4
+  origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+  design rules check: passed
+  constraints: 4 of 4 satisfied
+  design rules warnings: 1
+    warning [fiducial_count] the back of the board has parts the board house assembles and 0 fiducial(s); it asks for at least 2 on each assembled side ("a minimum of two, but three fiducial marks are strongly recommended") at (20.000, 20.000) on B.Cu
+wrote results/netsmith/basics/both-sides/fab/BothSides
+where each footprint's origin is, in mm from the outline's top left corner (y down), and how far it is from the centre of the body that `.place.x` and `.place.y` measure: to put the origin at (x, y) with the part on that face and turned so, write `.place.x &= x - dx` and `.place.y &= y - dy`:
+  J1 (`j1`) top, turned 270: origin (15.15, 3.3), body centre (10.07, 3.3), dx 5.08 dy 0
+  R1 (`r[0]`) bottom, turned 0: origin (14.6, 5.35), body centre (14.6, 5.35), dx 0 dy 0
+  R2 (`r[1]`) bottom, turned 0: origin (11.75, 8.4), body centre (11.75, 8.4), dx 0 dy 0
+  R3 (`r[2]`) bottom, turned 180: origin (10.6, 5.35), body centre (10.6, 5.35), dx 0 dy 0
+  R4 (`r[3]`) bottom, turned 90: origin (7.35, 6.1), body centre (7.35, 6.1), dx 0 dy 0
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/basics/both_sides.lock.toml
+BothSides: placing 5 parts
+BothSides: placing: seed 0 (1 of 8) [0 s]
+BothSides: placing: run 1 sized to the parts: placed [0 s]
+BothSides: placing: the courtyards need 50 mm2 on the front and 32 mm2 on the back, and each face of the 20.0 x 10.0 mm outline holds 165 mm2 inside its margin [0 s]
+BothSides: placing: run 1 in 20.0 x 10.0 mm: placed [0 s]
+BothSides: placed on a 20 by 10 mm board with seed 0
+BothSides: routing: 8 connections on a 20 by 10 mm board [0 s]
+BothSides: routing: try 1 of 1: ended with 8 of 8 connections routed; 34 tracks and 0 vias so far [0 s]
+BothSides: routed, writing files
+
+before you order (BothSides):
+fab-notes for BothSides
+process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+hand-solder: J1
+bottom side unverified (rotation and mirroring): check JLCPCB's order preview: R1, R2, R3, R4
+origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+design rules check: passed
+constraints: 4 of 4 satisfied
+design rules warnings: 1
+  warning [fiducial_count] the back of the board has parts the board house assembles and 0 fiducial(s); it asks for at least 2 on each assembled side ("a minimum of two, but three fiducial marks are strongly recommended") at (20.000, 20.000) on B.Cu

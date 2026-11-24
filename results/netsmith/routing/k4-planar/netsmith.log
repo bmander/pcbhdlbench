@@ -1,0 +1,33 @@
+K4Planar: 0 part(s) on 0 BOM line(s), 0 placement(s), 9 file(s) in the zip
+  process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+  buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C42431808 x4, PH2.54-1X4P-H25, for J1, J2, J3, J4 (hand-solder)
+  offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+  hand-solder: J1, J2, J3, J4
+  origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+  design rules check: passed
+  constraints: 6 of 6 satisfied
+wrote results/netsmith/routing/k4-planar/fab/K4Planar
+where each footprint's origin is, in mm from the outline's top left corner (y down), and how far it is from the centre of the body that `.place.x` and `.place.y` measure: to put the origin at (x, y) with the part on that face and turned so, write `.place.x &= x - dx` and `.place.y &= y - dy`:
+  J1 (`j1`) top, turned 0: origin (12.65, 18.25), body centre (12.65, 22.06), dx 0 dy -3.81
+  J2 (`j2`) top, turned 0: origin (17.4, 18.15), body centre (17.4, 21.96), dx 0 dy -3.81
+  J3 (`j3`) top, turned 180: origin (12.6, 13.15), body centre (12.6, 9.34), dx 0 dy 3.81
+  J4 (`j4`) top, turned 180: origin (17.4, 13.1), body centre (17.4, 9.29), dx 0 dy 3.81
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/routing/k4_planar.lock.toml
+K4Planar: placing 4 parts
+K4Planar: placing: seed 0 (1 of 8) [0 s]
+K4Planar: placing: run 1 sized to the parts: placed [0 s]
+K4Planar: placed on a 30 by 30 mm board with seed 0
+K4Planar: routing: 6 connections on a 30 by 30 mm board [0 s]
+K4Planar: routing: try 1 of 1: ended with 6 of 6 connections routed; 31 tracks and 0 vias so far [0 s]
+K4Planar: routed, writing files
+
+before you order (K4Planar):
+fab-notes for K4Planar
+process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C42431808 x4, PH2.54-1X4P-H25, for J1, J2, J3, J4 (hand-solder)
+offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+hand-solder: J1, J2, J3, J4
+origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+design rules check: passed
+constraints: 6 of 6 satisfied

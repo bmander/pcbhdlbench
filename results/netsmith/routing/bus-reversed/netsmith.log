@@ -1,0 +1,33 @@
+BusReversed: 0 part(s) on 0 BOM line(s), 0 placement(s), 9 file(s) in the zip
+  process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+  buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C32713274 x2, HX PZ2.54-1x8P ZZ, for J1, J2 (hand-solder)
+  offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+  hand-solder: J1, J2
+  origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+  design rules check: passed
+  constraints: 6 of 6 satisfied
+wrote results/netsmith/routing/bus-reversed/fab/BusReversed
+where each footprint's origin is, in mm from the outline's top left corner (y down), and how far it is from the centre of the body that `.place.x` and `.place.y` measure: to put the origin at (x, y) with the part on that face and turned so, write `.place.x &= x - dx` and `.place.y &= y - dy`:
+  J1 (`j1`) top, turned 180: origin (3, 20.89), body centre (3, 12), dx 0 dy 8.89
+  J2 (`j2`) top, turned 0: origin (17, 3.11), body centre (17, 12), dx 0 dy -8.89
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/routing/bus_reversed.lock.toml
+BusReversed: placing 2 parts
+BusReversed: placing: seed 0 (1 of 8) [0 s]
+BusReversed: placing: run 1 sized to the parts: placed [0 s]
+BusReversed: placing: the courtyards need 154 mm2 on the front and 46 mm2 on the back, and each face of the 20.0 x 24.0 mm outline holds 429 mm2 inside its margin [0 s]
+BusReversed: placing: run 1 in 20.0 x 24.0 mm: placed [0 s]
+BusReversed: placed on a 20 by 24 mm board with seed 0
+BusReversed: routing: 8 connections on a 20 by 24 mm board [0 s]
+BusReversed: routing: try 1 of 1: ended with 8 of 8 connections routed; 46 tracks and 2 vias so far [1 s]
+BusReversed: routed, writing files
+
+before you order (BusReversed):
+fab-notes for BusReversed
+process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C32713274 x2, HX PZ2.54-1x8P ZZ, for J1, J2 (hand-solder)
+offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+hand-solder: J1, J2
+origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+design rules check: passed
+constraints: 6 of 6 satisfied

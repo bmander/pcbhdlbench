@@ -1,0 +1,7 @@
+site/
+__pycache__/
+node_modules/
+.tscircuit/
+toolchains/netsmith/upstream/
+toolchains/netsmith/target/
+toolchains/netsmith/bin/

@@ -1,0 +1,14 @@
+import std::pcb::Outline
+
+physical for K4Planar {
+    case {
+        .outline: Outline { .width &= 30mm; .height &= 30mm }
+    }
+    // Every net on one layer, with no via.
+    .j1.p1 route one_layer
+    .j1.p2 route one_layer
+    .j1.p3 route one_layer
+    .j2.p2 route one_layer
+    .j2.p3 route one_layer
+    .j3.p3 route one_layer
+}

@@ -1,0 +1,14 @@
+import std::pcb::Outline
+
+physical for BusReversed {
+    case {
+        .outline: Outline { .width &= 20mm; .height &= 24mm }
+    }
+    // Face to face: J1 with pin 1 at the bottom, J2 with pin 1 at the top.
+    .j1.place.x &= 3mm
+    .j1.place.y &= 12mm
+    .j1.place.rotation &= 180
+    .j2.place.x &= 17mm
+    .j2.place.y &= 12mm
+    .j2.place.rotation &= 0
+}

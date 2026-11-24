@@ -1,0 +1,23 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::connector::Header1x2
+import std::parts::passive::{Led, Resistor}
+
+board LedResistor {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .j1: Header1x2
+    .r1: Resistor { .resistance &= 330ohm +/- 1%; .package &= "0603" }
+    .d1: Led { .package &= "0603" }
+
+    .j1.p1 ~ .r1.a
+    .r1.b ~ .d1.anode
+    .d1.cathode ~ .j1.p2
+}

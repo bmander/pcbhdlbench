@@ -1,0 +1,4 @@
+{
+ "outcome": "refused",
+ "why": "source_trace_not_connected_error: Could not find port for selector \".J1 > .pin5\". Component \".J1 > \" found, but does not have pin \"pin5\". It has no ports"
+}

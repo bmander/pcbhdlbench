@@ -1,0 +1,5 @@
+{
+ "outcome": "refused",
+ "why": "K33OneLayer: INCOMPLETE: 1 connections are not routed; writing the board and the Gerbers anyway, marked incomplete; error: K33OneLayer: 1 connections could not be routed (after 5 tries with the lines in different orders, ripping up the nets in the way):; INCOMPLETE: the board file is in results/netsmith/unsatisfiable/k33-one-layer/fab/K33OneLayer with the Gerbers (K33OneLayer-gerbers.zip) and fab-notes.txt; they are NOT ready to order",
+ "refs": {}
+}

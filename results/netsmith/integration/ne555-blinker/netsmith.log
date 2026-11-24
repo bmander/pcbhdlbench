@@ -1,0 +1,47 @@
+Ne555Blinker: 6 part(s) on 6 BOM line(s), 6 placement(s), 9 file(s) in the zip
+  process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+  buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C42431798 x1, PH2.54-1X2P-H25, for J1 (hand-solder)
+  offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+  most vias (nets no zone pours, 2 or more): net-c2.a 2 vias (16.72 mm routed, straight 15.97 mm)
+  hand-solder: J1, U1
+  rotation unverified: check JLCPCB's order preview: D1 (LED_0603_1608Metric)
+  origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+  design rules check: passed
+  design rules warnings: 2
+    warning [fiducial_count] the front of the board has parts the board house assembles and 0 fiducial(s); it asks for at least 2 on each assembled side ("a minimum of two, but three fiducial marks are strongly recommended") at (20.000, 20.000) on F.Cu
+    warning [acid_trap] a track leaves a pad at 45 degrees on F.Cu, an acute angle that traps etchant; make it a right angle or wider, or fill it (a teardrop) at (29.795, 27.875) on F.Cu: Track [net-c2.a] on F.Cu, length 0.5657 mm; SMD pad 4 [net-c2.a] of U1
+wrote results/netsmith/integration/ne555-blinker/fab/Ne555Blinker
+where each footprint's origin is, in mm from the outline's top left corner (y down), and how far it is from the centre of the body that `.place.x` and `.place.y` measure: to put the origin at (x, y) with the part on that face and turned so, write `.place.x &= x - dx` and `.place.y &= y - dy`:
+  C1 (`c1`) top, turned 180: origin (14.65, 1.85), body centre (14.65, 1.85), dx 0 dy 0
+  C2 (`c2`) top, turned 90: origin (7.25, 7.2), body centre (7.25, 7.2), dx 0 dy 0
+  D1 (`d1`) top, turned 0: origin (8.95, 1.85), body centre (8.95, 1.85), dx 0 dy 0
+  J1 (`j1`) top, turned 180: origin (3.65, 10), body centre (3.65, 8.73), dx 0 dy 1.27
+  R1 (`r1`) top, turned 0: origin (17.45, 12.55), body centre (17.45, 12.55), dx 0 dy 0
+  R2 (`r2`) top, turned 90: origin (17.3, 8.4), body centre (17.3, 8.4), dx 0 dy 0
+  R3 (`r3`) top, turned 180: origin (10.55, 4.35), body centre (10.55, 4.35), dx 0 dy 0
+  U1 (`u1`) top, turned 270: origin (12, 10.05), body centre (12, 10.05), dx 0 dy 0
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/integration/ne555_blinker.lock.toml
+Ne555Blinker: placing 8 parts
+Ne555Blinker: placing: seed 0 (1 of 8) [0 s]
+Ne555Blinker: placing: run 1 sized to the parts: placed [0 s]
+Ne555Blinker: placing: the courtyards need 88 mm2 on the front and 6 mm2 on the back, and each face of the 20.0 x 15.0 mm outline holds 259 mm2 inside its margin [0 s]
+Ne555Blinker: placing: run 1 in 20.0 x 15.0 mm: placed [1 s]
+Ne555Blinker: placed on a 20 by 15 mm board with seed 0
+Ne555Blinker: routing: 15 connections on a 20 by 15 mm board [0 s]
+Ne555Blinker: routing: try 1 of 2: ended with 15 of 15 connections routed; 67 tracks and 2 vias so far [0 s]
+Ne555Blinker: routed, writing files
+
+before you order (Ne555Blinker):
+fab-notes for Ne555Blinker
+process: JLCPCB TwoLayer (numbers from https://jlcpcb.com/capabilities/pcb-capabilities); track 0.15 mm, space 0.15 mm, drill 0.3 mm, via 0.6 mm, annular ring 0.18 mm, hole to hole 0.45 mm, copper to edge 0.3 mm, silkscreen 0.15 mm line and 1 mm text, mask bridge 0.13 mm; 2 layers, 1.6 mm thick, 1 oz copper, finish HASL lead-free; order it with these
+buy from jlcpcb-assembly (JLCPCB assembly stock), for the parts you ship to the board house or solder yourself: C42431798 x1, PH2.54-1X2P-H25, for J1 (hand-solder)
+offline: stock and price of the parts were not checked (no supplier was asked); look each part up at the supplier before you order
+most vias (nets no zone pours, 2 or more): net-c2.a 2 vias (16.72 mm routed, straight 15.97 mm)
+hand-solder: J1, U1
+rotation unverified: check JLCPCB's order preview: D1 (LED_0603_1608Metric)
+origin: the board sets no drill/place origin; coordinates are relative to the page corner, the same in every file
+design rules check: passed
+design rules warnings: 2
+  warning [fiducial_count] the front of the board has parts the board house assembles and 0 fiducial(s); it asks for at least 2 on each assembled side ("a minimum of two, but three fiducial marks are strongly recommended") at (20.000, 20.000) on F.Cu
+  warning [acid_trap] a track leaves a pad at 45 degrees on F.Cu, an acute angle that traps etchant; make it a right angle or wider, or fill it (a teardrop) at (29.795, 27.875) on F.Cu: Track [net-c2.a] on F.Cu, length 0.5657 mm; SMD pad 4 [net-c2.a] of U1

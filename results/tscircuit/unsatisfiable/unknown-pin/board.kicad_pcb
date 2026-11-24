@@ -1,0 +1,320 @@
+(kicad_pcb
+  (version 20241229)
+  (generator circuit-json-to-kicad)
+  (generator_version 0.0.1)
+  (general
+    (thickness 1.6)
+  )
+  (paper
+    A4
+  )
+  (layers
+    (0 "F.Cu" signal)
+    (31 "B.Cu" signal)
+    (32 "B.Adhes" user)
+    (33 "F.Adhes" user)
+    (34 "B.Paste" user)
+    (35 "F.Paste" user)
+    (36 "B.SilkS" user)
+    (37 "F.SilkS" user)
+    (38 "B.Mask" user)
+    (39 "F.Mask" user)
+    (40 "Dwgs.User" user)
+    (41 "Cmts.User" user)
+    (42 "Eco1.User" user)
+    (43 "Eco2.User" user)
+    (44 "Edge.Cuts" user)
+    (45 "Margin" user)
+    (46 "B.CrtYd" user)
+    (47 "F.CrtYd" user)
+    (48 "B.Fab" user)
+    (49 "F.Fab" user)
+  )
+  (setup
+    (pad_to_mask_clearance 0)
+  )
+  (net 0 "")
+  (net 1 ".J1 > .pin1 to .R1 > .pin1")
+  (footprint
+    "tscircuit:pin_header_pinrow4_p2_54_id1_od1_7_nopinlabels"
+    (layer F.Cu)
+    (uuid 0ef793e0-4b78-aa01-5a17-181e005925c3)
+    (at 100 100 0)
+    (attr through_hole)
+    (property "Reference" "J1"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 76011660-48dd-4d01-1bb9-83a2116a45bd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "J1"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 467a4a20-61c1-6901-7d08-87e267b0593d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 6c9dd7e0-663e-5ec1-391a-95620bf6cc03)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 16c4bcc0-75e4-51c1-028d-604270c9913d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 004a928c-621d-6f94-3b7a-8e4c26ed73d4)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_text
+      reference
+      "J1"
+      (at 0 -2.54 0)
+      (layer F.SilkS)
+      (effects
+        (font
+          (size 0.7 0.7)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_rect
+      (start -5.58 -1.77)
+      (end 5.58 1.77)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
+    (pad "1" thru_hole rect
+      (at -3.81 0 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 1 ".J1 > .pin1 to .R1 > .pin1")
+      (uuid 108b80ba-1cf4-029a-295c-847a35c5065a)
+    )
+    (pad "2" thru_hole circle
+      (at -1.27 0 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (uuid 06687118-12d0-f2f8-1f39-74d82ba1f6b8)
+    )
+    (pad "3" thru_hole circle
+      (at 1.27 0 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (uuid 450f7d80-1560-c061-6fd0-fe4235bec3dd)
+    )
+    (pad "4" thru_hole circle
+      (at 3.81 0 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (uuid 748d4460-3102-7dbf-296d-c0227c2201fd)
+    )
+  )
+  (footprint
+    "tscircuit:resistor_res0603"
+    (layer F.Cu)
+    (uuid 127da000-6cda-a5c1-13cd-147e6b8b3143)
+    (at 91.94 100 180)
+    (attr smd)
+    (property "Reference" "R1"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 29f03ea0-5714-07ff-7bc8-2ea24ea46543)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "1kΩ"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 27d2c6e0-0c8b-a7ff-0ebb-76e22a0295c3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 0c8f2ce0-39b2-f63f-66d6-bf9e6c057703)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 340df3c0-589b-1ac1-1abb-d6be71ed37c3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 35392564-685e-d87c-05f6-d65c5c712bc4)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_text
+      reference
+      "R1"
+      (at -1.6838893488276108e-16 -1.375 180)
+      (layer F.SilkS)
+      (effects
+        (font
+          (size 0.4 0.4)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_line
+      (start -0.2372579999999998 -0.5225)
+      (end 0.23725800000000058 -0.5225)
+      (stroke
+        (width 0.12)
+        (type default)
+      )
+      (layer F.SilkS)
+    )
+    (fp_line
+      (start -0.2372579999999997 0.5225)
+      (end 0.2372580000000007 0.5225)
+      (stroke
+        (width 0.12)
+        (type default)
+      )
+      (layer F.SilkS)
+    )
+    (fp_rect
+      (start -1.48 -0.73)
+      (end 1.48 0.73)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
+    (pad "1" smd rect
+      (at -0.8250000000000002 1.9721522630525295e-31 0)
+      (size 0.8 0.95)
+      (layers F.Cu F.Mask)
+      (net 1 ".J1 > .pin1 to .R1 > .pin1")
+      (uuid 73d8eaee-1270-eeee-4ef7-0d124fa0f6ee)
+    )
+    (pad "2" smd rect
+      (at 0.8249999999999993 0 0)
+      (size 0.8 0.95)
+      (layers F.Cu F.Mask)
+      (uuid 4c22c676-42e5-1aea-2e13-03b660f4ddaa)
+    )
+    (pad "" smd rect
+      (at -0.8250000000000002 1.9721522630525295e-31 0)
+      (size 0.5599999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 6b0daf60-7f8a-929f-6a22-d49e54bb169d)
+    )
+    (pad "" smd rect
+      (at 0.8249999999999993 0 0)
+      (size 0.5599999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 1d229080-07ba-d27f-0dac-eb822314a983)
+    )
+  )
+  (segment
+    (start 96.19 100)
+    (end 92.765 100)
+    (width 0.15)
+    (layer F.Cu)
+    (net 1)
+    (uuid 4fabb4c0-2fac-9101-50fb-293e2e5d1c83)
+  )
+  (gr_line
+    (start 90 105)
+    (end 110 105)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 110 105)
+    (end 110 95)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 110 95)
+    (end 90 95)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 90 95)
+    (end 90 105)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+)

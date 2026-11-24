@@ -1,0 +1,4 @@
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/basics/header_breakout.lock.toml
+error: HeaderBreakout: the outline is 20.0 x 12.0 mm, which leaves 18.8 x 10.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j1` (J1) (Header1x4) has a courtyard of 3.6 x 11.2 mm turned 180 degrees (only the turns a layout file or a requirement leave it were tried)
+error: HeaderBreakout: the outline is 20.0 x 12.0 mm, which leaves 18.8 x 10.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j2` (J2) (Header1x4) has a courtyard of 3.6 x 11.2 mm turned 180 degrees (only the turns a layout file or a requirement leave it were tried)

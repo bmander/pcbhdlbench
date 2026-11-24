@@ -1,0 +1,16 @@
+import std::pcb::Outline
+
+physical for Channel {
+    case {
+        .outline: Outline { 
+            polygon (0mm, 0mm) (13mm, 0mm) (13mm, 15.85mm) (17mm, 15.85mm) (17mm, 0mm) (30mm, 0mm) (30mm, 34mm) (17mm, 34mm) (17mm, 18.15mm) (13mm, 18.15mm) (13mm, 34mm) (0mm, 34mm)
+         }
+    }
+    // A header on each half, pin 1 at the bottom.
+    .j1.place.x &= 3mm
+    .j1.place.y &= 17mm
+    .j1.place.rotation &= 180
+    .j2.place.x &= 27mm
+    .j2.place.y &= 17mm
+    .j2.place.rotation &= 180
+}

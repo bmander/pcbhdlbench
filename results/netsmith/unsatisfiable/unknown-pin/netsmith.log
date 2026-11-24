@@ -1,0 +1,6 @@
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+error: `Header1x4` has no member `p5`
+   --> toolchains/netsmith/src/unsatisfiable/unknown_pin.nsm:20:9
+   |
+20 |     .j1.p5 ~ .r1.b
+   |         ^^

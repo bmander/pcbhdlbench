@@ -1,0 +1,76 @@
+note: KiCad is not installed, so --cross-check runs netsmith's viewer comparison alone (the Gerbers against the board model), not KiCad's plots and design rules check; netsmith's own design rules check still runs
+wrote toolchains/netsmith/src/routing/channel.lock.toml
+Channel: placing 2 parts
+Channel: placing: seed 0 (1 of 8) [0 s]
+Channel: placing: run 1 sized to the parts: placed [0 s]
+Channel: placing: the courtyards need 227 mm2 on the front and 69 mm2 on the back, and each face of the 30.0 x 34.0 mm outline holds 945 mm2 inside its margin [0 s]
+Channel: placing: run 1 in 30.0 x 34.0 mm: placed [0 s]
+Channel: placed on a 30 by 34 mm board with seed 0
+Channel: routing: 12 connections on a 30 by 34 mm board [0 s]
+Channel: routing: try 1 of 1: ripping up for net net-j1.p8: J1.8 to J2.8 (pass 1 of 3), 6 not routed; 49 tracks and 1 vias so far [2 s]
+Channel: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 1 of 3), 4 not routed; 85 tracks and 3 vias so far [5 s]
+Channel: routing: try 1 of 1: ripping up for net net-j1.p6: J1.6 to J2.6 (pass 2 of 3), 4 not routed; 85 tracks and 3 vias so far [7 s]
+Channel: routing: try 1 of 1: negotiating for net net-j1.p7: J1.7 to J2.7 (round 1 of 6), 4 not routed; 84 tracks and 4 vias so far [22 s]
+Channel: routing: try 1 of 1: negotiating for net net-j1.p8: J1.8 to J2.8 (round 1 of 6), 5 not routed; 69 tracks and 3 vias so far [31 s]
+Channel: routing: try 1 of 1: negotiating for net net-j1.p4: J1.4 to J2.4 (round 2 of 6), 4 not routed; 79 tracks and 3 vias so far [38 s]
+Channel: routing: try 1 of 1: negotiating for net net-j1.p11: J1.11 to J2.11 (round 2 of 6), 4 not routed; 87 tracks and 4 vias so far [53 s]
+Channel: routing: try 1 of 1: negotiating for net net-j1.p12: J1.12 to J2.12 (round 2 of 6), 4 not routed; 96 tracks and 4 vias so far [69 s]
+Channel: routing: try 1 of 1: negotiating for net net-j1.p8: J1.8 to J2.8 (round 2 of 6), 4 not routed; 94 tracks and 4 vias so far [82 s]
+Channel: routing: try 1 of 1: negotiating for net net-j1.p6: J1.6 to J2.6 (round 3 of 6), 5 not routed; 80 tracks and 2 vias so far [107 s]
+Channel: routing: try 1 of 1: negotiating for net net-j1.p11: J1.11 to J2.11 (round 3 of 6), 5 not routed; 79 tracks and 2 vias so far [124 s]
+Channel: routing: try 1 of 1: ended with 8 of 12 connections routed, 4 left: net net-j1.p4: J1.4 to J2.4, net net-j1.p11: J1.11 to J2.11, net net-j1.p12: J1.12 to J2.12, ...; 79 tracks and 3 vias so far [129 s]
+Channel: 4 connection(s) left with signals at 0.22 mm; routing again at the least track, 0.15 mm
+Channel: routing: 12 connections on a 30 by 34 mm board [130 s]
+Channel: routing: try 1 of 3: ripping up for net net-j1.p8: J1.8 to J2.8 (pass 1 of 3), 6 not routed; 49 tracks and 1 vias so far [132 s]
+Channel: routing: try 1 of 3: ripping up for net net-j1.p5: J1.5 to J2.5 (pass 1 of 3), 5 not routed; 64 tracks and 1 vias so far [134 s]
+Channel: routing: try 1 of 3: ripping up for net net-j1.p9: J1.9 to J2.9 (pass 1 of 3), 4 not routed; 83 tracks and 3 vias so far [136 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p7: J1.7 to J2.7 (round 1 of 6), 5 not routed; 71 tracks and 3 vias so far [151 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p9: J1.9 to J2.9 (round 1 of 6), 5 not routed; 82 tracks and 3 vias so far [163 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p4: J1.4 to J2.4 (round 2 of 6), 4 not routed; 84 tracks and 0 vias so far [167 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p11: J1.11 to J2.11 (round 2 of 6), 4 not routed; 92 tracks and 1 vias so far [173 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p12: J1.12 to J2.12 (round 2 of 6), 4 not routed; 94 tracks and 1 vias so far [180 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p6: J1.6 to J2.6 (round 3 of 6), 4 not routed; 96 tracks and 1 vias so far [187 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p5: J1.5 to J2.5 (round 3 of 6), 5 not routed; 93 tracks and 2 vias so far [202 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p10: J1.10 to J2.10 (round 3 of 6), 5 not routed; 87 tracks and 1 vias so far [215 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p11: J1.11 to J2.11 (round 4 of 6), 4 not routed; 98 tracks and 3 vias so far [221 s]
+Channel: routing: try 1 of 3: negotiating for net net-j1.p7: J1.7 to J2.7 (round 4 of 6), 5 not routed; 84 tracks and 3 vias so far [244 s]
+Channel: routing: try 1 of 3: ripping up whole nets for net net-j1.p2: J1.2 to J2.2 (round 1 of 6), 4 not routed; 85 tracks and 1 vias so far [253 s]
+Channel: routing: try 1 of 3: ripping up whole nets for net net-j1.p9: J1.9 to J2.9 (round 2 of 6), 5 not routed; 94 tracks and 2 vias so far [255 s]
+Channel: routing: try 1 of 3: ended with 8 of 12 connections routed, 4 left: net net-j1.p2: J1.2 to J2.2, net net-j1.p4: J1.4 to J2.4, net net-j1.p11: J1.11 to J2.11, ...; 85 tracks and 1 vias so far [257 s]
+Channel: routing: try 2 of 3: ripping up for net net-j1.p7: J1.7 to J2.7 (pass 1 of 3), 6 not routed; 49 tracks and 1 vias so far [259 s]
+Channel: routing: try 2 of 3: net net-j1.p4: J1.4 to J2.4 again with less room, 6 not routed; 49 tracks and 1 vias so far [261 s]
+Channel: routing: try 2 of 3: ripping up for net net-j1.p7: J1.7 to J2.7 (pass 1 of 3), 4 not routed; 83 tracks and 3 vias so far [263 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p7: J1.7 to J2.7 (round 1 of 6), 5 not routed; 71 tracks and 3 vias so far [279 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p9: J1.9 to J2.9 (round 1 of 6), 5 not routed; 82 tracks and 3 vias so far [291 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p4: J1.4 to J2.4 (round 2 of 6), 4 not routed; 84 tracks and 0 vias so far [296 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p11: J1.11 to J2.11 (round 2 of 6), 4 not routed; 92 tracks and 1 vias so far [302 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p12: J1.12 to J2.12 (round 2 of 6), 4 not routed; 94 tracks and 1 vias so far [310 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p6: J1.6 to J2.6 (round 3 of 6), 4 not routed; 96 tracks and 1 vias so far [320 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p5: J1.5 to J2.5 (round 3 of 6), 5 not routed; 93 tracks and 2 vias so far [337 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p10: J1.10 to J2.10 (round 3 of 6), 5 not routed; 87 tracks and 1 vias so far [352 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p11: J1.11 to J2.11 (round 4 of 6), 4 not routed; 98 tracks and 3 vias so far [358 s]
+Channel: routing: try 2 of 3: negotiating for net net-j1.p7: J1.7 to J2.7 (round 4 of 6), 5 not routed; 84 tracks and 3 vias so far [381 s]
+Channel: routing: try 2 of 3: ripping up whole nets for net net-j1.p2: J1.2 to J2.2 (round 1 of 6), 4 not routed; 85 tracks and 1 vias so far [390 s]
+Channel: routing: try 2 of 3: ripping up whole nets for net net-j1.p9: J1.9 to J2.9 (round 2 of 6), 5 not routed; 94 tracks and 2 vias so far [392 s]
+Channel: routing: try 2 of 3: ended with 8 of 12 connections routed, 4 left: net net-j1.p2: J1.2 to J2.2, net net-j1.p4: J1.4 to J2.4, net net-j1.p11: J1.11 to J2.11, ...; 85 tracks and 1 vias so far [393 s]
+Channel: routing: try 3 of 3: ripping up for net net-j1.p1: J1.1 to J2.1 (pass 1 of 3), 6 not routed; 34 tracks and 2 vias so far [396 s]
+Channel: routing: try 3 of 3: ripping up for net net-j1.p2: J1.2 to J2.2 (pass 2 of 3), 4 not routed; 80 tracks and 2 vias so far [398 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p10: J1.10 to J2.10 (round 1 of 6), 4 not routed; 84 tracks and 2 vias so far [401 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p1: J1.1 to J2.1 (round 1 of 6), 5 not routed; 70 tracks and 2 vias so far [409 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p3: J1.3 to J2.3 (round 2 of 6), 4 not routed; 86 tracks and 5 vias so far [411 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p12: J1.12 to J2.12 (round 2 of 6), 4 not routed; 102 tracks and 9 vias so far [425 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p8: J1.8 to J2.8 (round 2 of 6), 4 not routed; 103 tracks and 9 vias so far [438 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p9: J1.9 to J2.9 (round 2 of 6), 4 not routed; 96 tracks and 9 vias so far [453 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p6: J1.6 to J2.6 (round 3 of 6), 4 not routed; 95 tracks and 9 vias so far [467 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p11: J1.11 to J2.11 (round 3 of 6), 4 not routed; 103 tracks and 10 vias so far [494 s]
+Channel: routing: try 3 of 3: negotiating for net net-j1.p12: J1.12 to J2.12 (round 3 of 6), 4 not routed; 122 tracks and 12 vias so far [525 s]
+Channel: routing: try 3 of 3: ended with 8 of 12 connections routed, 4 left: net net-j1.p2: J1.2 to J2.2, net net-j1.p11: J1.11 to J2.11, net net-j1.p10: J1.10 to J2.10, ...; 80 tracks and 2 vias so far [540 s]
+Channel: INCOMPLETE: 4 connections are not routed; writing the board and the Gerbers anyway, marked incomplete
+error: Channel: 4 connections could not be routed (stopped after the route timeout of 540 s, on try 3 of the router; raise it with --route-timeout):
+  net net-j1.p11: J1.11 to J2.11
+  net net-j1.p12: J1.12 to J2.12
+  net net-j1.p2: J1.2 to J2.2
+  net net-j1.p4: J1.4 to J2.4
+vias in pads forbidden: the router went out between the pads, and none of the 4 connection(s) left open ends at a pad a via could stand in, so allowing vias in pads would not reach them
+  INCOMPLETE: the board file is in results/netsmith/routing/channel/fab/Channel with the Gerbers (Channel-gerbers.zip) and fab-notes.txt; they are NOT ready to order
+  every unrouted connection with its net and pads is in results/netsmith/routing/channel/fab/Channel/routing-failure.txt

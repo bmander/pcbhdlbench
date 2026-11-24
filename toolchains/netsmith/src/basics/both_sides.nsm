@@ -1,0 +1,29 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::passive::Resistor
+
+import src::bench::Header1x5
+
+board BothSides {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .j1: Header1x5
+    .r: 4 x Resistor { .resistance &= 10kohm +/- 1%; .package &= "0603" }
+
+    // Signal n on the header's pin n, pulled up to VCC on pin 5.
+    .j1.p1 ~ .r[0].a
+    .j1.p2 ~ .r[1].a
+    .j1.p3 ~ .r[2].a
+    .j1.p4 ~ .r[3].a
+    .r[0].b ~ .j1.p5
+    .r[1].b ~ .j1.p5
+    .r[2].b ~ .j1.p5
+    .r[3].b ~ .j1.p5
+}

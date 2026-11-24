@@ -1,0 +1,23 @@
+import std::pcb::Outline
+
+physical for Bus8 {
+    case {
+        .outline: Outline { .width &= 31mm; .height &= 31mm }
+    }
+    // J1 lies along the south edge and J2 stands up the west edge, pin 1s nearest the corner.
+    .j1.place.x &= 18.89mm
+    .j1.place.y &= 28mm
+    .j1.place.rotation &= 90
+    .j2.place.x &= 3mm
+    .j2.place.y &= 12.11mm
+    .j2.place.rotation &= 180
+    // Every net on one layer, with no via.
+    .j1.p1 route one_layer
+    .j1.p2 route one_layer
+    .j1.p3 route one_layer
+    .j1.p4 route one_layer
+    .j1.p5 route one_layer
+    .j1.p6 route one_layer
+    .j1.p7 route one_layer
+    .j1.p8 route one_layer
+}

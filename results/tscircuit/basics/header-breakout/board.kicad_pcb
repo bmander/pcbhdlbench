@@ -1,0 +1,339 @@
+(kicad_pcb
+  (version 20241229)
+  (generator circuit-json-to-kicad)
+  (generator_version 0.0.1)
+  (general
+    (thickness 1.6)
+  )
+  (paper
+    A4
+  )
+  (layers
+    (0 "F.Cu" signal)
+    (31 "B.Cu" signal)
+    (32 "B.Adhes" user)
+    (33 "F.Adhes" user)
+    (34 "B.Paste" user)
+    (35 "F.Paste" user)
+    (36 "B.SilkS" user)
+    (37 "F.SilkS" user)
+    (38 "B.Mask" user)
+    (39 "F.Mask" user)
+    (40 "Dwgs.User" user)
+    (41 "Cmts.User" user)
+    (42 "Eco1.User" user)
+    (43 "Eco2.User" user)
+    (44 "Edge.Cuts" user)
+    (45 "Margin" user)
+    (46 "B.CrtYd" user)
+    (47 "F.CrtYd" user)
+    (48 "B.Fab" user)
+    (49 "F.Fab" user)
+  )
+  (setup
+    (pad_to_mask_clearance 0)
+  )
+  (net 0 "")
+  (net 1 ".J1 > .pin1 to .J2 > .pin1")
+  (net 2 ".J1 > .pin2 to .J2 > .pin2")
+  (net 3 ".J1 > .pin3 to .J2 > .pin3")
+  (net 4 ".J1 > .pin4 to .J2 > .pin4")
+  (footprint
+    "tscircuit:pin_header_pinrow4_p2_54_id1_od1_7_nopinlabels"
+    (layer F.Cu)
+    (uuid 6860606c-2f2f-a194-3940-5c6c5e4fa594)
+    (at 93 100 90)
+    (attr through_hole)
+    (property "Reference" "J1"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 76011660-48dd-4d01-1bb9-83a2116a45bd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "J1"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 467a4a20-61c1-6901-7d08-87e267b0593d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 6c9dd7e0-663e-5ec1-391a-95620bf6cc03)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 16c4bcc0-75e4-51c1-028d-604270c9913d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 004a928c-621d-6f94-3b7a-8e4c26ed73d4)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_text
+      reference
+      "J1"
+      (at 4.930380657631324e-32 -2.539999999999999 90)
+      (layer F.SilkS)
+      (effects
+        (font
+          (size 0.7 0.7)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_rect
+      (start -5.58 -1.77)
+      (end 5.58 1.77)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
+    (pad "1" thru_hole rect
+      (at -3.81 2.3329521523757077e-16 90)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 1 ".J1 > .pin1 to .J2 > .pin1")
+      (uuid 21b74080-547f-8c01-3549-a77e40ed2503)
+    )
+    (pad "2" thru_hole circle
+      (at -1.27 7.776507174585693e-17 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 2 ".J1 > .pin2 to .J2 > .pin2")
+      (uuid 0dec3132-6980-ee2e-1f11-f272585b2cee)
+    )
+    (pad "3" thru_hole circle
+      (at 1.27 -7.776507174585693e-17 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 3 ".J1 > .pin3 to .J2 > .pin3")
+      (uuid 33759e58-551d-4248-224f-dd1866430388)
+    )
+    (pad "4" thru_hole circle
+      (at 3.81 -2.3329521523757077e-16 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 4 ".J1 > .pin4 to .J2 > .pin4")
+      (uuid 50e2d8a0-2553-f3e1-6475-3f9e11c18ce3)
+    )
+  )
+  (footprint
+    "tscircuit:pin_header_pinrow4_p2_54_id1_od1_7_nopinlabels"
+    (layer F.Cu)
+    (uuid 544624e0-062a-1901-609a-56e244f56b3d)
+    (at 107 100 90)
+    (attr through_hole)
+    (property "Reference" "J2"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 01bf1500-2b64-b45f-5888-7dbe7a53b8e3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "J2"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 18ef4fc0-0257-cf21-1d9e-ee0238e60ce3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 1f2026c0-0e03-a29f-3b27-6bfe684b355d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 37eb39e0-54bd-d4a1-1e99-1cde6e0ff1a3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 39bb1eb6-63dc-df2a-0174-dd0a60f32516)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_text
+      reference
+      "J2"
+      (at 0 -2.54 90)
+      (layer F.SilkS)
+      (effects
+        (font
+          (size 0.7 0.7)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_rect
+      (start -5.58 -1.77)
+      (end 5.58 1.77)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
+    (pad "1" thru_hole rect
+      (at -3.81 2.3329521523757077e-16 90)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 1 ".J1 > .pin1 to .J2 > .pin1")
+      (uuid 186e91a0-5dc8-3ae1-2c00-f89e4a35d3e3)
+    )
+    (pad "2" thru_hole circle
+      (at -1.27 7.776507174585693e-17 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 2 ".J1 > .pin2 to .J2 > .pin2")
+      (uuid 253e990c-6354-4794-1418-d7cc747a08d4)
+    )
+    (pad "3" thru_hole circle
+      (at 1.27 -7.776507174585693e-17 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 3 ".J1 > .pin3 to .J2 > .pin3")
+      (uuid 66a06896-21f2-780a-557a-a7563318394a)
+    )
+    (pad "4" thru_hole circle
+      (at 3.81 -2.3329521523757077e-16 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 4 ".J1 > .pin4 to .J2 > .pin4")
+      (uuid 479a29c0-2e9c-a2c1-5b2c-90be1b0a3bc3)
+    )
+  )
+  (segment
+    (start 93 96.19)
+    (end 107 96.19)
+    (width 0.15)
+    (layer F.Cu)
+    (net 4)
+    (uuid 09fa0560-646a-4341-4125-7ede194abf03)
+  )
+  (segment
+    (start 93 98.73)
+    (end 107 98.73)
+    (width 0.15)
+    (layer F.Cu)
+    (net 3)
+    (uuid 55470a00-0529-33e1-5f99-71c245f6505d)
+  )
+  (segment
+    (start 93 101.27)
+    (end 107 101.27)
+    (width 0.15)
+    (layer F.Cu)
+    (net 2)
+    (uuid 4623f8a0-3a83-c19f-44d4-84223bd3361d)
+  )
+  (segment
+    (start 93 103.81)
+    (end 107 103.81)
+    (width 0.15)
+    (layer F.Cu)
+    (net 1)
+    (uuid 6e000700-1158-3ec1-6f4f-7b7e1008ca43)
+  )
+  (gr_line
+    (start 90 106)
+    (end 110 106)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 110 106)
+    (end 110 94)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 110 94)
+    (end 90 94)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 90 94)
+    (end 90 106)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+)

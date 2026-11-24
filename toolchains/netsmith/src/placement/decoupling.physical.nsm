@@ -1,0 +1,13 @@
+import std::pcb::Outline
+
+physical for Decoupling {
+    case {
+        .outline: Outline { .width &= 25mm; .height &= 25mm }
+    }
+    // Each capacitor by its own supply pin. netsmith measures pad centre to pad centre, and the
+    // case 2 mm between the pads' copper: half the two pads' widths is another millimetre.
+    .c1 within 3mm of .u1.p4
+    .c2 within 3mm of .u1.p12
+    .c3 within 3mm of .u1.p20
+    .c4 within 3mm of .u1.p28
+}

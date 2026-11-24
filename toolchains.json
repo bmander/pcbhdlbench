@@ -1,0 +1,271 @@
+{
+ "toolchains": [
+  {
+   "name": "tscircuit",
+   "url": "https://github.com/tscircuit/tscircuit",
+   "language": "TypeScript (TSX)",
+   "license": "MIT",
+   "places": "yes",
+   "routes": "yes",
+   "writes": "Circuit JSON, KiCad, Gerber",
+   "note": "React components for circuits. Its own autoplacement and autorouter (@tscircuit/capacity-autorouter), so the only open HDL here that goes from code to a routed board with nothing else.",
+   "command": [
+    "node",
+    "toolchains/tscircuit/run.mjs"
+   ],
+   "version": [
+    "node",
+    "toolchains/tscircuit/run.mjs",
+    "--version"
+   ],
+   "source": "toolchains/tscircuit/cases/{id}.tsx",
+   "pads": {
+    "LED_0603": {
+     "1": "A",
+     "2": "K"
+    }
+   }
+  },
+  {
+   "name": "atopile",
+   "url": "https://github.com/atopile/atopile",
+   "language": "ato",
+   "license": "MIT",
+   "places": "no",
+   "routes": "no",
+   "writes": "KiCad",
+   "note": "Its own language, with units, tolerances and part picking. Layout is done by hand in KiCad, with a module's layout reusable; the third-party atoplace aims to place and route.",
+   "command": null
+  },
+  {
+   "name": "Zener",
+   "url": "https://github.com/diodeinc/pcb",
+   "language": "Starlark",
+   "license": "MIT",
+   "places": "packs, blind to nets",
+   "routes": "no",
+   "writes": "KiCad",
+   "note": "Diode Computers' pcb toolchain, written in Rust; the input language of PCB Gym. `pcb layout` keeps a KiCad board in step with the design: new parts are packed compactly by area, with no regard to nets or to an outline, and placement and routing are then a person's, kept across rebuilds. A module's hand-drawn layout, tracks and all, is replicated to each instance. It wraps Freerouting, but only for one command that builds interposers. From its source and README, v0.4.105; not run here.",
+   "command": null
+  },
+  {
+   "name": "SKiDL",
+   "url": "https://github.com/devbisme/skidl",
+   "language": "Python",
+   "license": "MIT",
+   "places": "no",
+   "routes": "no",
+   "writes": "KiCad netlist",
+   "note": "The oldest of these still maintained (3.0 in 2026). Writes a netlist; needs a placer and a router.",
+   "command": null
+  },
+  {
+   "name": "circuit-synth",
+   "url": "https://github.com/circuit-synth/circuit-synth",
+   "language": "Python",
+   "license": null,
+   "places": "partly",
+   "routes": "no",
+   "writes": "KiCad project",
+   "note": "Generates KiCad projects and reads changes made in KiCad back into the code.",
+   "command": null
+  },
+  {
+   "name": "Polymorphic Blocks",
+   "url": "https://github.com/BerkeleyHCI/PolymorphicBlocks",
+   "language": "Python",
+   "license": "BSD-3-Clause",
+   "places": "no",
+   "routes": "no",
+   "writes": "KiCad netlist",
+   "note": "Berkeley's block-based HDL, with typed ports and parameter solving. Writes a netlist.",
+   "command": null
+  },
+  {
+   "name": "JITX",
+   "url": "https://www.jitx.com",
+   "language": "Python (earlier, Stanza)",
+   "license": "proprietary",
+   "places": "yes",
+   "routes": "yes",
+   "writes": "KiCad, Altium",
+   "note": "Commercial. Code-defined designs with constraint-driven placement and routing.",
+   "command": null
+  },
+  {
+   "name": "netsmith",
+   "url": "https://github.com/noahdgrant/netsmith",
+   "language": "netsmith (.nsm)",
+   "license": "MIT",
+   "places": "yes",
+   "routes": "yes",
+   "writes": "KiCad, Gerber",
+   "note": "Rust, begun November 2026, 900 commits in three weeks. Its own language: a circuit with ranges and relations, parts picked from a catalogue by a solver, and a separate 'physical' file for the outline, fixed places and nearness. Places, routes and checks its own board, and stops when a connection is left or a rule is broken. Groups, but no loops: a ring of LEDs cannot be stated as its rule. Built here from source, v0.8.0.",
+   "command": [
+    "python3",
+    "toolchains/netsmith/run.py"
+   ],
+   "version": [
+    "python3",
+    "toolchains/netsmith/run.py",
+    "--version"
+   ],
+   "source": "toolchains/netsmith/src/{id_snake}.nsm",
+   "pads": {
+    "LED_0603": {
+     "1": "K",
+     "2": "A"
+    }
+   }
+  },
+  {
+   "name": "CodeYourPCB",
+   "url": "https://github.com/szymontex/codeyourpcb",
+   "language": "cypcb",
+   "license": "see repo",
+   "places": "no",
+   "routes": "partly",
+   "writes": "KiCad, Gerber",
+   "note": "Rust, 1,700 commits since March 2026. A board DSL with modules, aimed at LLMs. Parts are placed by coordinates in the source; it has an autorouter (negotiated congestion), which its own README calls work in progress.",
+   "command": null
+  },
+  {
+   "name": "KIL",
+   "url": "https://github.com/mkroplewski/kil",
+   "language": "JSON (.kil.json)",
+   "license": "MIT",
+   "places": "no",
+   "routes": "yes",
+   "writes": "KiCad 10",
+   "note": "Rust. 'KiCad Intent Language': circuit and layout intent as JSON for agents. Placement is stated, not found ('without an automatic placement optimizer'); routing is by the bundled KiCadRoutingTools, checked against KiCad's DRC.",
+   "command": null
+  },
+  {
+   "name": "BHDL",
+   "url": "https://github.com/girivs82/bhdl",
+   "language": "BHDL",
+   "license": "MIT OR Apache-2.0",
+   "places": "unverified",
+   "routes": "unverified",
+   "writes": "unverified",
+   "note": "Rust, 1,200 commits, quiet since August 2026. A 'flow-based' board language; its README lists force-directed placement and decoupling with placement constraints. What it writes was not checked.",
+   "command": null
+  },
+  {
+   "name": "stackup",
+   "url": "https://github.com/stackup-eda/stackup",
+   "language": "KDL",
+   "license": "MIT",
+   "places": "no",
+   "routes": "no",
+   "writes": "KiCad (by a plugin)",
+   "note": "Rust. Parts, reusable circuits, connections and constraints in KDL; checks and a BOM from the CLI, and a KiCad plugin that keeps a board in step.",
+   "command": null
+  },
+  {
+   "name": "cuprite_wire",
+   "url": "https://github.com/hyranno/cuprite_wire",
+   "language": "Rust",
+   "license": "MIT",
+   "places": "no",
+   "routes": "no",
+   "writes": "KiCad netlist",
+   "note": "A circuit as Rust types, with ERC and SPICE tests run from cargo test. Hands KiCad a netlist.",
+   "command": null
+  },
+  {
+   "name": "schem",
+   "url": "https://github.com/Raf3-Tech/schem",
+   "language": "schem",
+   "license": "none stated",
+   "places": "no",
+   "routes": "no",
+   "writes": "KiCad netlist",
+   "note": "Rust, three commits. A small schematic DSL 'readable by humans and LLMs' that writes a KiCad netlist.",
+   "command": null
+  },
+  {
+   "name": "via",
+   "url": "https://github.com/jz315/via-rs",
+   "language": "Rust",
+   "license": "MPL-2.0",
+   "places": "no",
+   "routes": "no",
+   "writes": "KiCad, LCEDA Pro",
+   "note": "A board as Rust data, validated and exported for layout by hand.",
+   "command": null
+  }
+ ],
+ "engines": [
+  {
+   "name": "Freerouting",
+   "url": "https://github.com/freerouting/freerouting",
+   "license": "GPL-3.0",
+   "does": "routes",
+   "note": "The open autorouter, over Specctra DSN. The router every routing benchmark compares against."
+  },
+  {
+   "name": "KiCad",
+   "url": "https://www.kicad.org",
+   "license": "GPL-3.0-or-later",
+   "does": "checks",
+   "note": "No autorouter of its own, but its board file is what most of these write, and its DRC is what PCBWorld grades by."
+  },
+  {
+   "name": "tscircuit-autorouter",
+   "url": "https://github.com/tscircuit/tscircuit-autorouter",
+   "license": "MIT",
+   "does": "routes",
+   "note": "tscircuit's router, usable alone over its SimpleRouteJson."
+  },
+  {
+   "name": "Quilter",
+   "url": "https://www.quilter.ai",
+   "license": "proprietary",
+   "does": "places and routes",
+   "note": "Commercial, physics-driven placement and routing of a schematic made elsewhere."
+  },
+  {
+   "name": "DeepPCB",
+   "url": "https://deeppcb.ai",
+   "license": "proprietary",
+   "does": "places and routes",
+   "note": "Commercial, InstaDeep's reinforcement-learning placer and router, in the cloud."
+  },
+  {
+   "name": "fastroute",
+   "url": "https://github.com/parisxmas/fastroute",
+   "license": null,
+   "does": "routes",
+   "note": "Rust port of Freerouting for KiCad and Specctra DSN, since September 2026. One of at least a dozen Rust autorouters begun in the second half of 2026."
+  },
+  {
+   "name": "KiCadRoutingTools",
+   "url": "https://github.com/drandyhaas/KiCadRoutingTools",
+   "license": null,
+   "does": "routes",
+   "note": "Python and Rust routing tools for KiCad; a baseline in PCBWorld, and what KIL routes with."
+  },
+  {
+   "name": "Topola",
+   "url": "https://codeberg.org/topola/topola",
+   "license": null,
+   "does": "routes",
+   "note": "Rust, since 2023: a topological (rubber-band) router, the oldest of the Rust routers still going."
+  },
+  {
+   "name": "guide",
+   "url": "https://github.com/KarpelesLab/guide",
+   "license": null,
+   "does": "places and routes",
+   "note": "Rust placement and routing engine (negotiated congestion), with cadlab, a headless CAD for agents, built on it; both pre-alpha."
+  },
+  {
+   "name": "An LLM agent",
+   "url": null,
+   "license": null,
+   "does": "places and routes",
+   "note": "A model driving any of the above, or KiCad itself, as PCBRouteAgent does. Entered as a toolchain like any other: named model, named tools, fixed prompt."
+  }
+ ]
+}

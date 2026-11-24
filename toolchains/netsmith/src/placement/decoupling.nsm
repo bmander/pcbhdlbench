@@ -1,0 +1,46 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::connector::Header1x2
+import std::parts::passive::Capacitor
+
+import src::bench::Tqfp32
+
+board Decoupling {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .u1: Tqfp32
+    .j1: Header1x2
+    /// The decoupling of pin 4.
+    .c1: Capacitor { .capacitance &= 100nF +/- 10%; .package &= "0402" }
+    /// The decoupling of pin 12.
+    .c2: Capacitor { .capacitance &= 100nF +/- 10%; .package &= "0402" }
+    /// The decoupling of pin 20.
+    .c3: Capacitor { .capacitance &= 100nF +/- 10%; .package &= "0402" }
+    /// The decoupling of pin 28.
+    .c4: Capacitor { .capacitance &= 100nF +/- 10%; .package &= "0402" }
+
+    // VDD on the header's pin 1, ground on pin 2; a VDD pin and a ground pin on each side.
+    .j1.p1 ~ .u1.p4
+    .j1.p2 ~ .u1.p5
+    .c1.a ~ .u1.p4
+    .c1.b ~ .u1.p5
+    .j1.p1 ~ .u1.p12
+    .j1.p2 ~ .u1.p13
+    .c2.a ~ .u1.p12
+    .c2.b ~ .u1.p13
+    .j1.p1 ~ .u1.p20
+    .j1.p2 ~ .u1.p21
+    .c3.a ~ .u1.p20
+    .c3.b ~ .u1.p21
+    .j1.p1 ~ .u1.p28
+    .j1.p2 ~ .u1.p29
+    .c4.a ~ .u1.p28
+    .c4.b ~ .u1.p29
+}

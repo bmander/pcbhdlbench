@@ -1,0 +1,4 @@
+# channel k's parts are the case's RSk, Ck and RLk
+'ch(\d)\.rs' = 'RS\1'
+'ch(\d)\.c' = 'C\1'
+'ch(\d)\.rl' = 'RL\1'

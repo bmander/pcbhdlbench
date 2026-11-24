@@ -1,0 +1,7 @@
+import std::pcb::Outline
+
+physical for VoltageDivider {
+    case {
+        .outline: Outline { .width &= 15mm; .height &= 10mm }
+    }
+}

@@ -1,0 +1,16 @@
+import std::pcb::Outline
+
+physical for ChannelOverfull {
+    case {
+        .outline: Outline { 
+            polygon (0mm, 0mm) (13mm, 0mm) (13mm, 16.85mm) (17mm, 16.85mm) (17mm, 0mm) (30mm, 0mm) (30mm, 36mm) (17mm, 36mm) (17mm, 19.15mm) (13mm, 19.15mm) (13mm, 36mm) (0mm, 36mm)
+         }
+    }
+    // A header on each half, pin 1 at the bottom.
+    .j1.place.x &= 3mm
+    .j1.place.y &= 18mm
+    .j1.place.rotation &= 180
+    .j2.place.x &= 27mm
+    .j2.place.y &= 18mm
+    .j2.place.rotation &= 180
+}

@@ -1,0 +1,69 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::connector::{Header1x2, Header1x8}
+import std::parts::passive::{Capacitor, Resistor}
+
+/// One channel: a series resistor, then a capacitor and a load to ground. Written once.
+module Channel {
+    .input: Pin
+    .output: Pin
+    .ground: Pin
+    .rs: Resistor { .resistance &= 1kohm +/- 1%; .package &= "0603" }
+    .c: Capacitor { .capacitance &= 100nF +/- 10%; .package &= "0603" }
+    .rl: Resistor { .resistance &= 100kohm +/- 1%; .package &= "0603" }
+    .input ~ .rs.a
+    .rs.b ~ .output
+    .output ~ .c.a
+    .output ~ .rl.a
+    .c.b ~ .ground
+    .rl.b ~ .ground
+}
+
+board EightChannels {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .j1: Header1x8
+    .j2: Header1x8
+    .j3: Header1x2
+    .ch1: Channel
+    .ch2: Channel
+    .ch3: Channel
+    .ch4: Channel
+    .ch5: Channel
+    .ch6: Channel
+    .ch7: Channel
+    .ch8: Channel
+
+    .j3.p1 ~ .j3.p2
+    .j1.p1 ~ .ch1.input
+    .ch1.output ~ .j2.p1
+    .ch1.ground ~ .j3.p1
+    .j1.p2 ~ .ch2.input
+    .ch2.output ~ .j2.p2
+    .ch2.ground ~ .j3.p1
+    .j1.p3 ~ .ch3.input
+    .ch3.output ~ .j2.p3
+    .ch3.ground ~ .j3.p1
+    .j1.p4 ~ .ch4.input
+    .ch4.output ~ .j2.p4
+    .ch4.ground ~ .j3.p1
+    .j1.p5 ~ .ch5.input
+    .ch5.output ~ .j2.p5
+    .ch5.ground ~ .j3.p1
+    .j1.p6 ~ .ch6.input
+    .ch6.output ~ .j2.p6
+    .ch6.ground ~ .j3.p1
+    .j1.p7 ~ .ch7.input
+    .ch7.output ~ .j2.p7
+    .ch7.ground ~ .j3.p1
+    .j1.p8 ~ .ch8.input
+    .ch8.output ~ .j2.p8
+    .ch8.ground ~ .j3.p1
+}

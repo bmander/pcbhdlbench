@@ -1,0 +1,45 @@
+# Rule sets the cases name: what a common board house makes without asking. Lengths in mm.
+
+[single]
+about = "One copper layer, home-etchable"
+layers = 1
+track = 0.25
+clearance = 0.25
+drill = 0.6
+annular_ring = 0.3
+edge = 0.5
+
+[std-2]
+about = "Two layers, 1.6 mm, 1 oz: any board house's standard service"
+layers = 2
+track = 0.15
+clearance = 0.15
+via_drill = 0.3
+via_pad = 0.6
+drill = 0.3
+annular_ring = 0.15
+edge = 0.3
+
+[std-4]
+about = "Four layers, 1.6 mm, 1 oz outer and 0.5 oz inner"
+layers = 4
+track = 0.127
+clearance = 0.127
+via_drill = 0.3
+via_pad = 0.5
+drill = 0.3
+annular_ring = 0.1
+edge = 0.3
+
+[hdi-6]
+about = "Six layers with laser microvias between the outer two layers on each side"
+layers = 6
+track = 0.09
+clearance = 0.09
+via_drill = 0.2
+via_pad = 0.4
+microvia_drill = 0.1
+microvia_pad = 0.25
+drill = 0.2
+annular_ring = 0.1
+edge = 0.25

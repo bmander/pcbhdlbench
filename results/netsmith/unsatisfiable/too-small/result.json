@@ -1,0 +1,5 @@
+{
+ "outcome": "refused",
+ "why": "error: TooSmall: the outline is 10.0 x 10.0 mm, which leaves 8.8 x 8.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j1` (J1) (Header1x4) has a courtyard of 3.6 x 11.2 mm turned 0 degrees, 11.2 x 3.6 mm turned 90 degrees, 3.6 x 11.2 mm turned 180 degrees, 11.2 x 3.6 mm turned 270 degrees; error: TooSmall: the outline is 10.0 x 10.0 mm, which leaves 8.8 x 8.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j2` (J2) (Header1x4) has a courtyard of 3.6 x 11.2 mm turned 0 degrees, 11.2 x 3.6 mm turned 90 degrees, 3.6 x 11.2 mm turned 180 degrees, 11.2 x 3.6 mm turned 270 degrees; error: TooSmall: the outline is 10.0 x 10.0 mm, which leaves 8.8 x 8.8 mm for a courtyard inside its 0.6 mm margin, and a part is bigger in every turn it may take: `j3` (J3) (Header1x4) has a courtyard of 3.6 x 11.2 mm turne",
+ "refs": {}
+}

@@ -1,0 +1,7 @@
+import std::pcb::Outline
+
+physical for UnknownPin {
+    case {
+        .outline: Outline { .width &= 20mm; .height &= 10mm }
+    }
+}

@@ -1,0 +1,45 @@
+# The footprints of the parts src/bench.nsm defines. The headers are netsmith's own generator's,
+# whose pads are those of KiCad's library; the chips are KiCad's own footprints, read from an
+# installed KiCad (the runner says where), as the bench's land patterns are.
+
+[[part]]
+kind = "Header1x3"
+package = "2.54mm"
+default = true
+footprint = "gen:PinHeader(pins=3, rows=1, pitch=2.54mm)"
+
+[[part]]
+kind = "Header1x5"
+package = "2.54mm"
+default = true
+footprint = "gen:PinHeader(pins=5, rows=1, pitch=2.54mm)"
+
+[[part]]
+kind = "Header1x12"
+package = "2.54mm"
+default = true
+footprint = "gen:PinHeader(pins=12, rows=1, pitch=2.54mm)"
+
+[[part]]
+kind = "Header1x13"
+package = "2.54mm"
+default = true
+footprint = "gen:PinHeader(pins=13, rows=1, pitch=2.54mm)"
+
+[[part]]
+kind = "Soic8"
+package = "SOIC-8"
+default = true
+footprint = "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+
+[[part]]
+kind = "Sot23"
+package = "SOT-23"
+default = true
+footprint = "Package_TO_SOT_SMD:SOT-23"
+
+[[part]]
+kind = "Tqfp32"
+package = "TQFP-32"
+default = true
+footprint = "Package_QFP:TQFP-32_7x7mm_P0.8mm"

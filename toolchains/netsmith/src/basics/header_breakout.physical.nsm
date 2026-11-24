@@ -1,0 +1,14 @@
+import std::pcb::Outline
+
+physical for HeaderBreakout {
+    case {
+        .outline: Outline { .width &= 20mm; .height &= 12mm }
+    }
+    // Each header stands with pin 1 at the bottom: its middle is at mid height.
+    .j1.place.x &= 3mm
+    .j1.place.y &= 6mm
+    .j1.place.rotation &= 180
+    .j2.place.x &= 17mm
+    .j2.place.y &= 6mm
+    .j2.place.rotation &= 180
+}

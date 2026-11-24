@@ -1,0 +1,4 @@
+{
+ "outcome": "refused",
+ "why": "pcb_trace_error: PCB trace .J1 > .pin7 to .J2 > .pin7 is too close to .J1 > .pin5 to .J2 > .pin5 (gap: 0.138mm); pcb_trace_error: Trace too close to board edge (0.327mm < 0.375mm required, margin: 0.3mm); pcb_trace_error: Trace too close to board edge (0.224mm < 0.375mm required, margin: 0.3mm); pcb_trace_error: Trace too close to board edge (0.120mm < 0.375mm required, margin: 0.3mm); and 12 more"
+}

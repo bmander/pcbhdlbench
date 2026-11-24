@@ -1,0 +1,32 @@
+import std::mfg::jlcpcb::TwoLayer
+import src::bench::Sot23
+
+board K33OneLayer {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    .h1: Sot23
+    .h2: Sot23
+    .h3: Sot23
+    .u1: Sot23
+    .u2: Sot23
+    .u3: Sot23
+
+    // Every house to every utility: pin j of house i to pin i of utility j.
+    .h1.p1 ~ .u1.p1
+    .h1.p2 ~ .u2.p1
+    .h1.p3 ~ .u3.p1
+    .h2.p1 ~ .u1.p2
+    .h2.p2 ~ .u2.p2
+    .h2.p3 ~ .u3.p2
+    .h3.p1 ~ .u1.p3
+    .h3.p2 ~ .u2.p3
+    .h3.p3 ~ .u3.p3
+}

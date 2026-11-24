@@ -1,0 +1,1495 @@
+(kicad_pcb
+  (version 20241229)
+  (generator circuit-json-to-kicad)
+  (generator_version 0.0.1)
+  (general
+    (thickness 1.6)
+  )
+  (paper
+    A4
+  )
+  (layers
+    (0 "F.Cu" signal)
+    (31 "B.Cu" signal)
+    (32 "B.Adhes" user)
+    (33 "F.Adhes" user)
+    (34 "B.Paste" user)
+    (35 "F.Paste" user)
+    (36 "B.SilkS" user)
+    (37 "F.SilkS" user)
+    (38 "B.Mask" user)
+    (39 "F.Mask" user)
+    (40 "Dwgs.User" user)
+    (41 "Cmts.User" user)
+    (42 "Eco1.User" user)
+    (43 "Eco2.User" user)
+    (44 "Edge.Cuts" user)
+    (45 "Margin" user)
+    (46 "B.CrtYd" user)
+    (47 "F.CrtYd" user)
+    (48 "B.Fab" user)
+    (49 "F.Fab" user)
+  )
+  (setup
+    (pad_to_mask_clearance 0)
+  )
+  (net 0 "")
+  (net 1 ".J1 > .pin1 to .D12 > .anode")
+  (net 2 ".J1 > .pin2 to .D1 > .cathode")
+  (net 3 ".D9 > .anode to .D10 > .cathode")
+  (net 4 ".D10 > .anode to .D11 > .cathode")
+  (net 5 ".D11 > .anode to .D12 > .cathode")
+  (net 6 ".D1 > .anode to .D2 > .cathode")
+  (net 7 ".D2 > .anode to .D3 > .cathode")
+  (net 8 ".D3 > .anode to .D4 > .cathode")
+  (net 9 ".D4 > .anode to .D5 > .cathode")
+  (net 10 ".D5 > .anode to .D6 > .cathode")
+  (net 11 ".D6 > .anode to .D7 > .cathode")
+  (net 12 ".D7 > .anode to .D8 > .cathode")
+  (net 13 ".D8 > .anode to .D9 > .cathode")
+  (footprint
+    "tscircuit:pin_header_pinrow2_p2_54_id1_od1_7_nopinlabels"
+    (layer F.Cu)
+    (uuid 0ef793e0-4b78-aa01-5a17-181e005925c3)
+    (at 100 100 0)
+    (attr through_hole)
+    (property "Reference" "J1"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 76011660-48dd-4d01-1bb9-83a2116a45bd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "J1"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 467a4a20-61c1-6901-7d08-87e267b0593d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 6c9dd7e0-663e-5ec1-391a-95620bf6cc03)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 16c4bcc0-75e4-51c1-028d-604270c9913d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 004a928c-621d-6f94-3b7a-8e4c26ed73d4)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_text
+      reference
+      "J1"
+      (at 0 -2.54 0)
+      (layer F.SilkS)
+      (effects
+        (font
+          (size 0.7 0.7)
+          (thickness 0.15)
+        )
+      )
+    )
+    (fp_rect
+      (start -3.04 -1.77)
+      (end 3.04 1.77)
+      (layer F.CrtYd)
+      (stroke
+        (width 0.05)
+        (type default)
+      )
+      (fill no)
+    )
+    (pad "1" thru_hole rect
+      (at -1.27 0 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 1 ".J1 > .pin1 to .D12 > .anode")
+      (uuid 731d6caa-66b4-eaca-5a4c-68ea4de3e70a)
+    )
+    (pad "2" thru_hole circle
+      (at 1.27 0 0)
+      (size 1.7 1.7)
+      (drill 1)
+      (layers *.Cu *.Mask)
+      (net 2 ".J1 > .pin2 to .D1 > .cathode")
+      (uuid 508e25a0-09e2-1841-6452-5622413d6bfd)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 755707e0-1ae6-c9ff-3f89-73e266064e3d)
+    (at 110 100 90)
+    (attr smd)
+    (property "Reference" "D1"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 1209e9e0-3f2d-b33f-6c51-7c9e668aba03)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 66cbe920-4b84-ca3f-303d-ab5e14f68c7d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 0b5727e0-21cc-a17f-4ef0-6ade7c14343d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 00cdd380-7424-c4ff-1884-49825ad2a7fd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 286d5c80-39fa-a5a0-639d-584001355620)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875 0 0)
+      (size 0.95 0.875)
+      (layers F.Cu F.Mask)
+      (net 2 ".J1 > .pin2 to .D1 > .cathode")
+      (uuid 29e82880-3f4f-e681-54b7-a4826a1f6283)
+    )
+    (pad "1" smd rect
+      (at 0.7875 0 0)
+      (size 0.95 0.875)
+      (layers F.Cu F.Mask)
+      (net 6 ".D1 > .anode to .D2 > .cathode")
+      (uuid 40db7a18-5cbc-83c8-05ab-7e5868138078)
+    )
+    (pad "" smd rect
+      (at -0.7875 0 0)
+      (size 0.6649999999999999 0.6124999999999999)
+      (layers F.Paste)
+      (uuid 6b0daf60-7f8a-929f-6a22-d49e54bb169d)
+    )
+    (pad "" smd rect
+      (at 0.7875 0 0)
+      (size 0.6649999999999999 0.6124999999999999)
+      (layers F.Paste)
+      (uuid 1d229080-07ba-d27f-0dac-eb822314a983)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 3315e180-7798-bb81-2247-5882330a0a7d)
+    (at 108.66025403784438 95 120)
+    (attr smd)
+    (property "Reference" "D2"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 79b414c0-4c90-4b61-1f6c-82020db7475d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 39ca7d00-5511-9be1-7058-bac27460265d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 68ead980-69f1-5d21-3ccd-93c20fa9ca63)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 21f450a0-6ab4-bde1-08a2-339e7bf9251d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 119854c2-7400-56e2-2997-a6fe38d05b22)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7874999999999996 0 120)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 6 ".D1 > .anode to .D2 > .cathode")
+      (uuid 68cac6a0-16d6-7be1-3b1d-cede72ede663)
+    )
+    (pad "1" smd rect
+      (at 0.7874999999999988 1.7763568394002505e-15 120)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 7 ".D2 > .anode to .D3 > .cathode")
+      (uuid 18d18960-0529-0561-0e7f-7e9e2228029d)
+    )
+    (pad "" smd rect
+      (at -0.7874999999999996 0 120)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 5aad2fa0-7014-eda1-7a83-545e651b965d)
+    )
+    (pad "" smd rect
+      (at 0.7874999999999988 1.7763568394002505e-15 120)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 2d831040-181b-523f-02b3-943e12b429c3)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 1810f9a0-6d62-5c9f-3d4c-40621805229d)
+    (at 105 91.33974596215562 150)
+    (attr smd)
+    (property "Reference" "D3"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 05721360-27b1-b5ff-54d5-7f5e7e06b743)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 259f1ce0-0a57-fdff-10ef-20e22c363fc3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 22d32520-0a50-a43f-3774-6d9e649836fd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 431acdc0-498e-40c1-29c8-b0be62e05dc3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 4b9e0604-51f9-f7dc-106e-0a4472d60c64)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7874999999999996 -1.7763568394002505e-15 150)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 7 ".D2 > .anode to .D3 > .cathode")
+      (uuid 043a7780-38a2-f361-6d0b-6f425e8c14dd)
+    )
+    (pad "1" smd rect
+      (at 0.7875000000000005 0 150)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 8 ".D3 > .anode to .D4 > .cathode")
+      (uuid 3f623aa2-4fa5-a6be-2152-77e26db5697e)
+    )
+    (pad "" smd rect
+      (at -0.7874999999999996 -1.7763568394002505e-15 150)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 4a4cafe0-5fb4-6de1-751c-2be2757c161d)
+    )
+    (pad "" smd rect
+      (at 0.7875000000000005 0 150)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 3de39000-287b-d1ff-1314-13fe0253aa03)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 05e0340a-6e50-320a-293f-cff63f302e0a)
+    (at 100 90 180)
+    (attr smd)
+    (property "Reference" "D4"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 6ecfee00-640c-48a1-36e8-7f4209c4b5e3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 7af74940-69c1-97df-4e7a-78fe33335a1d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 516edc40-7e92-a59f-5449-91022725c7a3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 64414ae0-2867-c3a1-4aef-2dde41b9e0a3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 7a5c48ba-17f4-469a-4a73-bb865324425a)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875000000000001 0 0)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 8 ".D3 > .anode to .D4 > .cathode")
+      (uuid 687fb500-168b-6a41-3b68-e07e72a2d4c3)
+    )
+    (pad "1" smd rect
+      (at 0.7874999999999999 0 0)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 9 ".D4 > .anode to .D5 > .cathode")
+      (uuid 32b9a8b0-5c4e-38b0-14a9-e5f07a5dfb70)
+    )
+    (pad "" smd rect
+      (at -0.7875000000000001 0 0)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 39ec3020-4f53-ee21-64bb-ac227a236a23)
+    )
+    (pad "" smd rect
+      (at 0.7874999999999999 0 0)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 4e440fc0-38dc-51bf-2374-93be0e0cd5bd)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 1a11b4e0-3fe1-b041-662a-ea9e0c37857d)
+    (at 95 91.3397459621556 209.99999999999997)
+    (attr smd)
+    (property "Reference" "D5"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 1cee10a0-1035-b8bf-3d59-821e6a7d4b7d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 1b8daf60-36d4-ce41-521b-ed226d630c03)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 3a4f2260-0d2b-5901-1ff8-705e4d1c39bd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 7a983800-0741-4681-6c15-aafe20936383)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 40569778-2211-6aa8-7b86-9338191e9118)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875000000000005 1.7763568394002505e-15 209.99999999999997)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 9 ".D4 > .anode to .D5 > .cathode")
+      (uuid 2084c770-40e3-3490-5db4-cf7003b32c90)
+    )
+    (pad "1" smd rect
+      (at 0.7875000000000005 -1.7763568394002505e-15 209.99999999999997)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 10 ".D5 > .anode to .D6 > .cathode")
+      (uuid 32e87362-2e7f-889e-7018-7b620eb07f62)
+    )
+    (pad "" smd rect
+      (at -0.7875000000000005 1.7763568394002505e-15 209.99999999999997)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 298bb060-3ef3-6e61-545b-2c6269c2ea63)
+    )
+    (pad "" smd rect
+      (at 0.7875000000000005 -1.7763568394002505e-15 209.99999999999997)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 5ea48f80-493c-d17f-33d5-137e1e6d557d)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 1ea402d8-3a2a-c3f8-55b1-851871384638)
+    (at 91.33974596215562 95 239.99999999999994)
+    (attr smd)
+    (property "Reference" "D6"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 5753f0c0-7b88-45e1-4e64-7c822140b323)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 43dbea80-2894-cb9f-0d4d-acbe0df97223)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 39f2df00-6716-a85f-6bc5-8e423ea1c4e3)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 5971bae0-19e5-369f-72c3-d7e20093199d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 0650e636-5c17-1bea-4180-e1f620e7202a)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875000000000005 0 239.99999999999994)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 10 ".D5 > .anode to .D6 > .cathode")
+      (uuid 4164dcc0-108f-6dff-6283-b8be4b87fc83)
+    )
+    (pad "1" smd rect
+      (at 0.7875000000000001 0 239.99999999999994)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 11 ".D6 > .anode to .D7 > .cathode")
+      (uuid 77520eb0-17b5-d2b0-5942-4bf035c59570)
+    )
+    (pad "" smd rect
+      (at -0.7875000000000005 0 239.99999999999994)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 7594b798-0d24-b998-5b4b-44683c44bd98)
+    )
+    (pad "" smd rect
+      (at 0.7875000000000001 0 239.99999999999994)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 0843046a-70b3-026a-26dc-ff964192fe6a)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 66386f98-3157-9268-3718-6b9860779668)
+    (at 90 100 270)
+    (attr smd)
+    (property "Reference" "D7"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 346a0de0-0746-4481-25dd-84de53014e3d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 5cba7ba0-7801-9a81-6cb7-469e517027bd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 51cb1fa0-24a7-5641-087c-731e35a03c7d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 384b3dc0-3b0b-b3bf-519d-5ac221b996bd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 33b4cb0c-69e3-32d4-077b-30b45aecd16c)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875 0 0)
+      (size 0.95 0.875)
+      (layers F.Cu F.Mask)
+      (net 11 ".D6 > .anode to .D7 > .cathode")
+      (uuid 014b8940-16b3-4741-2c1b-05424182c343)
+    )
+    (pad "1" smd rect
+      (at 0.7875 0 0)
+      (size 0.95 0.875)
+      (layers F.Cu F.Mask)
+      (net 12 ".D7 > .anode to .D8 > .cathode")
+      (uuid 649b66f4-0233-64d4-6034-9d4c3d636094)
+    )
+    (pad "" smd rect
+      (at -0.7875 0 0)
+      (size 0.6649999999999999 0.6124999999999999)
+      (layers F.Paste)
+      (uuid 79e53f94-1175-4194-56fa-bc6c40954594)
+    )
+    (pad "" smd rect
+      (at 0.7875 0 0)
+      (size 0.6649999999999999 0.6124999999999999)
+      (layers F.Paste)
+      (uuid 03f27c6e-6c62-7a6e-2b2d-87923d42766e)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 134a1b00-689b-7dff-4213-1f02133e43fd)
+    (at 91.33974596215562 105 300)
+    (attr smd)
+    (property "Reference" "D8"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 3fd7f380-6cfb-bcdf-65e0-79c238bcb063)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 02af1e40-1898-00a1-33df-1f824f263e63)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 2276e1c0-4f9a-ab1f-7cbe-747e561dc223)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 1724c0a0-5c32-30df-3076-dda242e013dd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 6dba7c4e-2fdd-8192-328a-808e6b0d7d52)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875000000000001 0 300)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 12 ".D7 > .anode to .D8 > .cathode")
+      (uuid 19f97080-6bed-bb3f-421d-fa020fd650bd)
+    )
+    (pad "1" smd rect
+      (at 0.7875000000000005 -1.7763568394002505e-15 300)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 13 ".D8 > .anode to .D9 > .cathode")
+      (uuid 451089a8-1c57-7258-7dbf-6e5820d895a8)
+    )
+    (pad "" smd rect
+      (at -0.7875000000000001 0 300)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 7e35c790-15c5-c990-52aa-347044e5cd90)
+    )
+    (pad "" smd rect
+      (at 0.7875000000000005 -1.7763568394002505e-15 300)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 005e0b8e-6811-f272-2f7e-0f8e38f1ee72)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 12534de0-67a4-b0df-4309-ec22124776dd)
+    (at 95 108.66025403784438 330)
+    (attr smd)
+    (property "Reference" "D9"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 4be60b20-1ec2-41c1-0e61-879e3b8550fd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 6218b820-46d1-993f-2b8a-7a5e10435b7d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 69471ce0-3c23-5381-0eff-8a221e243f3d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 0a01bc80-7d58-adff-0f50-6082640690fd)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 583fd270-0a28-2fb0-6c90-31d03107cc10)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875000000000005 0 330)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 13 ".D8 > .anode to .D9 > .cathode")
+      (uuid 2075ff60-726a-4a1f-3ba1-6b221652df9d)
+    )
+    (pad "1" smd rect
+      (at 0.7875000000000005 0 330)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 3 ".D9 > .anode to .D10 > .cathode")
+      (uuid 25c44f52-4b33-cf4e-43d4-12122d240c8e)
+    )
+    (pad "" smd rect
+      (at -0.7875000000000005 0 330)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 7d79b074-1a16-518c-4e59-ac744936558c)
+    )
+    (pad "" smd rect
+      (at 0.7875000000000005 0 330)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 04ae938a-63c1-6a76-33ce-978a34a16676)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 285b554e-34c3-d72e-412c-590e4d94daee)
+    (at 100 110 0)
+    (attr smd)
+    (property "Reference" "D10"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 51bd9ffa-36ec-fd66-4068-653a48423826)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 2f6830ba-7d04-edda-355e-5506183e681a)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 49efca32-2d65-986e-5b45-04f21c105dae)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 6dc4e5e4-763d-a764-7eb6-68e478d0d59c)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 7b184940-65b0-8b3f-5048-cd3e3ae10f3d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875 0 0)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 3 ".D9 > .anode to .D10 > .cathode")
+      (uuid 5b20ab78-0d4f-5288-75bf-508821d0b178)
+    )
+    (pad "1" smd rect
+      (at 0.7875 0 0)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 4 ".D10 > .anode to .D11 > .cathode")
+      (uuid 1d4f5180-32b7-0f81-481e-cd825d868b83)
+    )
+    (pad "" smd rect
+      (at -0.7875 0 0)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 79292878-1e66-d988-4a09-24784d86dd88)
+    )
+    (pad "" smd rect
+      (at 0.7875 0 0)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 08ff1b86-5f70-e27a-381f-1f863050de7a)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 10dfc840-5764-6b5f-6216-f1821b924e63)
+    (at 105 108.66025403784438 30)
+    (attr smd)
+    (property "Reference" "D11"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 40c4ab78-47e5-f1e8-2f6f-70b8593b2ca8)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 10b68ebc-5e53-4bdc-540f-f704067339e4)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 5ae8beb4-1c6c-a3ec-6c3d-f9740b17692c)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 2dc79da6-3640-5f26-3eb9-20a64731e226)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 559406e0-6afb-c4e1-7f9c-7d1e6a34bf1d)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7875000000000005 0 30)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 4 ".D10 > .anode to .D11 > .cathode")
+      (uuid 0eafc514-04bb-2dac-1826-206c2b91132c)
+    )
+    (pad "1" smd rect
+      (at 0.7875000000000005 -1.7763568394002505e-15 30)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 5 ".D11 > .anode to .D12 > .cathode")
+      (uuid 33749e40-00f3-dda1-355c-598269c4d563)
+    )
+    (pad "" smd rect
+      (at -0.7875000000000005 0 30)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 3874f35a-2ffb-0aa6-6794-f75a00db06a6)
+    )
+    (pad "" smd rect
+      (at 0.7875000000000005 -1.7763568394002505e-15 30)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 4562c8a8-522d-3958-1642-c4a87eb2c2a8)
+    )
+  )
+  (footprint
+    "tscircuit:led"
+    (layer F.Cu)
+    (uuid 17a0a0a0-5e25-43bf-5b56-192214d17603)
+    (at 108.66025403784438 105 60)
+    (attr smd)
+    (property "Reference" "D12"
+      (at 0 -3 0)
+      (layer F.SilkS)
+      (hide yes)
+      (uuid 2fcbb6f6-58de-e66a-1e76-7c366a34212a)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Value" "LED"
+      (at 0 3 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 0dfb1342-3fa1-a9de-72c1-99022524dbe2)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Datasheet" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 6be1b336-0b73-af6a-7d36-edf605e18b56)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Description" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 1235aa98-09bc-e918-0144-2798073499e8)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (property "Supplier Part Number" ""
+      (at 0 0 0)
+      (layer F.Fab)
+      (hide yes)
+      (uuid 26405700-3ba8-1501-510f-d30266779103)
+      (effects
+        (font
+          (size 1.27 1.27)
+          (thickness 0.15)
+        )
+      )
+    )
+    (pad "2" smd rect
+      (at -0.7874999999999996 0 60)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 5 ".D11 > .anode to .D12 > .cathode")
+      (uuid 1576c7fc-28e1-babc-3c4c-ad7c4fb7a03c)
+    )
+    (pad "1" smd rect
+      (at 0.7875000000000005 0 60)
+      (size 0.875 0.95)
+      (layers F.Cu F.Mask)
+      (net 1 ".J1 > .pin1 to .D12 > .anode")
+      (uuid 6748b360-1554-68a1-3c9f-e21e716bd323)
+    )
+    (pad "" smd rect
+      (at -0.7874999999999996 0 60)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 3cc57b56-2baa-82aa-6be5-7f5603758156)
+    )
+    (pad "" smd rect
+      (at 0.7875000000000005 0 60)
+      (size 0.6124999999999999 0.6649999999999999)
+      (layers F.Paste)
+      (uuid 411240ac-567d-c154-11f2-3cac7a623aac)
+    )
+  )
+  (segment
+    (start 105.68199500548025 108.26650403784438)
+    (end 108.26650403784438 105.68199500548025)
+    (width 0.15)
+    (layer F.Cu)
+    (net 5)
+    (uuid 4c85be30-2a5c-5c90-0832-faf019f666b0)
+  )
+  (segment
+    (start 100.7875 110)
+    (end 103.37200903236415 110)
+    (width 0.15)
+    (layer F.Cu)
+    (net 4)
+    (uuid 22952718-535b-1808-36b4-a8d83f3b9648)
+  )
+  (segment
+    (start 103.37200903236415 110)
+    (end 104.31800499451975 109.05400403784438)
+    (width 0.15)
+    (layer F.Cu)
+    (net 4)
+    (uuid 6ac5c540-6a88-ae01-3fd7-214215259483)
+  )
+  (segment
+    (start 95.68199500548025 109.05400403784438)
+    (end 96.62799096763585 110)
+    (width 0.15)
+    (layer F.Cu)
+    (net 3)
+    (uuid 34ac3ae0-1667-9081-617b-5be25370d8bd)
+  )
+  (segment
+    (start 96.62799096763585 110)
+    (end 99.21249999999999 110)
+    (width 0.15)
+    (layer F.Cu)
+    (net 3)
+    (uuid 58ec74ac-5a13-6af4-0d13-4a943fecd5cc)
+  )
+  (segment
+    (start 91.73349596215562 105.68199500548025)
+    (end 94.31750403784439 108.26650403784438)
+    (width 0.15)
+    (layer F.Cu)
+    (net 13)
+    (uuid 583a7c40-6fe6-91df-786d-588260c142e3)
+  )
+  (segment
+    (start 94.31750403784439 108.26650403784438)
+    (end 94.31800499451975 108.26650403784438)
+    (width 0.15)
+    (layer F.Cu)
+    (net 13)
+    (uuid 0e7d4c80-2629-621f-3dd5-77be55818d5d)
+  )
+  (segment
+    (start 90 100.7875)
+    (end 90 103.37200903236415)
+    (width 0.15)
+    (layer F.Cu)
+    (net 12)
+    (uuid 294008e0-6fc4-abff-49b6-b0e203320dc3)
+  )
+  (segment
+    (start 90 103.37200903236415)
+    (end 90.94599596215562 104.31800499451975)
+    (width 0.15)
+    (layer F.Cu)
+    (net 12)
+    (uuid 0ed65c88-088f-4418-1ff4-e4b8375a8558)
+  )
+  (segment
+    (start 90.9459959621556 95.68199500548025)
+    (end 90 96.62799096763585)
+    (width 0.15)
+    (layer F.Cu)
+    (net 11)
+    (uuid 2c5e7020-0032-3b61-2cc2-e6e259539263)
+  )
+  (segment
+    (start 90 96.62799096763585)
+    (end 90 99.2125)
+    (width 0.15)
+    (layer F.Cu)
+    (net 11)
+    (uuid 1168e500-43e8-7dff-66c6-1f021174bc03)
+  )
+  (segment
+    (start 94.31800499451975 91.73349596215562)
+    (end 94.31750403784439 91.73349596215562)
+    (width 0.15)
+    (layer F.Cu)
+    (net 10)
+    (uuid 7c041ba0-72b7-911f-696b-069e601e7c1d)
+  )
+  (segment
+    (start 94.31750403784439 91.73349596215562)
+    (end 91.73349596215562 94.31800499451975)
+    (width 0.15)
+    (layer F.Cu)
+    (net 10)
+    (uuid 4dda43a0-448d-b91f-3b41-2e9e31f4a41d)
+  )
+  (segment
+    (start 99.2125 90)
+    (end 96.62799096763585 90)
+    (width 0.15)
+    (layer F.Cu)
+    (net 9)
+    (uuid 6424a15e-489d-e03e-2d17-1f1e11905dfe)
+  )
+  (segment
+    (start 96.62799096763585 90)
+    (end 95.68199500548025 90.9459959621556)
+    (width 0.15)
+    (layer F.Cu)
+    (net 9)
+    (uuid 23cb4cc0-74ef-ec60-39eb-740017392ba0)
+  )
+  (segment
+    (start 104.31800499451975 90.94599596215562)
+    (end 103.37200903236415 90)
+    (width 0.15)
+    (layer F.Cu)
+    (net 8)
+    (uuid 785af7a0-2d47-2c3f-1dcc-9f2268e06a83)
+  )
+  (segment
+    (start 103.37200903236415 90)
+    (end 100.7875 90)
+    (width 0.15)
+    (layer F.Cu)
+    (net 8)
+    (uuid 7a400ce8-30e4-f618-23f6-06e878d103e8)
+  )
+  (segment
+    (start 108.26650403784438 94.31800499451975)
+    (end 105.68249596215561 91.73349596215562)
+    (width 0.15)
+    (layer F.Cu)
+    (net 7)
+    (uuid 69298b7e-7691-af02-564c-e98236082402)
+  )
+  (segment
+    (start 105.68249596215561 91.73349596215562)
+    (end 105.68199500548025 91.73349596215562)
+    (width 0.15)
+    (layer F.Cu)
+    (net 7)
+    (uuid 37d91696-581d-dc16-7862-a196675898ea)
+  )
+  (segment
+    (start 110 99.2125)
+    (end 110 96.62799096763587)
+    (width 0.15)
+    (layer F.Cu)
+    (net 6)
+    (uuid 3742ad2c-73e2-55d4-1f07-58d435d3a42c)
+  )
+  (segment
+    (start 110 96.62799096763587)
+    (end 109.05400403784438 95.68199500548025)
+    (width 0.15)
+    (layer F.Cu)
+    (net 6)
+    (uuid 24c7afc0-264c-1ba1-715f-e702438c4d9d)
+  )
+  (segment
+    (start 101.27 100)
+    (end 109.213 100)
+    (width 0.15)
+    (layer F.Cu)
+    (net 2)
+    (uuid 32144480-27b6-6edf-1d58-993e12fac39d)
+  )
+  (segment
+    (start 109.213 100)
+    (end 110 100.7875)
+    (width 0.15)
+    (layer F.Cu)
+    (net 2)
+    (uuid 7b24f500-6f19-f881-5958-e6024397d383)
+  )
+  (segment
+    (start 98.73 100)
+    (end 103.048 104.318)
+    (width 0.15)
+    (layer F.Cu)
+    (net 1)
+    (uuid 4014ff26-624c-3e5a-04ad-7bda58f146a6)
+  )
+  (segment
+    (start 103.048 104.318)
+    (end 109.05400403784438 104.31800499451975)
+    (width 0.15)
+    (layer F.Cu)
+    (net 1)
+    (uuid 4c5a4c72-7e8d-27ce-4974-9c0e145c104e)
+  )
+  (gr_line
+    (start 85 115)
+    (end 115 115)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 115 115)
+    (end 115 85)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 115 85)
+    (end 85 85)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+  (gr_line
+    (start 85 85)
+    (end 85 115)
+    (width 0.1)
+    (layer Edge.Cuts)
+  )
+)

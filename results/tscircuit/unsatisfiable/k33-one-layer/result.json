@@ -1,0 +1,4 @@
+{
+ "outcome": "refused",
+ "why": "pcb_trace_error: PCB trace .H3 > .pin3 to .U3 > .pin3 is too close to .H1 > .pin1 to .U1 > .pin1 (gap: 0.124mm); pcb_trace_error: PCB trace .H2 > .pin1 to .U1 > .pin2 is too close to .H1 > .pin1 to .U1 > .pin1 (gap: 0.116mm); pcb_trace_error: PCB trace .H2 > .pin1 to .U1 > .pin2 overlaps with pcb_smtpad \"U1.pin1\" (accidental contact); pcb_trace_error: PCB trace .H1 > .pin2 to .U2 > .pin1 overlaps with .H1 > .pin1 to .U1 > .pin1 (accidental contact)"
+}

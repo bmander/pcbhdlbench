@@ -1,0 +1,48 @@
+import std::mfg::jlcpcb::TwoLayer
+import std::parts::connector::Header1x2
+import std::parts::passive::{Capacitor, Led, Resistor}
+
+import src::bench::Soic8
+
+board Ne555Blinker {
+    .process: TwoLayer {
+        .stackup.thickness &= 1.6mm
+        .min_track &= 0.15mm..
+        .min_clearance &= 0.15mm..
+        .min_edge_clearance &= 0.3mm..
+        .min_drill &= 0.3mm..
+        .min_via_diameter &= 0.6mm..
+        .via_diameter &= 0.6mm
+        .via_drill &= 0.3mm
+    }
+    /// The 555: 1 GND, 2 TRIG, 3 OUT, 4 RESET, 5 CONT, 6 THRES, 7 DISCH, 8 VCC.
+    .u1: Soic8
+    .r1: Resistor { .resistance &= 1kohm +/- 1%; .package &= "0603" }
+    .r2: Resistor { .resistance &= 470kohm +/- 1%; .package &= "0603" }
+    .r3: Resistor { .resistance &= 330ohm +/- 1%; .package &= "0603" }
+    .c1: Capacitor { .capacitance &= 1uF +/- 10%; .package &= "0603" }
+    .c2: Capacitor { .capacitance &= 100nF +/- 10%; .package &= "0603" }
+    .d1: Led { .package &= "0603" }
+    .j1: Header1x2
+
+    // VCC: the header's pin 1, the supply and reset pins, R1 and the decoupling capacitor.
+    .j1.p1 ~ .u1.p8
+    .j1.p1 ~ .u1.p4
+    .j1.p1 ~ .r1.a
+    .j1.p1 ~ .c2.a
+    // Ground.
+    .j1.p2 ~ .u1.p1
+    .j1.p2 ~ .c1.b
+    .j1.p2 ~ .c2.b
+    .j1.p2 ~ .d1.cathode
+    // Discharge, between R1 and R2.
+    .u1.p7 ~ .r1.b
+    .u1.p7 ~ .r2.a
+    // Threshold and trigger, tied, on R2 and the timing capacitor.
+    .u1.p2 ~ .u1.p6
+    .u1.p2 ~ .r2.b
+    .u1.p2 ~ .c1.a
+    // The output, through R3 to the LED.
+    .u1.p3 ~ .r3.a
+    .r3.b ~ .d1.anode
+}
